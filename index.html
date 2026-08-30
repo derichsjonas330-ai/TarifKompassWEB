@@ -48,16 +48,17 @@ nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var
 @media(max-width:760px){.nav-phone{display:none}}
 
 /* Hero */
-.hero{background-image:linear-gradient(90deg,rgba(238,243,248,.98) 0%,rgba(246,249,252,.96) 42%,rgba(255,255,255,.82) 62%,rgba(255,255,255,.38) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-size:cover;background-position:center center;background-repeat:no-repeat;border-bottom:1px solid var(--linie);position:relative;overflow:hidden}
+.hero{background-color:var(--navy-hell);background-image:linear-gradient(90deg,rgba(238,243,248,.76) 0%,rgba(246,249,252,.66) 42%,rgba(255,255,255,.42) 62%,rgba(255,255,255,.16) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-size:cover;background-position:center center;background-repeat:no-repeat;border-bottom:1px solid var(--linie);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;top:-15%;right:-10%;width:50%;padding-bottom:50%;background:radial-gradient(circle,rgba(201,150,46,.10),transparent 70%);border-radius:50%;pointer-events:none}
 .hero-motif{position:absolute;top:-8%;right:-4%;width:300px;height:300px;opacity:.08;pointer-events:none}
-@media(max-width:900px){.hero{background-image:linear-gradient(90deg,rgba(238,243,248,.97) 0%,rgba(250,252,254,.94) 72%,rgba(255,255,255,.84) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:65% center}.hero-motif{display:none}}
-@media(max-width:600px){.hero{background-image:linear-gradient(rgba(242,246,250,.94),rgba(255,255,255,.96)),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:68% center}}
+@media(max-width:900px){.hero{background-image:linear-gradient(90deg,rgba(238,243,248,.84) 0%,rgba(250,252,254,.78) 72%,rgba(255,255,255,.64) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:65% center}.hero-motif{display:none}}
+@media(max-width:600px){.hero{background-image:linear-gradient(rgba(242,246,250,.88),rgba(255,255,255,.91)),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:68% center}}
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center;padding-top:clamp(3rem,7vh,5rem);padding-bottom:clamp(3rem,7vh,5rem);position:relative;z-index:2}
 @media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
 .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);color:var(--navy);margin-bottom:1.2rem;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .hero .sub{color:var(--grau);font-size:1.12rem;max-width:36rem}
+.hero h1,.hero .sub,.hero .checks,.hero .review-line{text-shadow:0 1px 2px rgba(255,255,255,.96),0 0 14px rgba(255,255,255,.72)}
 .checks{list-style:none;margin-top:1.6rem;display:grid;gap:.55rem}
 .checks li{padding-left:2rem;position:relative;font-weight:500}
 .checks li::before{content:"";position:absolute;left:0;top:.32em;width:20px;height:20px;border-radius:50%;background:var(--navy) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>') center/12px no-repeat}
