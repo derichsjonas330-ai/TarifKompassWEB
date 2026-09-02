@@ -42,9 +42,12 @@ nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var
 .logo{font-family:var(--fd);font-weight:700;font-size:1.25rem;color:var(--navy);text-decoration:none}
 .logo span{color:var(--gold)}
 .nav-right{display:flex;align-items:center;gap:1.4rem}
-.nav-phone{text-decoration:none;color:var(--navy);font-weight:600;font-size:1rem}
+.nav-phone{text-decoration:none;color:var(--navy);font-weight:600;font-size:1rem;white-space:nowrap}
 .nav-phone small{display:block;font-weight:400;color:var(--grau);font-size:.75rem}
-.nav-cta{padding:.7rem 1.4rem;font-size:.95rem}
+.nav-email{display:inline-flex;align-items:center;gap:.45rem;padding-left:1.2rem;border-left:1px solid var(--linie);color:var(--navy);font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap;transition:color .2s}
+.nav-phone:hover,.nav-email:hover{color:var(--gold)}
+.nav-cta{padding:.7rem 1.4rem;font-size:.95rem;white-space:nowrap}
+@media(max-width:920px){.nav-email{display:none}}
 @media(max-width:760px){.nav-phone{display:none}}
 
 /* Hero */
@@ -376,6 +379,7 @@ section h2{max-width:30ch}
     <a class="logo" href="#top">Paschen<span>-Energie</span></a>
     <div class="nav-right">
       <a class="nav-phone" href="tel:+4917616818944">☎ 0176 16818944<small>Mo–Fr 9–18 Uhr · persönlich erreichbar</small></a>
+      <a class="nav-email" href="mailto:info@paschenenergie.de"><span aria-hidden="true">✉</span><span>info@paschenenergie.de</span></a>
       <a class="btn nav-cta" href="#analyse">Analyse anfordern</a>
     </div>
   </div>
