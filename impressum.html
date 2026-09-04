@@ -10,114 +10,442 @@
   <style>
     :root{
       --navy:#123C63;
-      --navy-dark:#0A1F35;
-      --light:#EEF3F8;
-      --gold:#C9962E;
+      --navy-deep:#081F35;
+      --navy-soft:#1C527E;
+      --gold:#D09A2D;
+      --gold-light:#F8E9C5;
+      --cream:#FFF9EE;
+      --sky:#EAF2F8;
+      --white:#FFFFFF;
       --text:#1B2B3A;
-      --muted:#54657A;
-      --line:#D5DFE9;
-      --white:#fff;
+      --muted:#5A6B7D;
+      --line:#D4E0E9;
     }
+
     *{box-sizing:border-box}
+
     html{font-size:16px}
+
     body{
       margin:0;
-      color:var(--text);
-      background:linear-gradient(160deg,var(--light),#fff 60%);
-      font-family:"Segoe UI",Arial,sans-serif;
-      line-height:1.65;
       min-height:100vh;
       display:flex;
       flex-direction:column;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 8% 16%,rgba(208,154,45,.20),transparent 27rem),
+        radial-gradient(circle at 92% 18%,rgba(18,60,99,.18),transparent 30rem),
+        linear-gradient(145deg,#EAF2F8 0%,#F8FBFD 52%,#FFF8E9 100%);
+      font-family:"Segoe UI",Arial,sans-serif;
+      line-height:1.65;
     }
+
+    a{color:inherit}
+
     header{
-      background:var(--white);
-      border-bottom:1px solid var(--line);
+      position:relative;
+      z-index:5;
+      background:rgba(255,255,255,.94);
+      border-bottom:1px solid rgba(18,60,99,.15);
+      box-shadow:0 5px 22px rgba(8,31,53,.05);
     }
+
+    header::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-1px;
+      width:clamp(90px,18vw,280px);
+      height:3px;
+      background:var(--gold);
+    }
+
     .nav{
-      width:min(1080px,calc(100% - 2.5rem));
+      width:min(1120px,calc(100% - 2.5rem));
+      min-height:76px;
       margin:0 auto;
-      min-height:74px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:1.5rem;
     }
+
     .logo{
       color:var(--navy);
-      font-family:Georgia,serif;
-      font-size:1.28rem;
+      font-family:Georgia,"Times New Roman",serif;
+      font-size:1.34rem;
       font-weight:700;
+      letter-spacing:.01em;
       text-decoration:none;
     }
+
     .logo span{color:var(--gold)}
+
     .back{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
       color:var(--navy);
-      font-weight:600;
-      text-decoration:none;
-    }
-    .back:hover,.back:focus{color:var(--gold)}
-    main{
-      width:min(820px,calc(100% - 2.5rem));
-      margin:auto;
-      padding:4rem 0;
-    }
-    .card{
-      background:var(--white);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:clamp(1.6rem,5vw,3.3rem);
-      box-shadow:0 16px 50px rgba(18,60,99,.11);
-    }
-    .eyebrow{
-      display:inline-block;
-      margin-bottom:1rem;
-      padding:.35rem .85rem;
-      border-radius:6px;
-      background:var(--light);
-      color:var(--navy);
-      font-size:.78rem;
       font-weight:700;
-      letter-spacing:.13em;
+      text-decoration:none;
+      transition:color .2s ease,transform .2s ease;
+    }
+
+    .back:hover,.back:focus-visible{
+      color:#9A6A0D;
+      transform:translateX(-2px);
+    }
+
+    .back:focus-visible,
+    .contact-link:focus-visible,
+    .logo:focus-visible{
+      outline:3px solid rgba(208,154,45,.45);
+      outline-offset:4px;
+      border-radius:5px;
+    }
+
+    main{
+      position:relative;
+      isolation:isolate;
+      width:min(1000px,calc(100% - 2.5rem));
+      margin:auto;
+      padding:4.5rem 0;
+    }
+
+    .ambient{
+      position:absolute;
+      z-index:-1;
+      color:var(--navy);
+      opacity:.08;
+      pointer-events:none;
+    }
+
+    .ambient-house{
+      width:180px;
+      height:180px;
+      left:-135px;
+      bottom:20px;
+      transform:rotate(-5deg);
+    }
+
+    .ambient-bolt{
+      width:120px;
+      height:120px;
+      right:-95px;
+      top:34px;
+      color:var(--gold);
+      opacity:.13;
+      transform:rotate(8deg);
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      padding:clamp(.9rem,2.4vw,1.35rem);
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(18,60,99,.18);
+      border-top:5px solid var(--gold);
+      border-radius:24px;
+      box-shadow:
+        0 28px 75px rgba(8,31,53,.16),
+        0 3px 12px rgba(8,31,53,.05);
+      backdrop-filter:blur(8px);
+    }
+
+    .intro{
+      position:relative;
+      overflow:hidden;
+      min-height:245px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 220px;
+      align-items:center;
+      gap:2rem;
+      padding:clamp(2rem,5vw,3.35rem);
+      color:var(--white);
+      background:
+        radial-gradient(circle at 86% 20%,rgba(255,255,255,.10),transparent 15rem),
+        linear-gradient(135deg,var(--navy-deep),var(--navy) 62%,var(--navy-soft));
+      border-radius:17px;
+    }
+
+    .intro::before,
+    .intro::after{
+      content:"";
+      position:absolute;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:50%;
+    }
+
+    .intro::before{
+      width:330px;
+      height:330px;
+      right:-165px;
+      top:-190px;
+    }
+
+    .intro::after{
+      width:240px;
+      height:240px;
+      right:-115px;
+      top:-135px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      margin-bottom:1rem;
+      padding:.4rem .85rem;
+      color:#FFF3D8;
+      background:rgba(208,154,45,.20);
+      border:1px solid rgba(248,233,197,.25);
+      border-radius:999px;
+      font-size:.76rem;
+      font-weight:800;
+      letter-spacing:.14em;
       text-transform:uppercase;
     }
+
+    .eyebrow::before{
+      content:"";
+      width:7px;
+      height:7px;
+      background:var(--gold);
+      border-radius:50%;
+      box-shadow:0 0 0 4px rgba(208,154,45,.15);
+    }
+
     h1,h2{
-      color:var(--navy);
-      font-family:Georgia,serif;
-      line-height:1.25;
+      margin-top:0;
+      font-family:Georgia,"Times New Roman",serif;
+      line-height:1.2;
     }
+
     h1{
-      margin:0 0 2.2rem;
-      font-size:clamp(2.2rem,7vw,3.4rem);
+      margin-bottom:.8rem;
+      color:var(--white);
+      font-size:clamp(2.55rem,7vw,4rem);
+      letter-spacing:-.025em;
     }
+
+    .intro-copy{
+      max-width:560px;
+      margin:0;
+      color:#DDE9F2;
+      font-size:1.05rem;
+    }
+
+    .hero-icon{
+      position:relative;
+      z-index:1;
+      width:180px;
+      height:180px;
+      display:grid;
+      place-items:center;
+      justify-self:end;
+      color:var(--white);
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:50%;
+      box-shadow:
+        inset 0 0 0 12px rgba(255,255,255,.025),
+        0 20px 45px rgba(0,0,0,.15);
+    }
+
+    .hero-icon svg{width:108px;height:108px}
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:1.1rem;
+      margin-top:1.1rem;
+    }
+
+    .info-card{
+      min-height:250px;
+      padding:clamp(1.55rem,3.5vw,2.25rem);
+      border-radius:17px;
+    }
+
+    .address-card{
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(145deg,var(--cream),#FFFDF8);
+      border:1px solid #EBD9AE;
+    }
+
+    .address-card::after{
+      content:"";
+      position:absolute;
+      width:130px;
+      height:130px;
+      right:-55px;
+      bottom:-62px;
+      border:22px solid rgba(208,154,45,.08);
+      border-radius:50%;
+    }
+
+    .contact-card{
+      color:var(--white);
+      background:linear-gradient(145deg,#164A75,var(--navy-deep));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .section-heading{
+      display:flex;
+      align-items:center;
+      gap:.85rem;
+      margin-bottom:1.35rem;
+    }
+
+    .section-icon{
+      flex:0 0 auto;
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      color:var(--navy);
+      background:var(--gold-light);
+      border-radius:13px;
+      box-shadow:0 8px 18px rgba(18,60,99,.09);
+    }
+
+    .section-icon svg{width:25px;height:25px}
+
     h2{
-      margin:0 0 1rem;
-      font-size:1.35rem;
+      margin-bottom:0;
+      color:var(--navy);
+      font-size:clamp(1.18rem,2.8vw,1.46rem);
     }
-    address{font-style:normal}
-    .company{font-weight:700;color:var(--text)}
-    .contact{
-      margin-top:2.2rem;
-      padding-top:2.2rem;
-      border-top:1px solid var(--line);
+
+    .contact-card h2{color:var(--white)}
+
+    address{
+      position:relative;
+      z-index:1;
+      padding-left:.25rem;
+      font-style:normal;
     }
-    dl{margin:0;display:grid;grid-template-columns:100px 1fr;gap:.65rem 1rem}
-    dt{font-weight:700;color:var(--muted)}
-    dd{margin:0}
-    .contact a{color:var(--navy);font-weight:600;text-decoration:none}
-    .contact a:hover,.contact a:focus{color:var(--gold);text-decoration:underline}
+
+    .company{
+      display:inline-block;
+      margin-bottom:.28rem;
+      color:var(--navy-deep);
+      font-weight:800;
+    }
+
+    .contact-list{
+      display:grid;
+      gap:.75rem;
+    }
+
+    .contact-link{
+      display:grid;
+      grid-template-columns:42px minmax(0,1fr);
+      align-items:center;
+      gap:.85rem;
+      padding:.82rem;
+      color:var(--white);
+      background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:13px;
+      text-decoration:none;
+      transition:background .2s ease,border-color .2s ease,transform .2s ease;
+    }
+
+    .contact-link:hover,
+    .contact-link:focus-visible{
+      background:rgba(255,255,255,.13);
+      border-color:rgba(248,233,197,.35);
+      transform:translateY(-1px);
+    }
+
+    .contact-link .icon{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      color:var(--navy-deep);
+      background:var(--gold);
+      border-radius:11px;
+    }
+
+    .contact-link svg{width:21px;height:21px}
+
+    .contact-label{
+      display:block;
+      color:#BED0DF;
+      font-size:.74rem;
+      font-weight:800;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    .contact-value{
+      display:block;
+      overflow-wrap:anywhere;
+      font-weight:750;
+    }
+
     footer{
-      padding:1.5rem;
+      position:relative;
+      padding:1.45rem;
+      color:#BFD0DE;
+      background:var(--navy-deep);
+      border-top:3px solid var(--gold);
       text-align:center;
-      color:#AFC1D2;
-      background:var(--navy-dark);
-      font-size:.85rem;
+      font-size:.86rem;
     }
+
+    .footer-mark{
+      display:inline-block;
+      width:6px;
+      height:6px;
+      margin:0 .45rem .1rem;
+      background:var(--gold);
+      border-radius:50%;
+    }
+
+    @media(max-width:760px){
+      main{padding:2.5rem 0}
+      .intro{
+        min-height:auto;
+        grid-template-columns:1fr;
+        gap:1.3rem;
+      }
+      .hero-icon{
+        position:absolute;
+        right:-30px;
+        bottom:-40px;
+        width:145px;
+        height:145px;
+        opacity:.24;
+      }
+      .hero-icon svg{width:86px;height:86px}
+      .intro-copy{max-width:85%}
+      .info-grid{grid-template-columns:1fr}
+      .info-card{min-height:auto}
+      .ambient{display:none}
+    }
+
     @media(max-width:520px){
-      .nav{align-items:flex-start;flex-direction:column;padding:1rem 0}
-      main{padding:2rem 0}
-      dl{grid-template-columns:1fr;gap:.15rem}
-      dd{margin-bottom:.8rem}
+      .nav{
+        min-height:auto;
+        align-items:flex-start;
+        flex-direction:column;
+        padding:1rem 0;
+        gap:.45rem;
+      }
+      .back{font-size:.92rem}
+      main{width:min(100% - 1.25rem,1000px);padding:1.4rem 0 2rem}
+      .card{padding:.55rem;border-radius:18px}
+      .intro{padding:1.65rem 1.35rem;border-radius:13px}
+      .intro-copy{max-width:100%;font-size:.98rem}
+      .hero-icon{display:none}
+      .info-grid{gap:.65rem;margin-top:.65rem}
+      .info-card{padding:1.4rem;border-radius:13px}
+      .contact-link{grid-template-columns:38px minmax(0,1fr);padding:.7rem}
+      .contact-link .icon{width:38px;height:38px}
     }
   </style>
 </head>
@@ -125,38 +453,97 @@
   <header>
     <nav class="nav" aria-label="Hauptnavigation">
       <a class="logo" href="/">Paschen<span>-Energie</span></a>
-      <a class="back" href="/">← Zurück zur Startseite</a>
+      <a class="back" href="/"><span aria-hidden="true">←</span> Zurück zur Startseite</a>
     </nav>
   </header>
 
   <main>
+    <svg class="ambient ambient-house" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+      <path d="M15 58 60 21l45 37v46H73V75H47v29H15V58Z" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M82 31V17h15v27" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+    </svg>
+    <svg class="ambient ambient-bolt" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <path d="M58 8 22 55h27l-7 37 36-50H51L58 8Z" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+    </svg>
+
     <article class="card">
-      <span class="eyebrow">Rechtliches</span>
-      <h1>Impressum</h1>
-
-      <section aria-labelledby="anbieter">
-        <h2 id="anbieter">Angaben gemäß § 5 DDG</h2>
-        <address>
-          <span class="company">Stefanos Paschen Vertrieb &amp; Energie</span><br>
-          Inhaber: Stefanos Paschen<br>
-          Nikolaus-Becker-Straße 33<br>
-          52511 Geilenkirchen<br>
-          Deutschland
-        </address>
+      <section class="intro" aria-labelledby="seitentitel">
+        <div>
+          <span class="eyebrow">Rechtliches</span>
+          <h1 id="seitentitel">Impressum</h1>
+          <p class="intro-copy">Transparente Angaben zu unserem Unternehmen und Ihre direkten Kontaktmöglichkeiten auf einen Blick.</p>
+        </div>
+        <div class="hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none">
+            <path d="M15 56 60 19l45 37v47H73V74H47v29H15V56Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M81 31V18h15v26" stroke="#D09A2D" stroke-width="5" stroke-linejoin="round"/>
+            <path d="m64 39-16 23h13l-4 19 17-24H61l3-18Z" fill="#D09A2D"/>
+          </svg>
+        </div>
       </section>
 
-      <section class="contact" aria-labelledby="kontakt">
-        <h2 id="kontakt">Kontakt</h2>
-        <dl>
-          <dt>Telefon</dt>
-          <dd><a href="tel:+4917616818944">+49 176 16818944</a></dd>
-          <dt>E-Mail</dt>
-          <dd><a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a></dd>
-        </dl>
-      </section>
+      <div class="info-grid">
+        <section class="info-card address-card" aria-labelledby="anbieter">
+          <div class="section-heading">
+            <span class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="m3 11 9-7 9 7v9H4v-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M9 20v-6h6v6M17 7V4h2v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h2 id="anbieter">Angaben gemäß § 5 DDG</h2>
+          </div>
+          <address>
+            <span class="company">Stefanos Paschen Vertrieb &amp; Energie</span><br>
+            Inhaber: Stefanos Paschen<br>
+            Nikolaus-Becker-Straße 33<br>
+            52511 Geilenkirchen<br>
+            Deutschland
+          </address>
+        </section>
+
+        <section class="info-card contact-card" aria-labelledby="kontakt">
+          <div class="section-heading">
+            <span class="section-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M5 5h14v11H8l-3 3V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="m8 9 4 3 4-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <h2 id="kontakt">Kontakt</h2>
+          </div>
+
+          <div class="contact-list">
+            <a class="contact-link" href="tel:+4917616818944">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M7.2 3.7 10 8.1 7.9 10c1.2 2.6 3.5 4.8 6.1 6l1.9-2.1 4.4 2.8-.8 3c-.3.8-1 1.3-1.8 1.3C9.6 20.3 3.7 14.4 3 6.3c-.1-.8.5-1.6 1.3-1.8l2.9-.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-label">Telefon</span>
+                <span class="contact-value">+49 176 16818944</span>
+              </span>
+            </a>
+
+            <a class="contact-link" href="mailto:info@paschenenergie.de">
+              <span class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18v12H3V6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                  <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-label">E-Mail</span>
+                <span class="contact-value">info@paschenenergie.de</span>
+              </span>
+            </a>
+          </div>
+        </section>
+      </div>
     </article>
   </main>
 
-  <footer>Paschen-Energie · Unabhängige Energieberatung</footer>
+  <footer>Paschen-Energie <span class="footer-mark" aria-hidden="true"></span> Unabhängige Energieberatung</footer>
 </body>
 </html>
