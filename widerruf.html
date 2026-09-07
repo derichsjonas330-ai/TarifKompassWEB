@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widerrufsbelehrung | Paschen-Energie</title>
+  <meta name="description" content="Widerrufsbelehrung und Muster-Widerrufsformular für entgeltliche Beratungsverträge mit Paschen-Energie.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://paschenenergie.de/widerruf">
+  <link rel="stylesheet" href="assets/fonts.css">
+  <style>
+    :root{
+      --navy:#123C63;
+      --navy-deep:#081F35;
+      --navy-soft:#1C527E;
+      --gold:#D09A2D;
+      --gold-light:#F8E9C5;
+      --cream:#FFF9EE;
+      --sky:#EAF2F8;
+      --white:#FFFFFF;
+      --text:#1B2B3A;
+      --muted:#5A6B7D;
+      --line:#D4E0E9;
+    }
+
+    *{box-sizing:border-box}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 8% 14%,rgba(208,154,45,.18),transparent 28rem),
+        radial-gradient(circle at 94% 17%,rgba(18,60,99,.16),transparent 31rem),
+        linear-gradient(145deg,#EAF2F8 0%,#F8FBFD 52%,#FFF8E9 100%);
+      font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;
+      line-height:1.65;
+    }
+
+    a{color:inherit}
+    a:focus-visible,button:focus-visible{outline:3px solid rgba(208,154,45,.55);outline-offset:4px;border-radius:5px}
+
+    header{
+      position:relative;
+      z-index:5;
+      background:rgba(255,255,255,.94);
+      border-bottom:1px solid rgba(18,60,99,.15);
+      box-shadow:0 5px 22px rgba(8,31,53,.05);
+    }
+
+    header::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-1px;
+      width:clamp(90px,18vw,280px);
+      height:3px;
+      background:var(--gold);
+    }
+
+    .nav{
+      width:min(1120px,calc(100% - 2.5rem));
+      min-height:76px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1.5rem;
+    }
+
+    .logo{
+      color:var(--navy);
+      font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+      font-size:1.34rem;
+      font-weight:700;
+      letter-spacing:.01em;
+      text-decoration:none;
+    }
+
+    .logo span{color:var(--gold)}
+    .back{display:inline-flex;align-items:center;gap:.5rem;color:var(--navy);font-weight:700;text-decoration:none;transition:color .2s,transform .2s}
+    .back:hover{color:#9A6A0D;transform:translateX(-2px)}
+
+    main{width:min(1000px,calc(100% - 2.5rem));margin:0 auto;padding:4.5rem 0}
+    .shell{padding:clamp(.75rem,2vw,1.15rem);background:rgba(255,255,255,.9);border:1px solid rgba(18,60,99,.18);border-top:5px solid var(--gold);border-radius:24px;box-shadow:0 28px 75px rgba(8,31,53,.16),0 3px 12px rgba(8,31,53,.05)}
+
+    .intro{
+      position:relative;
+      overflow:hidden;
+      min-height:240px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 200px;
+      align-items:center;
+      gap:2rem;
+      padding:clamp(2rem,5vw,3.35rem);
+      color:var(--white);
+      background:radial-gradient(circle at 86% 20%,rgba(255,255,255,.10),transparent 15rem),linear-gradient(135deg,var(--navy-deep),var(--navy) 62%,var(--navy-soft));
+      border-radius:17px;
+    }
+
+    .intro::after{content:"";position:absolute;width:330px;height:330px;right:-165px;top:-190px;border:1px solid rgba(255,255,255,.10);border-radius:50%}
+    .eyebrow{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1rem;padding:.4rem .85rem;color:#FFF3D8;background:rgba(208,154,45,.20);border:1px solid rgba(248,233,197,.25);border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:7px;height:7px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 4px rgba(208,154,45,.15)}
+    h1,h2,h3{font-family:"Source Serif 4",Georgia,"Times New Roman",serif;line-height:1.2}
+    h1{margin:.15rem 0 .8rem;font-size:clamp(2.35rem,6vw,3.75rem);letter-spacing:-.025em}
+    .intro p{max-width:610px;margin:0;color:#DDE9F2;font-size:1.05rem}
+    .hero-icon{position:relative;z-index:1;width:166px;height:166px;display:grid;place-items:center;justify-self:end;color:var(--white);background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:inset 0 0 0 12px rgba(255,255,255,.025),0 20px 45px rgba(0,0,0,.15)}
+    .hero-icon svg{width:96px;height:96px}
+
+    .notice{display:flex;gap:.9rem;align-items:flex-start;margin:1rem 0;padding:1.15rem 1.25rem;color:var(--navy-deep);background:var(--gold-light);border:1px solid #E7CC8D;border-radius:15px}
+    .notice svg{flex:0 0 auto;width:25px;height:25px;color:var(--gold)}
+    .notice p{margin:0}
+
+    .legal-card{margin-top:1rem;padding:clamp(1.5rem,4vw,2.6rem);background:var(--white);border:1px solid var(--line);border-radius:17px}
+    .legal-card h2{margin:0 0 1rem;color:var(--navy);font-size:clamp(1.55rem,3vw,2rem)}
+    .legal-card h3{margin:1.8rem 0 .65rem;color:var(--navy-deep);font-size:1.28rem}
+    .legal-card p{margin:.72rem 0}
+    .contact-box{margin:1rem 0;padding:1.15rem 1.25rem;background:var(--sky);border-left:4px solid var(--gold);border-radius:0 12px 12px 0}
+    .contact-box address{font-style:normal}
+    .contact-box a{color:var(--navy);font-weight:700;text-decoration-thickness:1px;text-underline-offset:3px}
+
+    .form-card{margin-top:1rem;padding:clamp(1.5rem,4vw,2.6rem);background:linear-gradient(145deg,var(--cream),#FFFDF8);border:1px solid #EBD9AE;border-radius:17px}
+    .form-card h2{margin:0 0 .25rem;color:var(--navy);font-size:clamp(1.55rem,3vw,2rem)}
+    .form-card .sub{margin:0 0 1.35rem;color:var(--muted)}
+    .form-lines{display:grid;gap:1rem;margin-top:1.4rem}
+    .form-line{min-height:2.3rem;padding:.4rem 0;border-bottom:1px solid #CDBF9E}
+    .form-line strong{color:var(--navy-deep)}
+    .form-address{padding:1.05rem 1.2rem;background:rgba(255,255,255,.72);border:1px solid #E8D9B7;border-radius:12px}
+    .mail-action{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.35rem;padding:.78rem 1.05rem;color:var(--white);background:var(--navy);border-radius:9px;font-weight:700;text-decoration:none;transition:background .2s,transform .2s}
+    .mail-action:hover{background:var(--navy-deep);transform:translateY(-1px)}
+    .mail-action svg{width:20px;height:20px}
+    .source-note{margin:1rem .35rem .2rem;color:var(--muted);font-size:.84rem}
+
+    footer{margin-top:auto;padding:1.45rem;color:#BFD0DE;background:var(--navy-deep);border-top:3px solid var(--gold);text-align:center;font-size:.86rem}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem 1.3rem;margin-bottom:.55rem}
+    .footer-links a{color:#EFF5FA;font-weight:700;text-decoration:none}
+    .footer-links a:hover{text-decoration:underline;text-underline-offset:3px}
+    .footer-mark{display:inline-block;width:6px;height:6px;margin:0 .45rem .1rem;background:var(--gold);border-radius:50%}
+
+    @media(max-width:760px){
+      main{padding:2.5rem 0}
+      .intro{min-height:auto;grid-template-columns:1fr}
+      .hero-icon{position:absolute;right:-28px;bottom:-42px;width:145px;height:145px;opacity:.24}
+      .intro p{max-width:83%}
+    }
+
+    @media(max-width:520px){
+      .nav{min-height:auto;align-items:flex-start;flex-direction:column;padding:1rem 0;gap:.45rem}
+      .back{font-size:.92rem}
+      main{width:min(100% - 1.25rem,1000px);padding:1.4rem 0 2rem}
+      .shell{padding:.55rem;border-radius:18px}
+      .intro{padding:1.65rem 1.35rem;border-radius:13px}
+      .intro p{max-width:100%;font-size:.98rem}
+      .hero-icon{display:none}
+      .notice,.legal-card,.form-card{border-radius:13px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="logo" href="/">Paschen<span>-Energie</span></a>
+      <a class="back" href="/"><span aria-hidden="true">←</span> Zurück zur Startseite</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="shell">
+      <section class="intro" aria-labelledby="seitentitel">
+        <div>
+          <span class="eyebrow">Rechtliches</span>
+          <h1 id="seitentitel">Widerrufsbelehrung</h1>
+          <p>Informationen zum gesetzlichen Widerrufsrecht bei entgeltlichen Beratungsverträgen mit Verbraucherinnen und Verbrauchern.</p>
+        </div>
+        <div class="hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none">
+            <path d="M31 35V18h17" stroke="#D09A2D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M33 20c-12 9-20 23-20 39 0 26 21 47 47 47 17 0 32-9 40-22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+            <path d="M89 85v17H72" stroke="#D09A2D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M87 100c12-9 20-23 20-39 0-26-21-47-47-47-17 0-32 9-40 22" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </section>
+
+      <aside class="notice" aria-label="Hinweis zum Geltungsbereich">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 10v6M12 7h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p><strong>Hinweis:</strong> Die kostenlose Tarif-Anfrage über den Konfigurator ist unverbindlich und begründet noch keinen entgeltlichen Beratungsvertrag. Diese Belehrung gilt, wenn anschließend mit einem Verbraucher ein entgeltlicher Beratungsvertrag im Fernabsatz oder außerhalb von Geschäftsräumen geschlossen wird.</p>
+      </aside>
+
+      <section class="legal-card" aria-labelledby="belehrung">
+        <h2 id="belehrung">Widerrufsbelehrung</h2>
+
+        <h3>Widerrufsrecht</h3>
+        <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+        <p>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.</p>
+        <p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</p>
+
+        <div class="contact-box">
+          <address>
+            <strong>Stefanos Paschen Vertrieb &amp; Energie</strong><br>
+            Inhaber: Stefanos Paschen<br>
+            Nikolaus-Becker-Straße 33<br>
+            52511 Geilenkirchen<br>
+            Deutschland<br>
+            Telefon: <a href="tel:+4917616818944">+49 176 16818944</a><br>
+            E-Mail: <a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a>
+          </address>
+        </div>
+
+        <p>mittels einer eindeutigen Erklärung (z.&nbsp;B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das unten bereitgestellte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+        <p>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
+
+        <h3>Folgen des Widerrufs</h3>
+        <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</p>
+        <p>Haben Sie verlangt, dass die Dienstleistungen während der Widerrufsfrist beginnen sollen, so haben Sie uns einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie uns von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.</p>
+
+        <h3>Vorzeitiges Erlöschen des Widerrufsrechts</h3>
+        <p>Bei einem entgeltlichen Dienstleistungsvertrag erlischt das Widerrufsrecht mit vollständiger Erbringung der Dienstleistung, wenn Sie vor Beginn der Leistung ausdrücklich zugestimmt haben, dass wir mit der Erbringung der Dienstleistung vor Ablauf der Widerrufsfrist beginnen, und Sie zugleich bestätigt haben, dass Ihnen bekannt ist, dass Sie Ihr Widerrufsrecht mit vollständiger Vertragserfüllung durch uns verlieren.</p>
+      </section>
+
+      <section class="form-card" aria-labelledby="musterformular">
+        <h2 id="musterformular">Muster-Widerrufsformular</h2>
+        <p class="sub">Wenn Sie den Vertrag widerrufen wollen, können Sie dieses Formular ausfüllen und an uns zurücksenden.</p>
+
+        <div class="form-address">
+          <strong>An:</strong><br>
+          Stefanos Paschen Vertrieb &amp; Energie<br>
+          Inhaber: Stefanos Paschen<br>
+          Nikolaus-Becker-Straße 33<br>
+          52511 Geilenkirchen<br>
+          Deutschland<br>
+          E-Mail: <a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a>
+        </div>
+
+        <p>Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*) / die Erbringung der folgenden Dienstleistung (*):</p>
+
+        <div class="form-lines" aria-label="Felder des Muster-Widerrufsformulars">
+          <div class="form-line"><strong>Waren / Dienstleistung:</strong></div>
+          <div class="form-line"><strong>Bestellt am (*) / erhalten am (*):</strong></div>
+          <div class="form-line"><strong>Name des/der Verbraucher(s):</strong></div>
+          <div class="form-line"><strong>Anschrift des/der Verbraucher(s):</strong></div>
+          <div class="form-line"><strong>Datum:</strong></div>
+          <div class="form-line"><strong>Unterschrift des/der Verbraucher(s):</strong> <span>(nur bei Mitteilung auf Papier)</span></div>
+        </div>
+
+        <p><small>(*) Unzutreffendes streichen.</small></p>
+        <a class="mail-action" href="mailto:info@paschenenergie.de?subject=Widerruf%20meines%20Beratungsvertrags&amp;body=Hiermit%20widerrufe%20ich%20den%20von%20mir%20abgeschlossenen%20Vertrag%20%C3%BCber%20die%20folgende%20Dienstleistung%3A%0A%0ADienstleistung%3A%0ABestellt%20am%3A%0AName%3A%0AAnschrift%3A%0A%0ADatum%3A">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18v12H3V6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Widerruf per E-Mail vorbereiten
+        </a>
+      </section>
+
+      <p class="source-note">Stand: September 2026 · Grundlage: gesetzliches Muster gemäß Anlage 1 und Muster-Widerrufsformular gemäß Anlage 2 zu Artikel 246a EGBGB.</p>
+    </article>
+  </main>
+
+  <footer>
+    <nav class="footer-links" aria-label="Rechtliche Hinweise">
+      <a href="/">Startseite</a>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutzerklärung</a>
+      <a href="/widerruf.html" aria-current="page">Widerrufsbelehrung</a>
+    </nav>
+    Paschen-Energie <span class="footer-mark" aria-hidden="true"></span> Unabhängige Energieberatung
+  </footer>
+</body>
+</html>
