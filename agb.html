@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Allgemeine Geschäftsbedingungen | Paschen-Energie</title>
+  <meta name="description" content="Allgemeine Geschäftsbedingungen von Paschen-Energie für die kostenfreie Beratung und Vermittlung von Strom- und Gasverträgen.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://paschenenergie.de/agb">
+  <link rel="stylesheet" href="assets/fonts.css">
+  <style>
+    :root{
+      --navy:#123C63;
+      --navy-deep:#081F35;
+      --navy-soft:#1C527E;
+      --gold:#D09A2D;
+      --gold-light:#F8E9C5;
+      --cream:#FFF9EE;
+      --sky:#EAF2F8;
+      --white:#FFFFFF;
+      --text:#1B2B3A;
+      --muted:#5A6B7D;
+      --line:#D4E0E9;
+    }
+
+    *{box-sizing:border-box}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 8% 14%,rgba(208,154,45,.18),transparent 28rem),
+        radial-gradient(circle at 94% 17%,rgba(18,60,99,.16),transparent 31rem),
+        linear-gradient(145deg,#EAF2F8 0%,#F8FBFD 52%,#FFF8E9 100%);
+      font-family:"Source Sans 3","Segoe UI",Arial,sans-serif;
+      line-height:1.65;
+    }
+
+    a{color:inherit}
+    a:focus-visible{outline:3px solid rgba(208,154,45,.55);outline-offset:4px;border-radius:5px}
+
+    header{
+      position:relative;
+      z-index:5;
+      background:rgba(255,255,255,.94);
+      border-bottom:1px solid rgba(18,60,99,.15);
+      box-shadow:0 5px 22px rgba(8,31,53,.05);
+    }
+
+    header::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-1px;
+      width:clamp(90px,18vw,280px);
+      height:3px;
+      background:var(--gold);
+    }
+
+    .nav{
+      width:min(1120px,calc(100% - 2.5rem));
+      min-height:76px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1.5rem;
+    }
+
+    .logo{
+      color:var(--navy);
+      font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+      font-size:1.34rem;
+      font-weight:700;
+      letter-spacing:.01em;
+      text-decoration:none;
+    }
+
+    .logo span{color:var(--gold)}
+    .back{display:inline-flex;align-items:center;gap:.5rem;color:var(--navy);font-weight:700;text-decoration:none;transition:color .2s,transform .2s}
+    .back:hover{color:#9A6A0D;transform:translateX(-2px)}
+
+    main{width:min(1000px,calc(100% - 2.5rem));margin:0 auto;padding:4.5rem 0}
+    .shell{padding:clamp(.75rem,2vw,1.15rem);background:rgba(255,255,255,.9);border:1px solid rgba(18,60,99,.18);border-top:5px solid var(--gold);border-radius:24px;box-shadow:0 28px 75px rgba(8,31,53,.16),0 3px 12px rgba(8,31,53,.05)}
+
+    .intro{
+      position:relative;
+      overflow:hidden;
+      min-height:240px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 200px;
+      align-items:center;
+      gap:2rem;
+      padding:clamp(2rem,5vw,3.35rem);
+      color:var(--white);
+      background:radial-gradient(circle at 86% 20%,rgba(255,255,255,.10),transparent 15rem),linear-gradient(135deg,var(--navy-deep),var(--navy) 62%,var(--navy-soft));
+      border-radius:17px;
+    }
+
+    .intro::after{content:"";position:absolute;width:330px;height:330px;right:-165px;top:-190px;border:1px solid rgba(255,255,255,.10);border-radius:50%}
+    .eyebrow{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:1rem;padding:.4rem .85rem;color:#FFF3D8;background:rgba(208,154,45,.20);border:1px solid rgba(248,233,197,.25);border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:7px;height:7px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 4px rgba(208,154,45,.15)}
+    h1,h2,h3{font-family:"Source Serif 4",Georgia,"Times New Roman",serif;line-height:1.2}
+    h1{margin:.15rem 0 .8rem;font-size:clamp(2.35rem,6vw,3.75rem);letter-spacing:-.025em}
+    .intro p{max-width:630px;margin:0;color:#DDE9F2;font-size:1.05rem}
+    .hero-icon{position:relative;z-index:1;width:166px;height:166px;display:grid;place-items:center;justify-self:end;color:var(--white);background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:inset 0 0 0 12px rgba(255,255,255,.025),0 20px 45px rgba(0,0,0,.15)}
+    .hero-icon svg{width:96px;height:96px}
+
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:1rem 0}
+    .fact{padding:1rem 1.1rem;background:var(--gold-light);border:1px solid #E7CC8D;border-radius:14px;color:var(--navy-deep)}
+    .fact strong{display:block;color:var(--navy);font-size:.95rem}
+    .fact span{display:block;margin-top:.2rem;font-size:.88rem;line-height:1.45}
+
+    .toc{margin-top:1rem;padding:1.35rem 1.5rem;background:var(--sky);border:1px solid var(--line);border-radius:15px}
+    .toc strong{color:var(--navy)}
+    .toc ol{columns:2;gap:2.2rem;margin:.75rem 0 0;padding-left:1.25rem}
+    .toc li{break-inside:avoid;margin:.22rem 0}
+    .toc a{color:var(--navy);text-underline-offset:3px}
+
+    .legal-card{margin-top:1rem;padding:clamp(1.5rem,4vw,2.6rem);background:var(--white);border:1px solid var(--line);border-radius:17px}
+    .legal-card h2{margin:0 0 1rem;color:var(--navy);font-size:clamp(1.4rem,3vw,1.85rem)}
+    .legal-card h3{margin:1.55rem 0 .55rem;color:var(--navy-deep);font-size:1.18rem}
+    .legal-card p{margin:.72rem 0}
+    .legal-card ol,.legal-card ul{margin:.72rem 0;padding-left:1.35rem}
+    .legal-card li{margin:.45rem 0}
+    .contact-box{margin:1rem 0;padding:1.15rem 1.25rem;background:var(--sky);border-left:4px solid var(--gold);border-radius:0 12px 12px 0}
+    .contact-box address{font-style:normal}
+    .contact-box a,.legal-card a{color:var(--navy);font-weight:700;text-decoration-thickness:1px;text-underline-offset:3px}
+    .note{margin:1rem 0;padding:1rem 1.15rem;background:var(--cream);border:1px solid #EBD9AE;border-radius:12px}
+    .status{margin:1rem .35rem .2rem;color:var(--muted);font-size:.84rem}
+
+    footer{margin-top:auto;padding:1.45rem;color:#BFD0DE;background:var(--navy-deep);border-top:3px solid var(--gold);text-align:center;font-size:.86rem}
+    .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem 1.3rem;margin-bottom:.55rem}
+    .footer-links a{color:#EFF5FA;font-weight:700;text-decoration:none}
+    .footer-links a:hover{text-decoration:underline;text-underline-offset:3px}
+    .footer-mark{display:inline-block;width:6px;height:6px;margin:0 .45rem .1rem;background:var(--gold);border-radius:50%}
+
+    @media(max-width:760px){
+      main{padding:2.5rem 0}
+      .intro{min-height:auto;grid-template-columns:1fr}
+      .hero-icon{position:absolute;right:-28px;bottom:-42px;width:145px;height:145px;opacity:.24}
+      .intro p{max-width:83%}
+      .facts{grid-template-columns:1fr}
+      .toc ol{columns:1}
+    }
+
+    @media(max-width:520px){
+      .nav{min-height:auto;align-items:flex-start;flex-direction:column;padding:1rem 0;gap:.45rem}
+      .back{font-size:.92rem}
+      main{width:min(100% - 1.25rem,1000px);padding:1.4rem 0 2rem}
+      .shell{padding:.55rem;border-radius:18px}
+      .intro{padding:1.65rem 1.35rem;border-radius:13px}
+      .intro p{max-width:100%;font-size:.98rem}
+      .hero-icon{display:none}
+      .legal-card,.toc{border-radius:13px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="logo" href="/">Paschen<span>-Energie</span></a>
+      <a class="back" href="/"><span aria-hidden="true">←</span> Zurück zur Startseite</a>
+    </nav>
+  </header>
+
+  <main>
+    <article class="shell">
+      <section class="intro" aria-labelledby="seitentitel">
+        <div>
+          <span class="eyebrow">Rechtliches</span>
+          <h1 id="seitentitel">Allgemeine Geschäftsbedingungen</h1>
+          <p>AGB für die kostenfreie Beratung und Vermittlung von Strom- und Gaslieferverträgen durch Paschen-Energie.</p>
+        </div>
+        <div class="hero-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none">
+            <path d="M30 14h43l19 19v73H30c-5 0-8-3-8-8V22c0-5 3-8 8-8Z" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/>
+            <path d="M73 14v20h19M39 52h37M39 67h37M39 82h24" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="m74 78 7 7 15-17" stroke="#D09A2D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </section>
+
+      <div class="facts" aria-label="Wichtige Hinweise">
+        <div class="fact"><strong>Für Kunden kostenfrei</strong><span>Paschen-Energie berechnet Kunden kein Beratungs- oder Vermittlungshonorar.</span></div>
+        <div class="fact"><strong>Anbieterfinanziert</strong><span>Bei erfolgreicher Vermittlung kann Paschen-Energie eine Provision vom vermittelten Energieversorger erhalten.</span></div>
+        <div class="fact"><strong>Begrenzte Auswahl</strong><span>Berücksichtigt werden ausgewählte Partneranbieter und Vermittlungsplattformen, nicht der gesamte Markt.</span></div>
+      </div>
+
+      <nav class="toc" aria-label="Inhaltsverzeichnis">
+        <strong>Inhalt</strong>
+        <ol>
+          <li><a href="#anbieter">Anbieter und Geltungsbereich</a></li>
+          <li><a href="#vertrag">Anfrage und Vertragsschluss</a></li>
+          <li><a href="#leistung">Leistungsumfang</a></li>
+          <li><a href="#verguetung">Kosten und Provision</a></li>
+          <li><a href="#pflichten">Mitwirkung der Kunden</a></li>
+          <li><a href="#energievertrag">Energievertrag</a></li>
+          <li><a href="#prognosen">Tarifangaben und Prognosen</a></li>
+          <li><a href="#widerruf">Widerruf und Beendigung</a></li>
+          <li><a href="#erinnerung">Erinnerungsservice</a></li>
+          <li><a href="#haftung">Haftung</a></li>
+          <li><a href="#datenschutz">Datenschutz</a></li>
+          <li><a href="#streitbeilegung">Streitbeilegung</a></li>
+          <li><a href="#schluss">Schlussbestimmungen</a></li>
+        </ol>
+      </nav>
+
+      <section class="legal-card" id="anbieter">
+        <h2>1. Anbieter und Geltungsbereich</h2>
+        <p>Diese Allgemeinen Geschäftsbedingungen gelten für Beratungs- und Vermittlungsleistungen von:</p>
+        <div class="contact-box">
+          <address>
+            <strong>Stefanos Paschen Vertrieb &amp; Energie</strong><br>
+            Inhaber: Stefanos Paschen<br>
+            Nikolaus-Becker-Straße 33<br>
+            52511 Geilenkirchen<br>
+            Deutschland<br>
+            Telefon: <a href="tel:+4917616818944">+49 176 16818944</a><br>
+            E-Mail: <a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a>
+          </address>
+        </div>
+        <p>– nachfolgend „Paschen-Energie“ – gegenüber Verbrauchern und Unternehmern, gemeinsam nachfolgend „Kunden“ genannt.</p>
+        <p>Verbraucher ist jede natürliche Person, die den Vertrag überwiegend zu Zwecken abschließt, die weder ihrer gewerblichen noch ihrer selbstständigen beruflichen Tätigkeit zugerechnet werden können. Unternehmer ist eine natürliche oder juristische Person oder eine rechtsfähige Personengesellschaft, die bei Vertragsschluss in Ausübung ihrer gewerblichen oder selbstständigen beruflichen Tätigkeit handelt.</p>
+        <p>Für den späteren Strom- oder Gasliefervertrag gelten ausschließlich die Vertragsbedingungen und Pflichtinformationen des ausgewählten Energieanbieters. Paschen-Energie wird nicht selbst Energieversorger und nicht Partei des Liefervertrags.</p>
+      </section>
+
+      <section class="legal-card" id="vertrag">
+        <h2>2. Unverbindliche Anfrage und Vertragsschluss</h2>
+        <ol>
+          <li>Das Absenden des Tarif-Konfigurators, eine telefonische Kontaktaufnahme oder eine sonstige erste Anfrage ist kostenfrei und unverbindlich. Dadurch kommt weder ein Vermittlungsvertrag noch ein Strom- oder Gasliefervertrag zustande.</li>
+          <li>Paschen-Energie nimmt nach der Anfrage persönlich Kontakt auf und stellt dem Kunden Informationen zu einem oder mehreren in Betracht kommenden Tarifen ausgewählter Partneranbieter oder Plattformen zur Verfügung.</li>
+          <li>Ein Vermittlungsvertrag kommt erst zustande, wenn der Kunde Paschen-Energie nach Erhalt der erforderlichen Informationen per E-Mail ausdrücklich mit der Vermittlung eines konkret bezeichneten Tarifs beauftragt und Paschen-Energie diesen Auftrag per E-Mail bestätigt.</li>
+          <li>Vor der Beauftragung erhält der Kunde diese AGB und – soweit er Verbraucher ist – die Widerrufsbelehrung in einer Form, die gespeichert werden kann. Paschen-Energie bestätigt den Vertragsinhalt per E-Mail.</li>
+          <li>Auf ausdrücklichen Wunsch des Kunden darf Paschen-Energie bereits vor Ablauf einer etwaigen Widerrufsfrist mit der Vermittlungsleistung beginnen.</li>
+        </ol>
+      </section>
+
+      <section class="legal-card" id="leistung">
+        <h2>3. Leistungsumfang von Paschen-Energie</h2>
+        <p>Paschen-Energie unterstützt den Kunden nach Maßgabe des jeweiligen Vermittlungsauftrags insbesondere durch:</p>
+        <ul>
+          <li>die persönliche Auswertung der vom Kunden bereitgestellten Verbrauchs-, Vertrags- und Kontaktdaten,</li>
+          <li>die Auswahl und Erläuterung geeigneter Angebote aus dem verfügbaren Kreis ausgewählter Partneranbieter und Vermittlungsplattformen,</li>
+          <li>die Übermittlung der für den gewünschten Vertragsschluss erforderlichen Angaben an den vom Kunden bestätigten Empfänger und</li>
+          <li>die Unterstützung bei Rückfragen zum eingeleiteten Anbieterwechsel.</li>
+        </ul>
+        <p>Die Leistung umfasst keinen vollständigen Vergleich sämtlicher am Markt verfügbarer Anbieter und Tarife. Paschen-Energie ist nicht verpflichtet, Angebote von Unternehmen zu berücksichtigen, mit denen keine Vermittlungsmöglichkeit besteht.</p>
+        <p>Paschen-Energie schuldet eine sorgfältige Vermittlungstätigkeit, nicht jedoch den Abschluss eines Energievertrags, eine bestimmte Ersparnis, einen bestimmten Lieferbeginn oder die dauerhafte Verfügbarkeit eines Tarifs.</p>
+        <p>Eine Rechts-, Steuer- oder Schuldnerberatung ist nicht Gegenstand der Leistung.</p>
+      </section>
+
+      <section class="legal-card" id="verguetung">
+        <h2>4. Kostenfreiheit für Kunden und Anbieterprovision</h2>
+        <p>Die Beratungs- und Vermittlungsleistung von Paschen-Energie ist für den Kunden kostenfrei. Der Kunde schuldet Paschen-Energie weder ein Honorar noch eine sonstige gesonderte Vergütung.</p>
+        <p>Kommt infolge der Vermittlung ein Vertrag zustande, kann Paschen-Energie ausschließlich vom vermittelten Energieversorger eine Provision erhalten. Diese Vergütung begründet keine Zahlungspflicht des Kunden gegenüber Paschen-Energie.</p>
+        <div class="note"><strong>Transparenzhinweis:</strong> Paschen-Energie hat aufgrund der möglichen Provision ein wirtschaftliches Interesse an einer erfolgreichen Vermittlung. Die Tarifauswahl ist auf die verfügbaren Angebote ausgewählter Partneranbieter und Plattformen beschränkt.</div>
+        <p>Die Kosten, Preise, Abschläge, Boni und sonstigen Konditionen des Energievertrags ergeben sich ausschließlich aus den vor Vertragsschluss bereitgestellten Tarif- und Vertragsunterlagen des Energieanbieters.</p>
+      </section>
+
+      <section class="legal-card" id="pflichten">
+        <h2>5. Mitwirkungspflichten des Kunden</h2>
+        <p>Der Kunde stellt alle für Prüfung und Vermittlung erforderlichen Angaben vollständig, richtig und aktuell bereit. Dazu können insbesondere Name, Anschrift, Lieferstelle, Zählernummer, Verbrauchsdaten, bisheriger Anbieter, Vertragslaufzeit und – falls für den Energievertrag erforderlich – Zahlungsdaten gehören.</p>
+        <p>Der Kunde prüft die ihm vorgelegten Tarifdaten, Preise, Laufzeiten, Kündigungsfristen, Preisgarantien, Bonusbedingungen und persönlichen Angaben vor seiner Bestätigung. Er teilt erkennbare Fehler oder zwischenzeitliche Änderungen unverzüglich mit.</p>
+        <p>Beauftragt der Kunde Paschen-Energie für eine andere Person oder Lieferstelle, versichert er, hierzu berechtigt zu sein. Soweit für die Vermittlung oder Kündigung des bisherigen Vertrags eine Vollmacht erforderlich ist, wird diese gesondert erteilt. Paschen-Energie darf eine Vollmacht nur im erteilten Umfang verwenden.</p>
+      </section>
+
+      <section class="legal-card" id="energievertrag">
+        <h2>6. Vermittlung und gesonderter Energievertrag</h2>
+        <p>Nach ausdrücklicher Bestätigung des Kunden übermittelt Paschen-Energie die notwendigen Daten an den ausgewählten Energieanbieter oder die konkret benannte Vermittlungsplattform. Einzelheiten zur Datenverarbeitung ergeben sich aus der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
+        <p>Über Annahme oder Ablehnung des Antrags entscheidet allein der Energieanbieter. Lehnt der Anbieter den Antrag ab, ist der Tarif nicht mehr verfügbar oder kommt aus einem anderen Grund kein Liefervertrag zustande, schuldet Paschen-Energie keinen Ersatzvertrag und keine bestimmte Alternative. Für den Kunden entstehen gegenüber Paschen-Energie keine Kosten. Die Daten werden nach Maßgabe der Datenschutzerklärung gelöscht, sobald sie nicht mehr benötigt werden und keine gesetzlichen Aufbewahrungspflichten oder berechtigten Nachweisinteressen entgegenstehen.</p>
+        <p>Der Energieanbieter ist allein verantwortlich für Energielieferung, Abrechnung, Abschläge, Boni, Preisänderungen, Preisgarantien, Vertragslaufzeit, Kündigung und Kundenservice. Der Kunde prüft die Vertragsbestätigung des Anbieters unverzüglich und meldet Abweichungen direkt dem Anbieter sowie möglichst auch Paschen-Energie.</p>
+        <p>Erklärungen gegenüber Paschen-Energie wirken nicht automatisch gegenüber dem Energieanbieter. Insbesondere müssen Widerruf, Kündigung oder Änderungen des Energievertrags grundsätzlich an den in den Vertragsunterlagen genannten Energieanbieter gerichtet werden, sofern keine gesonderte Empfangs- oder Vertretungsvollmacht besteht.</p>
+      </section>
+
+      <section class="legal-card" id="prognosen">
+        <h2>7. Tarifangaben, Berechnungen und Prognosen</h2>
+        <p>Berechnungen und Einschätzungen zum Sparpotenzial beruhen auf den Angaben des Kunden, den zum Prüfzeitpunkt verfügbaren Tarifinformationen und gegebenenfalls typisierten Annahmen. Sie sind unverbindliche Prognosen.</p>
+        <p>Die tatsächlichen Gesamtkosten und eine mögliche Ersparnis können insbesondere durch Verbrauchsabweichungen, Preisänderungen, Steuern, Abgaben, Netzentgelte, Bonusbedingungen, Vertragsbeginn oder den Wegfall einzelner Tarifbestandteile abweichen. Eine bestimmte Ersparnis wird nicht garantiert.</p>
+        <p>Maßgeblich sind ausschließlich die vollständigen Vertragsunterlagen und die Vertragsbestätigung des Energieanbieters.</p>
+      </section>
+
+      <section class="legal-card" id="widerruf">
+        <h2>8. Widerruf und Beendigung des Vermittlungsauftrags</h2>
+        <p>Verbrauchern räumt Paschen-Energie bei einem im Fernabsatz geschlossenen Vermittlungsvertrag ein vierzehntägiges Widerrufsrecht nach Maßgabe der gesonderten <a href="/widerruf.html">Widerrufsbelehrung</a> ein.</p>
+        <p>Der Kunde kann den unentgeltlichen Vermittlungsauftrag außerdem jederzeit für die Zukunft beenden. Bereits an einen Energieanbieter übermittelte Erklärungen oder ein bereits geschlossener Energievertrag werden dadurch nicht automatisch widerrufen oder beendet.</p>
+        <p>Der Vermittlungsauftrag endet im Übrigen, sobald der beauftragte Vermittlungsvorgang abgeschlossen, endgültig abgelehnt oder nach Abstimmung mit dem Kunden eingestellt wurde.</p>
+      </section>
+
+      <section class="legal-card" id="erinnerung">
+        <h2>9. Freiwilliger Erinnerungsservice</h2>
+        <p>Paschen-Energie kann dem Kunden als freiwillige und kostenfreie Zusatzleistung anbieten, ihn vor dem voraussichtlichen Ende einer Vertragslaufzeit, Preisgarantie oder Kündigungsfrist per E-Mail oder Telefon zu kontaktieren. Eine solche Kontaktaufnahme erfolgt nur, wenn der Kunde sie gesondert gewünscht beziehungsweise – soweit erforderlich – ausdrücklich eingewilligt hat.</p>
+        <p>Der Kunde kann den Erinnerungsservice und eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, beispielsweise per E-Mail an <a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a>.</p>
+        <p>Der Erinnerungsservice begründet keine Pflicht zur laufenden Markt- oder Vertragsüberwachung. Paschen-Energie übernimmt keine Garantie für den rechtzeitigen Zugang einer Erinnerung. Der Kunde bleibt selbst dafür verantwortlich, Vertragslaufzeiten, Preisgarantien und Kündigungsfristen zu prüfen und erforderliche Erklärungen rechtzeitig abzugeben.</p>
+      </section>
+
+      <section class="legal-card" id="haftung">
+        <h2>10. Haftung</h2>
+        <p>Paschen-Energie haftet unbeschränkt für Schäden, die vorsätzlich oder grob fahrlässig verursacht wurden, für Schäden aus der Verletzung von Leben, Körper oder Gesundheit, nach dem Produkthaftungsgesetz sowie im Umfang einer ausdrücklich übernommenen Garantie.</p>
+        <p>Bei leicht fahrlässiger Verletzung einer wesentlichen Vertragspflicht ist die Haftung auf den bei Vertragsschluss vorhersehbaren, vertragstypischen Schaden begrenzt. Wesentliche Vertragspflichten sind Pflichten, deren Erfüllung die ordnungsgemäße Durchführung des Vermittlungsvertrags überhaupt erst ermöglicht und auf deren Einhaltung der Kunde regelmäßig vertrauen darf. Im Übrigen ist die Haftung für leicht fahrlässig verursachte Schäden ausgeschlossen.</p>
+        <p>Die vorstehenden Haftungsregelungen gelten auch zugunsten der gesetzlichen Vertreter und Erfüllungsgehilfen von Paschen-Energie.</p>
+        <p>Paschen-Energie haftet nicht für die eigenständige Entscheidung eines Energieanbieters, einen Antrag anzunehmen oder abzulehnen, und nicht für Pflichtverletzungen des Energieanbieters aus dem gesonderten Liefervertrag. Eine Haftung von Paschen-Energie für eigenes Verschulden bleibt hiervon unberührt.</p>
+      </section>
+
+      <section class="legal-card" id="datenschutz">
+        <h2>11. Datenschutz und Kommunikation</h2>
+        <p>Personenbezogene Daten werden nach Maßgabe der <a href="/datenschutz.html">Datenschutzerklärung</a> verarbeitet. Eine Übermittlung von Vertragsdaten an einen Anbieter oder eine Plattform erfolgt erst nach persönlicher Abstimmung und ausdrücklichem Vermittlungsauftrag des Kunden.</p>
+        <p>Rechtlich erhebliche Mitteilungen im Zusammenhang mit dem Vermittlungsvertrag können an die im Impressum genannten Kontaktdaten gerichtet werden. Der Kunde hält seine für die Bearbeitung verwendeten Kontaktdaten aktuell.</p>
+      </section>
+
+      <section class="legal-card" id="streitbeilegung">
+        <h2>12. Beschwerden und Verbraucherstreitbeilegung</h2>
+        <p>Beschwerden können an <a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a> oder an die im Impressum genannte Anschrift gerichtet werden.</p>
+        <p>Paschen-Energie ist nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+      </section>
+
+      <section class="legal-card" id="schluss">
+        <h2>13. Schlussbestimmungen</h2>
+        <p>Es gilt das Recht der Bundesrepublik Deutschland. Bei Verbrauchern gilt diese Rechtswahl nur, soweit ihnen dadurch nicht der Schutz zwingender Bestimmungen des Staates ihres gewöhnlichen Aufenthalts entzogen wird.</p>
+        <p>Ist der Kunde Kaufmann, eine juristische Person des öffentlichen Rechts oder ein öffentlich-rechtliches Sondervermögen, ist – soweit gesetzlich zulässig – Geilenkirchen ausschließlicher Gerichtsstand. Für Verbraucher gelten die gesetzlichen Gerichtsstände.</p>
+        <p>Sollte eine Bestimmung dieser AGB ganz oder teilweise unwirksam sein oder werden, bleiben die übrigen Bestimmungen unberührt. An die Stelle der unwirksamen Bestimmung tritt die gesetzliche Regelung.</p>
+        <p>Änderungen dieser AGB gelten nur für künftig geschlossene Vermittlungsverträge, sofern sie nicht mit dem Kunden ausdrücklich vereinbart werden.</p>
+      </section>
+
+      <p class="status"><strong>Stand: 9. September 2026</strong></p>
+    </article>
+  </main>
+
+  <footer>
+    <nav class="footer-links" aria-label="Rechtliche Hinweise">
+      <a href="/">Startseite</a>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutzerklärung</a>
+      <a href="/widerruf.html">Widerrufsbelehrung</a>
+      <a href="/agb.html" aria-current="page">AGB</a>
+    </nav>
+    Paschen-Energie <span class="footer-mark" aria-hidden="true"></span> Persönliche Energieberatung
+  </footer>
+</body>
+</html>
