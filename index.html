@@ -7,6 +7,8 @@
 <meta name="description" content="Persönliche Tarifberatung für Strom und Gas. Kostenfreie Analyse ausgewählter Partnerangebote und Unterstützung beim Anbieterwechsel.">
 <link rel="preload" as="image" href="assets/tarifkompass-hero-eigenheim-paar.webp" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="/assets/cookie-consent.css">
+<script defer src="/assets/cookie-consent.js"></script>
 <style>
 :root{
   --navy:#123C63; --navy-dunkel:#0C2A47; --navy-hell:#EEF3F8; --himmel:#DCE7F1;
@@ -415,6 +417,10 @@ section h2{max-width:30ch}
           <input type="hidden" name="subject" value="Neue Tarif-Anfrage über paschenenergie.de">
           <input type="hidden" id="k-verbrauch-berechnet" name="verbrauch_berechnet" value="">
           <input type="hidden" id="k-sparpotenzial" name="sparpotenzial" value="">
+          <input type="hidden" name="vorgangs_id" value="">
+          <input type="hidden" name="lead_id" value="">
+          <input type="hidden" name="erstkontakt_zeitpunkt" value="">
+          <input type="hidden" name="cookie_einwilligung" value="Keine Entscheidung">
           <p hidden aria-hidden="true"><label>Dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off" tabindex="-1"></label></p>
 
           <!-- Schritt 1: Sparte & Objekt -->
@@ -780,7 +786,7 @@ section h2{max-width:30ch}
   <div class="wrap">
     <div class="footer-grid">
       <div><h4>Paschen-Energie, Persönliche Energieberatung</h4><p>Stefanos Paschen Vertrieb &amp; Energie<br>Inhaber: Stefanos Paschen<br>Nikolaus-Becker-Straße 33<br>52511 Geilenkirchen<br>Deutschland</p></div>
-      <div><h4>Rechtliches</h4><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/widerruf.html">Widerrufsbelehrung</a><a href="/agb.html">AGB</a></div>
+      <div><h4>Rechtliches</h4><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/widerruf.html">Widerrufsbelehrung</a><a href="/agb.html">AGB</a><button class="pe-cookie-settings" type="button" data-pe-cookie-settings>Cookie-Einstellungen</button></div>
       <div><h4>Kontakt</h4><a href="tel:+4917616818944">0176 16818944</a><a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a><a href="#kontakt">Erreichbarkeit &amp; Rückruf</a></div>
     </div>
     <div class="footer-legal">
@@ -969,6 +975,10 @@ section h2{max-width:30ch}
     e.preventDefault();
     if(submitting || !check(3)) return;
 
+    if(window.PaschenCookieConsent){
+      window.PaschenCookieConsent.syncLeadFields(form);
+      window.PaschenCookieConsent.ensureRequestId(form);
+    }
     ergebnis();
     submitting = true;
     setErr('err4','');

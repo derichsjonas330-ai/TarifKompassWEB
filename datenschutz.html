@@ -8,6 +8,8 @@
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://paschenenergie.de/datenschutz">
   <link rel="stylesheet" href="assets/fonts.css">
+  <link rel="stylesheet" href="/assets/cookie-consent.css">
+  <script defer src="/assets/cookie-consent.js"></script>
   <style>
     :root{
       --navy:#123C63;
@@ -299,7 +301,7 @@
           <li><a href="#beratung">Persönliche Beratung</a></li>
           <li><a href="#empfaenger">Empfänger und Drittland</a></li>
           <li><a href="#speicherdauer">Speicherdauer</a></li>
-          <li><a href="#cookies">Cookies und externe Dienste</a></li>
+          <li><a href="#cookies">Cookies und Lead-Zuordnung</a></li>
           <li><a href="#rechte">Ihre Rechte</a></li>
           <li><a href="#pflichtangaben">Pflichtangaben und Entscheidungen</a></li>
           <li><a href="#sicherheit">Sicherheit und Aktualität</a></li>
@@ -338,6 +340,7 @@
               <tr><th>Tarif- und Objektdaten</th><td>Energieart (Strom, Gas oder Heizstrom), Objektart, Postleitzahl, Haushaltsgröße, optional Jahresverbrauch, derzeitige Vertragssituation, optional aktueller Anbieter und Angabe zu einer Preiserhöhung</td></tr>
               <tr><th>Kontaktdaten</th><td>Name sowie mindestens eine Telefonnummer oder E-Mail-Adresse; optional gewünschte Rückrufzeit</td></tr>
               <tr><th>Berechnungsdaten</th><td>Aus den Eingaben ermittelter Verbrauchswert und unverbindliche Schätzung des Sparpotenzials</td></tr>
+              <tr><th>Vorgangs- und Zuordnungsdaten</th><td>Eine bei Absendung erzeugte eindeutige Vorgangs-ID sowie – nur nach Ihrer vorherigen Cookie-Einwilligung – die pseudonyme Lead-ID, der Erstkontaktzeitpunkt und der dokumentierte Einwilligungsstatus</td></tr>
               <tr><th>Technische Daten</th><td>Zeitpunkt der Übermittlung und die für Übertragung, Sicherheit und Spam-Schutz erforderlichen technischen Verbindungsdaten</td></tr>
             </tbody>
           </table>
@@ -381,6 +384,7 @@
           </ul>
           <p>Eine solche Übermittlung erfolgt erst nach der persönlichen Beratung und Ihrem ausdrücklichen Auftrag. Vor einer Übermittlung informieren wir Sie über den konkret vorgesehenen Empfänger. Der jeweilige Anbieter oder die Plattform verarbeitet die übermittelten Daten anschließend gegebenenfalls in eigener datenschutzrechtlicher Verantwortlichkeit; in diesem Fall gelten ergänzend deren Datenschutzhinweise.</p>
           <p>Dienstleister, die Daten ausschließlich in unserem Auftrag verarbeiten, sind insbesondere Netlify und Hostinger. Mit ihnen bestehen Vereinbarungen zur Auftragsverarbeitung, soweit dies gesetzlich erforderlich ist. Zu möglichen Übermittlungen in Drittländer bei diesen Dienstleistern finden Sie nähere Angaben in den Abschnitten 2 und 4.</p>
+          <p>Für die technische Betreuung der Website und die vertraglich vereinbarte Abrechnung von Website-Leads können pseudonyme Lead- beziehungsweise Vorgangs-IDs, Erstkontakt- und Übermittlungszeitpunkte, der Bearbeitungs- oder Vertragsstatus sowie abrechnungsrelevante Provisionsangaben an unseren Website- und Abrechnungspartner übermittelt werden. Direkte Kontaktdaten werden hierfür grundsätzlich nicht offengelegt, soweit sie nicht im Einzelfall rechtlich erforderlich und zulässig sind. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unsere berechtigten Interessen liegen in der ordnungsgemäßen technischen Betreuung, der transparenten Provisionsabrechnung und der Geltendmachung beziehungsweise Verteidigung vertraglicher Ansprüche.</p>
           <p>Eine Weitergabe zu Werbezwecken, ein Verkauf Ihrer Daten oder eine Übermittlung an sonstige, nicht genannte Empfängerkategorien findet nicht statt.</p>
         </section>
 
@@ -396,11 +400,23 @@
         </section>
 
         <section class="legal-card" id="cookies">
-          <h2>8. Cookies, lokale Ressourcen und externe Dienste</h2>
-          <p>Wir setzen auf dieser Website derzeit keine Analyse- oder Marketing-Cookies, keine Tracking-Pixel und keine sonstigen technisch nicht erforderlichen Speicher- oder Ausleseverfahren auf Ihrem Endgerät ein. Ein Cookie-Consent-Banner ist deshalb nach dem gegenwärtigen Funktionsumfang nicht erforderlich. Sollte im Einzelfall eine technisch zwingend notwendige Speicherung oder ein Zugriff auf das Endgerät erfolgen, richtet sich dies nach § 25 Abs. 2 TDDDG.</p>
+          <h2>8. Cookies und pseudonyme Lead-Zuordnung</h2>
+          <p>Beim ersten Besuch zeigen wir Ihnen einen Einwilligungsdialog. Ohne Ihre Zustimmung werden keine optionalen Lead-Cookies gesetzt. Sie können die Website und den Tarif-Konfigurator auch dann uneingeschränkt nutzen, wenn Sie die optionalen Cookies ablehnen.</p>
+          <p>Wenn Sie „Lead-Cookies akzeptieren“ wählen, speichern wir auf Ihrem Endgerät einen zufällig erzeugten pseudonymen Lead-Code sowie den Zeitpunkt des ersten Seitenaufrufs, bei dem Sie die Einwilligung erteilt haben. Diese Angaben ermöglichen uns, wiederkehrende Website-Anfragen demselben pseudonymen Kontakt zuzuordnen und Website-Leads intern nachzuweisen und abzurechnen. Die Daten werden nicht für personalisierte Werbung, ein nutzerübergreifendes Profiling oder eine Weitergabe an Werbenetzwerke verwendet.</p>
+          <table class="data-table">
+            <thead><tr><th scope="col">Cookie</th><th scope="col">Zweck</th><th scope="col">Speicherdauer</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><code>pe_cookie_choice</code></th><td>Speichert Ihre Auswahl, die Version des Einwilligungsdialogs und den Entscheidungszeitpunkt, damit die Abfrage nicht bei jedem Seitenaufruf erneut erscheint.</td><td>6 Monate</td></tr>
+              <tr><th scope="row"><code>pe_lead_id</code></th><td>Zufällige, pseudonyme Lead-ID zur Wiedererkennung von Website-Anfragen auf diesem Browser.</td><td>6 Monate; nur nach Einwilligung</td></tr>
+              <tr><th scope="row"><code>pe_first_contact</code></th><td>Zeitpunkt des ersten Seitenaufrufs innerhalb des Besuchs, bei dem die Einwilligung erteilt wurde.</td><td>6 Monate; nur nach Einwilligung</td></tr>
+            </tbody>
+          </table>
+          <p>Für die Speicherung und das Auslesen der optionalen Lead-Cookies ist Ihre Einwilligung nach <strong>§ 25 Abs. 1 TDDDG</strong> die Rechtsgrundlage. Soweit dabei personenbezogene Daten verarbeitet werden, erfolgt dies auf Grundlage Ihrer Einwilligung nach <strong>Art. 6 Abs. 1 lit. a DSGVO</strong>. Das Cookie <code>pe_cookie_choice</code> ist erforderlich, um Ihre Auswahl umzusetzen und zu dokumentieren; seine Speicherung stützen wir auf § 25 Abs. 2 Nr. 2 TDDDG und die damit verbundene Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse besteht darin, Ihre Entscheidung zu beachten, eine wiederholte Abfrage zu vermeiden und die Einwilligungsverwaltung nachweisen zu können.</p>
+          <p>Bei einer Formularübermittlung werden die optionale Lead-ID, der Erstkontaktzeitpunkt und der Einwilligungsstatus zusammen mit Ihrer Anfrage an Netlify Forms und als E-Mail-Benachrichtigung an unser Hostinger-Postfach übermittelt. Ab diesem Zeitpunkt gelten hierfür ergänzend die in Abschnitt 3 beschriebenen Zwecke, Empfänger und Löschfristen. Unabhängig von Ihrer Cookie-Entscheidung erhält jede tatsächlich abgesendete Anfrage eine eindeutige Vorgangs-ID, damit wir die von Ihnen gewünschte Anfrage bearbeiten und nachweisen können.</p>
+          <p><strong>Widerruf:</strong> Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft über die Schaltfläche „Cookie-Einstellungen“ im Footer widerrufen. Bei Auswahl von „Nur erforderliche Cookies“ werden die optionalen Lead-Cookies sofort gelöscht. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt. Bereits zusammen mit einer Anfrage übermittelte Angaben werden nach den in Abschnitt 7 beschriebenen Fristen gelöscht; Ihre gesetzlichen Betroffenenrechte bleiben unberührt.</p>
           <p>Die auf der Website verwendeten Schrift- und Animationsdateien werden lokal von unserem eigenen Hosting ausgeliefert. Beim bloßen Seitenaufruf wird daher wegen dieser Dateien keine Verbindung zu Google Fonts oder einem externen JavaScript-CDN aufgebaut.</p>
           <p><strong>Nicht eingesetzt werden derzeit insbesondere:</strong> Google Analytics, Google Ads Conversion Tracking, Meta Pixel, Newsletter-Tracking, Trustpilot-Widgets und Calendly-Einbettungen. Diese Erklärung beschreibt ausschließlich den aktuellen Stand. Solche Dienste werden erst nach einer gesonderten datenschutzrechtlichen Prüfung, Anpassung dieser Erklärung und – soweit erforderlich – Einholung Ihrer vorherigen Einwilligung aktiviert.</p>
-          <span class="status">Derzeit kein Analyse- oder Marketingtracking</span>
+          <span class="status">Optionale pseudonyme Lead-Zuordnung – kein Werbe- oder Analyse-Tracking</span>
         </section>
 
         <section class="legal-card" id="rechte">
@@ -440,7 +456,7 @@
           <h2>11. Datensicherheit und Aktualität</h2>
           <p>Die Übertragung dieser Website erfolgt verschlüsselt über HTTPS/TLS. Darüber hinaus treffen wir angemessene technische und organisatorische Maßnahmen, um personenbezogene Daten vor Verlust, Manipulation und unbefugtem Zugriff zu schützen. Ein vollständiger Schutz bei der Datenübertragung im Internet kann technisch jedoch nicht garantiert werden.</p>
           <p>Wir passen diese Datenschutzerklärung an, wenn sich unsere Website, eingesetzte Dienste oder gesetzliche Anforderungen ändern. Maßgeblich ist die jeweils auf dieser Seite veröffentlichte Fassung.</p>
-          <p><strong>Stand: 9. September 2026</strong></p>
+          <p><strong>Stand: 16. September 2026</strong></p>
         </section>
       </article>
     </div>
@@ -453,6 +469,7 @@
       <a href="/datenschutz.html" aria-current="page">Datenschutzerklärung</a>
       <a href="/widerruf.html">Widerrufsbelehrung</a>
       <a href="/agb.html">AGB</a>
+      <button class="pe-cookie-settings" type="button" data-pe-cookie-settings>Cookie-Einstellungen</button>
     </nav>
     <div>Paschen-Energie · Persönliche Energieberatung</div>
   </footer>
