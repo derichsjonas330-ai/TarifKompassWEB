@@ -1,0 +1,62 @@
+/* ── Konfigurator (Hero-Karte) ───────────────────────────────── */
+.konf{background:#fff;border:1px solid var(--linie);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.konf-bar{display:flex;gap:3px}
+.konf-bar i{flex:1;height:6px;background:var(--himmel);transition:background .4s ease}
+.konf-bar i.done{background:var(--navy)}
+.konf-bar i.now{background:linear-gradient(90deg,var(--navy),var(--gold))}
+.konf-body{padding:1.7rem 1.6rem 1.5rem}
+@media(max-width:420px){.konf-body{padding:1.4rem 1.15rem 1.3rem}}
+.konf fieldset{border:0;padding:0;margin:0}
+.konf legend,.konf-q{display:block;width:100%;font-family:var(--fd);font-weight:700;font-size:1.08rem;line-height:1.35;color:var(--navy);text-align:center;text-wrap:balance;margin-bottom:.85rem}
+.konf-kicker{display:block;text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--grau);margin-bottom:1rem}
+.konf-step[hidden]{display:none}
+.konf-note{text-align:center;font-size:.86rem;font-weight:700;color:var(--navy);margin-top:.9rem}
+.konf-sub{text-align:center;font-size:.82rem;color:var(--grau);margin-top:.55rem;line-height:1.5}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:1.5rem}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.5rem;text-align:center;background:#FBFCFE;border:1.5px solid var(--linie);border-radius:10px;padding:1rem .45rem .85rem;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.tile:hover{border-color:var(--navy);background:#fff}
+.tile input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;white-space:nowrap}
+.tile svg{width:30px;height:30px;color:var(--navy);flex:none}
+.tile .t-lbl{font-size:.87rem;font-weight:600;line-height:1.2;color:var(--tinte)}
+.tile .t-sub{font-size:.66rem;font-weight:700;letter-spacing:.02em;color:var(--gold);text-transform:uppercase;line-height:1.2}
+.tile.sel{border-color:var(--navy);background:var(--navy-hell);box-shadow:inset 0 0 0 1px var(--navy)}
+.tile.sel .t-lbl{color:var(--navy)}
+.tile.sel::after{content:"";position:absolute;top:6px;right:6px;width:17px;height:17px;border-radius:50%;background:var(--gold) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>') center/10px no-repeat}
+.tile input:focus-visible+.t-ic{outline:3px solid var(--gold);outline-offset:4px;border-radius:6px}
+@media(max-width:380px){.tile{padding:.8rem .3rem .7rem}.tile svg{width:26px;height:26px}.tile .t-lbl{font-size:.8rem}}
+.tiles.wide{grid-template-columns:1fr}
+.tiles.wide .tile{flex-direction:row;justify-content:flex-start;text-align:left;gap:.85rem;padding:.85rem 1rem}
+.tiles.wide svg{width:24px;height:24px}
+
+.konf-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+@media(max-width:400px){.konf-row{grid-template-columns:1fr}}
+.hint{font-size:.78rem;color:var(--grau);margin-top:.35rem;line-height:1.45}
+.konf .field{margin-bottom:.95rem}
+.konf-err{display:none;background:#FBEDEB;color:#8a3226;border-radius:7px;padding:.6rem .8rem;font-size:.85rem;margin-bottom:.9rem}
+.konf-err.on{display:block}
+.field.bad input,.field.bad select{border-color:#B03A2E;background:#FDF7F6}
+
+.konf-step>.btn{width:100%}
+.konf-nav{display:flex;align-items:center;gap:.9rem;margin-top:.3rem}
+.konf-nav .btn{flex:1;width:auto}
+.konf-back{flex:none;background:none;border:0;padding:.4rem .2rem;font-family:var(--fb);font-size:.9rem;font-weight:600;color:var(--grau);cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.konf-back:hover{color:var(--navy)}
+
+.konf-result{text-align:center}
+.konf-result .ok{width:52px;height:52px;border-radius:50%;background:var(--navy-hell);color:var(--navy);display:grid;place-items:center;margin:0 auto .9rem}
+.konf-result .ok svg{width:26px;height:26px}
+.konf-result h3{font-size:1.3rem;color:var(--navy);margin-bottom:.4rem}
+.konf-est{background:linear-gradient(160deg,var(--navy-hell),var(--gold-hell));border-radius:var(--radius);padding:1.3rem 1rem;margin:1.2rem 0 1rem}
+.konf-est .lbl{font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);opacity:.75}
+.konf-est .big{display:block;font-family:var(--fd);font-weight:700;font-size:clamp(1.6rem,5.5vw,2.1rem);color:var(--navy);line-height:1.15;margin-top:.25rem}
+.konf-est .per{font-size:.85rem;color:var(--grau)}
+.konf-sum{list-style:none;text-align:left;border-top:1px solid var(--linie);margin-top:.4rem}
+.konf-sum li{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;padding:.55rem 0;border-bottom:1px solid var(--linie)}
+.konf-sum li span:first-child{color:var(--grau)}
+.konf-sum li span:last-child{font-weight:600;text-align:right}
+.konf-fine{font-size:.72rem;color:var(--grau);line-height:1.55;margin-top:1rem;text-align:left}
+.tile:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
+.konf{scroll-margin-top:92px}
+.rv{opacity:0;transform:translateY(26px)}
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
