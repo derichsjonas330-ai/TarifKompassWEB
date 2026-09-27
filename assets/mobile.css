@@ -24,16 +24,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .wrap{width:min(100% - 40px,1000px);margin-inline:auto}
 .skip-link{position:absolute;z-index:500;top:-60px;left:12px;background:#fff;padding:12px}
 .skip-link:focus{top:8px}
-.topbar{background:#fff;position:sticky;top:0;z-index:80;box-shadow:0 1px 0 var(--linie)}
-.topbar-inner{max-width:1040px;margin:auto;padding:11px 20px;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar{background:rgba(255,255,255,.98);position:sticky;top:0;z-index:80;box-shadow:0 1px 0 var(--linie)}
+.topbar-inner{width:min(1100px,calc(100% - 40px));margin:auto;padding-top:13px;display:flex;align-items:center}
 .logo{text-decoration:none;font:700 1.24rem/1 var(--fd);color:var(--navy);white-space:nowrap}
 .logo span{color:#AC7418}
-.logo small{display:block;color:var(--grau);font:600 .68rem/1.4 var(--fb);letter-spacing:.06em;margin-top:5px}
-.call-icon{display:grid;place-items:center;flex:none;width:46px;height:46px;background:var(--navy-hell);border-radius:50%;color:var(--navy)}
-.call-icon svg{width:21px;height:21px}
-.topbar-pages{display:flex;justify-content:center;gap:26px;min-height:39px;align-items:center;border-top:1px solid var(--linie)}
-.topbar-pages a{color:var(--navy);font-size:.84rem;font-weight:700;text-decoration:none;line-height:1.2;padding:10px 8px}
-.topbar-pages a:hover{color:#9A6A0D}
+.topbar-pages{width:min(1100px,calc(100% - 40px));margin:12px auto 0;display:flex;justify-content:center;gap:clamp(7px,1.2vw,16px);align-items:center;border-top:1px solid var(--linie)}
+.topbar-pages a{color:var(--navy);font-size:.84rem;font-weight:700;text-decoration:none;line-height:1.2;padding:10px 13px;border-radius:8px;white-space:nowrap}
+.topbar-pages a:hover,.topbar-pages a[aria-current="page"]{background:var(--navy-hell)}
+.topbar-pages a[aria-current="page"]{box-shadow:inset 0 -2px var(--gold)}
 .mobile-hero{background:radial-gradient(circle at 97% 9%,rgba(126,171,206,.22),transparent 36%),linear-gradient(147deg,#09253e,var(--navy) 70%,#1d4f77);color:#fff;padding:44px 0 45px;overflow:hidden}
 .hero-copy{position:relative;z-index:1}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 .73rem/1.2 var(--fb);text-transform:uppercase;letter-spacing:.13em;color:var(--navy);margin-bottom:18px}
@@ -114,7 +112,7 @@ footer .pe-cookie-settings{color:#ADC2D3;text-align:left;text-decoration:none}
 .mobile-dock a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:49px;max-width:430px;margin:auto;border-radius:9px;background:var(--gold);text-decoration:none;color:#152c42;font-weight:800;font-size:.95rem}
 .mobile-dock.is-hidden{transform:translateY(110%);pointer-events:none}
 body:has(.pe-cookie-banner:not([hidden])) .mobile-dock{display:none}
-@media(max-width:370px){.wrap{width:min(100% - 30px,1000px)}.topbar-inner{padding-inline:15px}.mobile-hero h1{font-size:2.42rem}.analysis-section .konf-body{padding:19px 14px}.tile .t-lbl{font-size:.76rem}}
+@media(max-width:370px){.wrap{width:min(100% - 30px,1000px)}.mobile-hero h1{font-size:2.42rem}.analysis-section .konf-body{padding:19px 14px}.tile .t-lbl{font-size:.76rem}}
 @media(max-width:430px){.konf-nav{flex-wrap:wrap}.konf-nav .btn{flex:1 0 100%;order:1}.konf-nav .konf-back{order:2;min-height:44px}.konf-result .konf-nav .btn{font-size:.94rem}}
 @media(min-width:700px){body{padding-bottom:0}.mobile-dock{display:none}.mobile-hero{padding:70px 0}.mobile-hero>.wrap{max-width:1000px}.hero-picture{margin-top:37px}.picture-frame img{aspect-ratio:1.95}.steps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.human-grid{grid-template-columns:1fr 1fr;align-items:center}.human-image{margin:0;border-radius:14px}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:980px){.mobile-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);align-items:center;gap:clamp(24px,4vw,50px);padding:78px max(24px,calc((100vw - 1120px)/2))}.mobile-hero>.wrap{width:100%;max-width:none}.mobile-hero h1{font-size:clamp(3.1rem,4.6vw,4.4rem)}.hero-picture{margin:0}.picture-frame img{aspect-ratio:1.07;object-position:33% center}.advisor-card{max-width:405px}}

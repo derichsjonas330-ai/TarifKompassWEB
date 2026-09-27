@@ -51,22 +51,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .cta-note{font-size:.9rem;color:var(--grau)}
 .cta-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:1.8rem}
 
-nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--linie)}
-.nav-inner{max-width:1080px;margin:0 auto;padding:1rem clamp(1.25rem,4vw,2.5rem);display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.logo{font-family:var(--fd);font-weight:700;font-size:1.25rem;color:var(--navy);text-decoration:none}
+nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.98);box-shadow:0 1px 0 var(--linie)}
+.nav-inner{width:min(1100px,calc(100% - 40px));min-height:76px;margin:0 auto;display:flex;align-items:center;gap:clamp(16px,2.4vw,32px)}
+.logo{flex:none;font:700 1.3rem/1 var(--fd);color:var(--navy);text-decoration:none;white-space:nowrap}
 .logo span{color:var(--gold)}
-.nav-pages{display:flex;align-items:center;gap:clamp(.65rem,1.4vw,1.3rem);margin-left:auto}
-.nav-pages a{color:var(--navy);font-size:.94rem;font-weight:700;text-decoration:none;white-space:nowrap}
-.nav-pages a:hover{color:#9A6A0D}
-.nav-right{display:flex;align-items:center;gap:1.4rem}
-.nav-phone{text-decoration:none;color:var(--navy);font-weight:600;font-size:1rem;white-space:nowrap}
-.nav-phone small{display:block;font-weight:400;color:var(--grau);font-size:.75rem}
-.nav-email{display:inline-flex;align-items:center;gap:.45rem;padding-left:1.2rem;border-left:1px solid var(--linie);color:var(--navy);font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap;transition:color .2s}
-.nav-phone:hover,.nav-email:hover{color:var(--gold)}
-.nav-cta{padding:.7rem 1.4rem;font-size:.95rem;white-space:nowrap}
-@media(max-width:1170px){.nav-email{display:none}}
-@media(max-width:1000px){.nav-right{gap:.6rem}.nav-phone{font-size:.9rem}.nav-cta{padding:.65rem 1rem}}
-@media(max-width:760px){.nav-phone{display:none}.nav-inner{flex-wrap:wrap;padding-bottom:0}.nav-pages{order:3;width:100%;justify-content:center;padding:.45rem 0;border-top:1px solid var(--linie)}.nav-cta{display:none}}
+.nav-pages{display:flex;align-items:center;gap:clamp(7px,1.2vw,16px);margin-left:auto}
+.nav-pages a{padding:10px 9px;border-radius:8px;color:var(--navy);font-size:.91rem;font-weight:700;text-decoration:none;white-space:nowrap}
+.nav-pages a:hover,.nav-pages a[aria-current="page"]{background:var(--navy-hell);color:var(--navy)}
+.nav-pages a[aria-current="page"]{box-shadow:inset 0 -2px var(--gold)}
+.nav-right{display:flex;align-items:center;gap:clamp(16px,2.4vw,32px)}
+.nav-phone{text-decoration:none;color:var(--navy);font-weight:700;font-size:.93rem;white-space:nowrap}
+.nav-phone:hover{color:#9A6A0D}
+.nav-cta{min-height:42px;padding:9px 16px;border-radius:10px;background:var(--gold);box-shadow:none;color:#142c42;font-size:.88rem;font-weight:800;line-height:1.2;white-space:nowrap}
+.nav-cta:hover{background:#E1AE4D;transform:none}
+@media(max-width:940px){.nav-phone{display:none}}
+@media(max-width:720px){.nav-inner{min-height:0;flex-wrap:wrap;gap:0;padding-top:13px}.logo{margin-right:auto;font-size:1.24rem}.nav-right{display:none}.nav-pages{order:3;flex-basis:100%;margin:12px 0 0;justify-content:center;border-top:1px solid var(--linie)}.nav-pages a{padding:10px 13px;font-size:.84rem}}
 
 /* Hero */
 .hero{background-color:var(--navy-hell);background-image:linear-gradient(90deg,rgba(238,243,248,.76) 0%,rgba(246,249,252,.66) 42%,rgba(255,255,255,.42) 62%,rgba(255,255,255,.16) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-size:cover;background-position:center center;background-repeat:no-repeat;border-bottom:1px solid var(--linie);position:relative;overflow:hidden}
@@ -337,7 +336,6 @@ footer a:hover{color:var(--gold)}
    ══════════════════════════════════════════════════════════════ */
 :root{--maxw:1400px}
 .wrap{max-width:var(--maxw)}
-.nav-inner{max-width:var(--maxw)}
 
 /* Überschriften laufen nicht über die ganze Breite */
 section h2{max-width:30ch}
@@ -394,14 +392,13 @@ section h2{max-width:30ch}
 </head>
 <body>
 
-<nav>
+<nav aria-label="Hauptnavigation">
   <div class="nav-inner">
     <a class="logo" href="#top">Paschen<span>-Energie</span></a>
-    <div class="nav-pages" aria-label="Weitere Seiten"><a href="/ueber-uns">Über uns</a><a href="/news">News</a></div>
+    <div class="nav-pages"><a href="#top" aria-current="page">Startseite</a><a href="/ueber-uns">Über uns</a><a href="/news">News</a></div>
     <div class="nav-right">
-      <a class="nav-phone" href="tel:+4917616818944">☎ 0176 16818944<small>Mo–Fr 9–18 Uhr · persönlich erreichbar</small></a>
-      <a class="nav-email" href="mailto:info@paschenenergie.de"><span aria-hidden="true">✉</span><span>info@paschenenergie.de</span></a>
-      <a class="btn nav-cta" href="#analyse">Analyse anfordern</a>
+      <a class="nav-phone" href="tel:+4917616818944">0176 16818944</a>
+      <a class="btn nav-cta" href="#analyse">Tarif prüfen lassen</a>
     </div>
   </div>
 </nav>
