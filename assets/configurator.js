@@ -6,7 +6,7 @@
   const steps = Array.prototype.slice.call(form.querySelectorAll('.konf-step'));
   const bar   = Array.prototype.slice.call(card.querySelectorAll('.konf-bar i'));
   const submitButton = form.querySelector('button[type="submit"]');
-  const submitLabel = submitButton ? submitButton.textContent : 'Sparpotenzial berechnen';
+  const submitLabel = submitButton ? submitButton.textContent : 'Unverbindlich anfragen';
   let cur = 0;
   let submitting = false;
 
@@ -84,46 +84,28 @@
     return true;
   }
 
-  /* Schätzung des Sparpotenzials (Richtwerte, bewusst konservativ) */
-  const BASIS = {
-    Strom:     {1:1600, 2:2500, 3:3300, 4:4000, 5:5000},
-    Gas:       {1:6500, 2:11000, 3:14500, 4:18000, 5:21000},
-    Heizstrom: {1:3400, 2:4200, 3:5000, 4:5800, 5:6600}
-  };
-  const OBJEKT = {
-    Strom:     {Wohnung:1, Haus:1.25, Gewerbe:2.4},
-    Gas:       {Wohnung:1, Haus:1.4,  Gewerbe:1.9},
-    Heizstrom: {Wohnung:0.8, Haus:1.25, Gewerbe:2}
-  };
-  const CENT = { Strom:[0.055,0.105], Gas:[0.018,0.04], Heizstrom:[0.04,0.075] };
-  const SITUATION = {'Grundversorgung':1.15, 'Laufender Vertrag':0.85, 'Umzug oder Neuanschluss':1};
   const nf = new Intl.NumberFormat('de-DE');
 
-  function rechnen(){
-    const sparte = form.sparte.value, objekt = form.objekt.value;
-    const pers = form.personen.value;
+  function angaben(){
     const eigen = document.getElementById('k-kwh').value.trim().replace(/[.\s']/g,'');
-    const geschaetzt = Math.round(BASIS[sparte][pers] * OBJEKT[sparte][objekt] / 100) * 100;
-    const kwh = eigen ? +eigen : geschaetzt;
-    let f = SITUATION[form.situation.value] || 1;
-    if(document.getElementById('k-erhoehung').checked) f += 0.1;
-    const runden = function(v){ return Math.max(50, Math.round(v/10)*10); };
-    const low = runden(kwh * CENT[sparte][0] * f);
-    const high = runden(kwh * CENT[sparte][1] * f);
-    return {sparte:sparte, objekt:objekt, kwh:kwh, eigen:!!eigen, low:low, high:high};
+    const beide = document.getElementById('k-beide').checked;
+    return {
+      sparte: beide ? 'Strom und Gas' : form.sparte.value,
+      objekt: form.objekt.value,
+      verbrauch: eigen ? nf.format(+eigen) + ' kWh (Ihre Angabe)' : 'Nicht angegeben'
+    };
   }
 
   function ergebnis(){
-    const r = rechnen();
-    const sparText = 'ca. ' + nf.format(r.low) + ' – ' + nf.format(r.high) + ' €';
-    document.getElementById('k-est').textContent = sparText;
-    document.getElementById('k-verbrauch-berechnet').value = nf.format(r.kwh) + ' kWh' + (r.eigen ? ' (Kundenangabe)' : ' (anhand der Angaben geschätzt)');
-    document.getElementById('k-sparpotenzial').value = sparText + ' pro Jahr';
+    const r = angaben();
+    document.getElementById('k-est').textContent = 'In Prüfung';
+    document.getElementById('k-verbrauch-berechnet').value = r.verbrauch;
+    document.getElementById('k-sparpotenzial').value = 'Noch nicht ermittelt';
     const zeilen = [
       ['Sparte', r.sparte === 'Heizstrom' ? 'Heizstrom (Wärmepumpe)' : r.sparte],
       ['Objekt', r.objekt],
       ['Postleitzahl', document.getElementById('k-plz').value.trim()],
-      ['Jahresverbrauch', nf.format(r.kwh) + ' kWh' + (r.eigen ? ' (Ihre Angabe)' : ' (geschätzt)')],
+      ['Jahresverbrauch', r.verbrauch],
       ['Aktuelle Situation', form.situation.value],
       ['Rückmeldung', document.getElementById('k-zeit').value]
     ];
