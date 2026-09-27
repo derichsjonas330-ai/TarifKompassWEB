@@ -321,6 +321,7 @@ footer a:hover{color:var(--gold)}
 .tile:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
 .konf{scroll-margin-top:92px}
 .rv{opacity:0;transform:translateY(26px)}
+.rv[data-hero]{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
 
 /* ══════════════════════════════════════════════════════════════
@@ -830,7 +831,6 @@ section h2{max-width:30ch}
   }
   if(window.gsap && !reduced){
     gsap.registerPlugin(ScrollTrigger);
-    gsap.to('[data-hero]',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.1,delay:.1});
     document.querySelectorAll('.rv:not([data-hero])').forEach(el=>{
       gsap.to(el,{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
     });
