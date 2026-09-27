@@ -31,6 +31,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .logo small{display:block;color:var(--grau);font:600 .68rem/1.4 var(--fb);letter-spacing:.06em;margin-top:5px}
 .call-icon{display:grid;place-items:center;flex:none;width:46px;height:46px;background:var(--navy-hell);border-radius:50%;color:var(--navy)}
 .call-icon svg{width:21px;height:21px}
+.topbar-pages{display:flex;justify-content:center;gap:26px;min-height:39px;align-items:center;border-top:1px solid var(--linie)}
+.topbar-pages a{color:var(--navy);font-size:.84rem;font-weight:700;text-decoration:none;line-height:1.2;padding:10px 8px}
+.topbar-pages a:hover{color:#9A6A0D}
 .mobile-hero{background:radial-gradient(circle at 97% 9%,rgba(126,171,206,.22),transparent 36%),linear-gradient(147deg,#09253e,var(--navy) 70%,#1d4f77);color:#fff;padding:44px 0 45px;overflow:hidden}
 .hero-copy{position:relative;z-index:1}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 .73rem/1.2 var(--fb);text-transform:uppercase;letter-spacing:.13em;color:var(--navy);margin-bottom:18px}

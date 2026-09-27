@@ -55,14 +55,18 @@ nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var
 .nav-inner{max-width:1080px;margin:0 auto;padding:1rem clamp(1.25rem,4vw,2.5rem);display:flex;justify-content:space-between;align-items:center;gap:1rem}
 .logo{font-family:var(--fd);font-weight:700;font-size:1.25rem;color:var(--navy);text-decoration:none}
 .logo span{color:var(--gold)}
+.nav-pages{display:flex;align-items:center;gap:clamp(.65rem,1.4vw,1.3rem);margin-left:auto}
+.nav-pages a{color:var(--navy);font-size:.94rem;font-weight:700;text-decoration:none;white-space:nowrap}
+.nav-pages a:hover{color:#9A6A0D}
 .nav-right{display:flex;align-items:center;gap:1.4rem}
 .nav-phone{text-decoration:none;color:var(--navy);font-weight:600;font-size:1rem;white-space:nowrap}
 .nav-phone small{display:block;font-weight:400;color:var(--grau);font-size:.75rem}
 .nav-email{display:inline-flex;align-items:center;gap:.45rem;padding-left:1.2rem;border-left:1px solid var(--linie);color:var(--navy);font-weight:600;font-size:.9rem;text-decoration:none;white-space:nowrap;transition:color .2s}
 .nav-phone:hover,.nav-email:hover{color:var(--gold)}
 .nav-cta{padding:.7rem 1.4rem;font-size:.95rem;white-space:nowrap}
-@media(max-width:920px){.nav-email{display:none}}
-@media(max-width:760px){.nav-phone{display:none}}
+@media(max-width:1170px){.nav-email{display:none}}
+@media(max-width:1000px){.nav-right{gap:.6rem}.nav-phone{font-size:.9rem}.nav-cta{padding:.65rem 1rem}}
+@media(max-width:760px){.nav-phone{display:none}.nav-inner{flex-wrap:wrap;padding-bottom:0}.nav-pages{order:3;width:100%;justify-content:center;padding:.45rem 0;border-top:1px solid var(--linie)}.nav-cta{display:none}}
 
 /* Hero */
 .hero{background-color:var(--navy-hell);background-image:linear-gradient(90deg,rgba(238,243,248,.76) 0%,rgba(246,249,252,.66) 42%,rgba(255,255,255,.42) 62%,rgba(255,255,255,.16) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-size:cover;background-position:center center;background-repeat:no-repeat;border-bottom:1px solid var(--linie);position:relative;overflow:hidden}
@@ -393,6 +397,7 @@ section h2{max-width:30ch}
 <nav>
   <div class="nav-inner">
     <a class="logo" href="#top">Paschen<span>-Energie</span></a>
+    <div class="nav-pages" aria-label="Weitere Seiten"><a href="/ueber-uns.html">Über uns</a><a href="/news.html">News</a></div>
     <div class="nav-right">
       <a class="nav-phone" href="tel:+4917616818944">☎ 0176 16818944<small>Mo–Fr 9–18 Uhr · persönlich erreichbar</small></a>
       <a class="nav-email" href="mailto:info@paschenenergie.de"><span aria-hidden="true">✉</span><span>info@paschenenergie.de</span></a>
@@ -803,7 +808,7 @@ section h2{max-width:30ch}
   <div class="wrap">
     <div class="footer-grid">
       <div><h4>Paschen-Energie, Persönliche Energieberatung</h4><p>Stefanos Paschen Vertrieb &amp; Energie<br>Inhaber: Stefanos Paschen<br>Nikolaus-Becker-Straße 33<br>52511 Geilenkirchen<br>Deutschland</p></div>
-      <div><h4>Rechtliches</h4><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/widerruf.html">Widerrufsbelehrung</a><a href="/agb.html">AGB</a><button class="pe-cookie-settings" type="button" data-pe-cookie-settings>Cookie-Einstellungen</button></div>
+      <div><h4>Seiten &amp; Rechtliches</h4><a href="/ueber-uns.html">Über uns</a><a href="/news.html">News</a><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutzerklärung</a><a href="/widerruf.html">Widerrufsbelehrung</a><a href="/agb.html">AGB</a><button class="pe-cookie-settings" type="button" data-pe-cookie-settings>Cookie-Einstellungen</button></div>
       <div><h4>Kontakt</h4><a href="tel:+4917616818944">0176 16818944</a><a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a><a href="#kontakt">Erreichbarkeit &amp; Rückruf</a></div>
     </div>
     <div class="footer-legal">
