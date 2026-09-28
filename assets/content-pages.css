@@ -72,6 +72,14 @@ p{margin-bottom:1rem}
 .story-link h2{font-size:1.55rem;margin:14px 0}
 .story-link p{color:var(--muted);font-size:.92rem;line-height:1.5}
 .story-link .read{margin-top:auto;color:var(--navy);font-size:.88rem;font-weight:800}
+.story-link--featured{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(230px,.8fr);align-items:center;gap:clamp(26px,5vw,70px);min-height:320px;padding:clamp(28px,5vw,52px);border:0;background:linear-gradient(120deg,#fff 45%,#EAF2F8);overflow:hidden}
+.story-link--featured .story-copy{display:flex;flex-direction:column;align-items:flex-start}
+.story-link--featured h2{max-width:23ch;margin:14px 0 14px;font-size:clamp(1.85rem,3.3vw,2.65rem);line-height:1.14}
+.story-link--featured .story-teaser{max-width:59ch;color:#41566B;font-size:1.02rem;line-height:1.55}
+.story-link--featured .read{margin-top:25px;border-bottom:2px solid var(--gold);padding-bottom:3px}
+.story-feature-panel{display:flex;flex-direction:column;gap:9px;padding:24px;border-radius:17px;background:#123C63;color:#fff;box-shadow:0 18px 35px rgba(12,42,71,.18);transform:rotate(2deg)}
+.story-feature-panel>span{margin-bottom:3px;color:#E6BA62;font-size:.76rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.story-feature-panel strong{padding:11px 14px;border:1px solid rgba(255,255,255,.23);border-radius:8px;font-family:var(--serif);font-size:1.1rem;font-weight:600}
 .news-content{padding-top:55px}
 .article{max-width:780px;margin:0 auto;padding:65px 0;border-bottom:1px solid var(--line);scroll-margin-top:100px}
 .article:last-child{border-bottom:0}
@@ -113,6 +121,10 @@ p{margin-bottom:1rem}
   .news-list{gap:12px}
   .story-link{min-height:0;padding:22px}
   .story-link h2{font-size:1.35rem}
+  .story-link--featured{grid-template-columns:1fr;gap:0;padding:28px}
+  .story-link--featured h2{font-size:clamp(1.75rem,7vw,2.25rem)}
+  .story-link--featured .story-teaser{font-size:.97rem}
+  .story-feature-panel{display:none}
   .text-grid{grid-template-columns:1fr}
   .article{padding:52px 0;scroll-margin-top:125px}
   .footer-grid{grid-template-columns:1fr;gap:30px}
