@@ -20,7 +20,7 @@
 .blog-body h3{margin:36px 0 13px;color:var(--navy);font-size:clamp(1.25rem,2vw,1.42rem);line-height:1.25}
 .blog-section{padding-top:50px;scroll-margin-top:90px}
 .blog-section+.blog-section{margin-top:34px;border-top:1px solid var(--line)}
-.blog-body ul{padding-left:1.35em;margin:0 0 1.5em}
+.blog-body ul,.blog-body ol{padding-left:1.35em;margin:0 0 1.5em}
 .blog-body li{padding-left:3px;margin-bottom:.58em}
 .formula{padding:19px 23px;border-left:4px solid var(--gold);border-radius:0 9px 9px 0;background:#eff4f8;color:#102f4c;font-size:1.06rem;font-weight:600;line-height:1.5}
 .example-box{margin:31px 0 39px;padding:clamp(19px,3vw,31px);border:1px solid #d0dfeb;border-radius:15px;background:#f5f8fb}
@@ -35,6 +35,7 @@
 .comparison-table tbody th{font-weight:600}
 .comparison-table .total{background:#e6eef5;color:var(--navy);font-weight:800}
 .comparison-table .total th,.comparison-table .total td{border-bottom:0}
+.blog-table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .blog-faq .faq-item{padding:12px 0 17px;border-bottom:1px solid var(--line)}
 .blog-faq .faq-item h3{margin-top:16px}
 .blog-faq .faq-item p{margin-bottom:0}
@@ -66,6 +67,7 @@
   .example-box{padding:17px 12px}
   .comparison-table{font-size:.8rem}
   .comparison-table th,.comparison-table td{padding:10px 4px}
+  .blog-table-scroll .comparison-table{min-width:560px}
   .blog-sources{padding:22px 20px}
   .blog-contact{margin-top:54px}
 }
