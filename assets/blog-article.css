@@ -7,6 +7,7 @@
 .breadcrumb a:hover{color:#e6ba62}
 .breadcrumb span[aria-hidden]{color:#e6ba62}
 .blog-date{color:#bcd3e4;font-size:.84rem}
+.ai-text-note{display:block;width:max-content;max-width:100%;margin-bottom:19px;padding:6px 10px;border:1px solid rgba(230,186,98,.52);border-radius:6px;color:#fff;background:rgba(5,28,47,.38);font-size:.81rem;line-height:1.35}
 .blog-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:clamp(35px,5vw,72px);align-items:start;padding-block:clamp(53px,7vw,86px) 92px}
 .blog-toc{position:sticky;top:108px;display:flex;flex-direction:column;gap:6px;padding:20px 0 20px 18px;border-left:2px solid var(--line);font-size:.86rem;line-height:1.45}
 .blog-toc strong{margin:0 0 9px;color:#8a611b;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase}

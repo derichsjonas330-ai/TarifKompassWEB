@@ -69,6 +69,7 @@ p{margin-bottom:1rem}
 .story-link{display:flex;flex-direction:column;min-height:270px;padding:26px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:13px;box-shadow:0 16px 35px rgba(12,42,71,.1);text-decoration:none}
 .story-link:hover{transform:translateY(-3px);box-shadow:0 21px 45px rgba(12,42,71,.15)}
 .story-link .story-type{color:#956613;font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800}
+.story-ai-note{display:block;margin-top:8px;color:#526477;font-size:.76rem;font-weight:650;line-height:1.3}
 .story-link h2{font-size:1.55rem;margin:14px 0}
 .story-link p{color:var(--muted);font-size:.92rem;line-height:1.5}
 .story-link .read{margin-top:auto;color:var(--navy);font-size:.88rem;font-weight:800}
@@ -84,6 +85,7 @@ p{margin-bottom:1rem}
 .article{max-width:780px;margin:0 auto;padding:65px 0;border-bottom:1px solid var(--line);scroll-margin-top:100px}
 .article:last-child{border-bottom:0}
 .article .article-meta{display:block;margin-bottom:10px;color:#8A611B;font-size:.78rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.article .article-ai-note{display:block;width:max-content;max-width:100%;margin-bottom:16px;padding:5px 9px;border-radius:6px;background:#eaf1f6;color:#30495f;font-size:.8rem;line-height:1.3}
 .article h2{margin-bottom:20px}
 .article p{color:#35475A}
 .article h3{margin-top:27px;margin-bottom:11px}
