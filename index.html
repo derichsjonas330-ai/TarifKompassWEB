@@ -326,7 +326,7 @@ footer a:hover{color:var(--gold)}
 .konf-fine{font-size:.72rem;color:var(--grau);line-height:1.55;margin-top:1rem;text-align:left}
 .tile:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
 .konf{scroll-margin-top:92px}
-.rv{opacity:0;transform:translateY(26px)}
+.rv{opacity:1;transform:none}
 .rv[data-hero]{opacity:1;transform:none}
 @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
 
@@ -837,10 +837,10 @@ section h2{max-width:30ch}
         scrollTrigger:{trigger:el,start:'top 88%'}});
     });
   }
-  if(window.gsap && !reduced){
+  if(window.gsap && window.ScrollTrigger && !reduced){
     gsap.registerPlugin(ScrollTrigger);
     document.querySelectorAll('.rv:not([data-hero])').forEach(el=>{
-      gsap.to(el,{opacity:1,y:0,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
+      gsap.from(el,{opacity:0,y:26,immediateRender:false,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
     });
     const arc=document.getElementById('donutArc');
     gsap.to(arc,{strokeDashoffset:0,duration:1.5,ease:'power2.out',scrollTrigger:{trigger:arc,start:'top 85%'}});
