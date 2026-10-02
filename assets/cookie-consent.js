@@ -1,12 +1,17 @@
 (function(){
   'use strict';
 
-  const VERSION = '1';
+  if(window.PaschenCookieConsent) return;
+
+  const VERSION = '2';
+  const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
   const MAX_AGE = 60 * 60 * 24 * 180;
   const CHOICE_COOKIE = 'pe_cookie_choice';
   const LEAD_COOKIE = 'pe_lead_id';
   const FIRST_CONTACT_COOKIE = 'pe_first_contact';
   const pageEnteredAt = new Date().toISOString();
+  let analyticsStarted = false;
+  window['ga-disable-' + MEASUREMENT_ID] = true;
 
   function readCookie(name){
     const prefix = name + '=';
@@ -29,9 +34,81 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    if(parts.length !== 3 || parts[0] !== VERSION) return null;
-    if(parts[1] !== 'granted' && parts[1] !== 'denied') return null;
-    return {status:parts[1], at:parts[2]};
+    // An earlier consent covered lead cookies only, never Google Analytics.
+    if(parts.length !== 4 || parts[0] !== VERSION) return null;
+    if(!['granted','denied'].includes(parts[1]) || !['granted','denied'].includes(parts[2])) return null;
+    const timestamp = Date.parse(parts[3]);
+    if(!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp >= MAX_AGE * 1000) return null;
+    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', at:parts[3]};
+  }
+
+  function clearAnalyticsCookies(){
+    const domains = ['', window.location.hostname, '.' + window.location.hostname];
+    const parts = window.location.hostname.split('.');
+    while(parts.length > 2){
+      parts.shift();
+      domains.push(parts.join('.'), '.' + parts.join('.'));
+    }
+    document.cookie.split(';').forEach(function(cookie){
+      const name = cookie.trim().split('=')[0];
+      if(name !== '_ga' && name !== '_ga_' + MEASUREMENT_ID.slice(2)) return;
+      domains.forEach(function(domain){
+        document.cookie = name + '=; Path=/; Max-Age=0; SameSite=Lax; Secure' + (domain ? '; Domain=' + domain : '');
+      });
+    });
+  }
+
+  function consentSettings(granted){
+    return {
+      analytics_storage:granted ? 'granted' : 'denied',
+      ad_storage:'denied',
+      ad_user_data:'denied',
+      ad_personalization:'denied'
+    };
+  }
+
+  function withoutUrlParameters(value){
+    if(!value) return '';
+    try{ const url = new URL(value); return url.origin + url.pathname; }
+    catch(_error){ return ''; }
+  }
+
+  function syncAnalytics(granted){
+    window['ga-disable-' + MEASUREMENT_ID] = !granted;
+    if(!granted){
+      if(analyticsStarted) window.gtag('consent', 'update', consentSettings(false));
+      clearAnalyticsCookies();
+      return;
+    }
+    if(analyticsStarted){
+      window.gtag('consent', 'update', consentSettings(true));
+      return;
+    }
+    analyticsStarted = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+    // Basic consent mode: no Google script or request before analytics opt-in.
+    window.gtag('consent', 'default', consentSettings(false));
+    window.gtag('consent', 'update', consentSettings(true));
+    window.gtag('js', new Date());
+    window.gtag('config', MEASUREMENT_ID, {
+      allow_google_signals:false,
+      allow_ad_personalization_signals:false,
+      page_location:withoutUrlParameters(window.location.href),
+      page_referrer:withoutUrlParameters(document.referrer),
+      cookie_expires:MAX_AGE,
+      cookie_update:false,
+      cookie_flags:'SameSite=Lax;Secure'
+    });
+    const script = document.createElement('script');
+    script.id = 'pe-google-analytics';
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
+    script.addEventListener('load', function(){
+      const choice = parseChoice();
+      if(!choice || !choice.analytics) syncAnalytics(false);
+    });
+    document.head.appendChild(script);
   }
 
   function createLeadId(){
@@ -81,16 +158,15 @@
     const leadField = target.querySelector('[name="lead_id"]');
     const firstField = target.querySelector('[name="erstkontakt_zeitpunkt"]');
     const consentField = target.querySelector('[name="cookie_einwilligung"]');
-    if(choice && choice.status === 'granted'){
+    if(choice && choice.lead){
       const lead = ensureLeadCookies();
       if(leadField) leadField.value = lead.leadId;
       if(firstField) firstField.value = lead.firstContact;
-      if(consentField) consentField.value = 'Erteilt am ' + choice.at + ' (Version ' + VERSION + ')';
     } else {
       if(leadField) leadField.value = '';
       if(firstField) firstField.value = '';
-      if(consentField) consentField.value = choice ? 'Abgelehnt am ' + choice.at + ' (Version ' + VERSION + ')' : 'Keine Entscheidung';
     }
+    if(consentField) consentField.value = choice ? 'Lead-Cookies: ' + (choice.lead ? 'erteilt' : 'abgelehnt') + '; Google Analytics: ' + (choice.analytics ? 'erteilt' : 'abgelehnt') + '; am ' + choice.at + ' (Version ' + VERSION + ')' : 'Keine Entscheidung';
   }
 
   function buildBanner(){
@@ -103,11 +179,16 @@
       '<div class="pe-cookie-panel">' +
         '<div class="pe-cookie-copy">' +
           '<h2>Ihre Entscheidung zu Cookies</h2>' +
-          '<p>Mit Ihrer Zustimmung speichern wir für sechs Monate einen zufälligen Lead-Code und den Zeitpunkt Ihres ersten Besuchs. So können wir wiederkehrende Website-Anfragen eindeutig zuordnen und die vertraglich vereinbarte Abrechnung der Website-Leads nachweisen. Es findet keine Werbung und kein Profiling statt. Eine Ablehnung hat keine Nachteile. <a href="/datenschutz.html#cookies">Details in der Datenschutzerklärung</a>.</p>' +
+          '<p>Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. Eine Ablehnung hat keine Nachteile. Änderungen sind jederzeit über „Cookie-Einstellungen“ möglich. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
+          '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
+          '</fieldset>' +
         '</div>' +
         '<div class="pe-cookie-actions">' +
           '<button class="pe-cookie-choice" type="button" data-pe-cookie="denied">Nur erforderliche Cookies</button>' +
-          '<button class="pe-cookie-choice" type="button" data-pe-cookie="granted">Lead-Cookies akzeptieren</button>' +
+          '<button class="pe-cookie-choice" type="button" data-pe-cookie="selected">Auswahl speichern</button>' +
+          '<button class="pe-cookie-choice" type="button" data-pe-cookie="granted">Alle akzeptieren</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(banner);
@@ -118,6 +199,9 @@
 
   function showBanner(){
     if(!banner) banner = buildBanner();
+    const choice = parseChoice();
+    banner.querySelector('#pe-consent-lead').checked = !!(choice && choice.lead);
+    banner.querySelector('#pe-consent-analytics').checked = !!(choice && choice.analytics);
     banner.hidden = false;
   }
 
@@ -126,13 +210,17 @@
   }
 
   function saveChoice(status){
+    if(!['granted','denied','selected'].includes(status)) return;
+    const lead = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-lead').checked);
+    const analytics = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-analytics').checked);
     const now = new Date().toISOString();
-    writeCookie(CHOICE_COOKIE, VERSION + '|' + status + '|' + now, MAX_AGE);
-    if(status === 'granted') ensureLeadCookies(pageEnteredAt);
+    writeCookie(CHOICE_COOKIE, VERSION + '|' + (lead ? 'granted' : 'denied') + '|' + (analytics ? 'granted' : 'denied') + '|' + now, MAX_AGE);
+    if(lead) ensureLeadCookies(pageEnteredAt);
     else clearLeadCookies();
+    syncAnalytics(analytics);
     syncLeadFields();
     hideBanner();
-    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:status,at:now}}));
+    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:lead ? 'granted' : 'denied',lead:lead,analytics:analytics,at:now}}));
   }
 
   function openSettings(){
@@ -155,11 +243,12 @@
   if(!choice){
     clearLeadCookies();
     showBanner();
-  } else if(choice.status === 'granted'){
+  } else if(choice.lead){
     ensureLeadCookies();
   } else {
     clearLeadCookies();
   }
+  syncAnalytics(!!(choice && choice.analytics));
   syncLeadFields();
 
   window.PaschenCookieConsent = {
