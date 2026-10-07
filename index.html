@@ -541,8 +541,12 @@ section h2{max-width:30ch}
             <p class="konf-err" id="err4" role="alert"></p>
             <div class="field"><label for="k-name">Vor- und Nachname</label>
               <input id="k-name" name="name" type="text" placeholder="Ihr Name" autocomplete="name"></div>
-            <div class="field"><label for="k-kontakt">Telefon oder E-Mail</label>
-              <input id="k-kontakt" name="kontakt" type="text" placeholder="Für Ihre persönliche Rückmeldung"></div>
+            <div class="field"><label for="k-telefon">Telefon</label>
+              <input id="k-telefon" name="telefon" type="tel" placeholder="Ihre Telefonnummer" autocomplete="tel" aria-describedby="k-kontakt-hint"></div>
+            <div class="field"><label for="k-email">E-Mail</label>
+              <input id="k-email" name="email" type="email" placeholder="Ihre E-Mail-Adresse" autocomplete="email" aria-describedby="k-kontakt-hint">
+              <p class="hint" id="k-kontakt-hint">Eine Telefonnummer oder E-Mail-Adresse genügt.</p></div>
+            <input id="k-kontakt" name="kontakt" type="hidden">
             <div class="field"><label for="k-zeit">Wann darf ich Sie zurückrufen? <span class="opt">(optional)</span></label>
               <select id="k-zeit" name="rueckruf">
                 <option>Jederzeit zu den Bürozeiten (Mo–Fr 9–18 Uhr)</option>

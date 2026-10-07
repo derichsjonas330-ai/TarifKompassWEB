@@ -71,13 +71,17 @@
       setErr('err2',''); return true;
     }
     if(i === 3){
-      const nm = document.getElementById('k-name'), ko = document.getElementById('k-kontakt'), cs = document.getElementById('k-consent');
-      const val = ko.value.trim();
+      const nm = document.getElementById('k-name'), tel = document.getElementById('k-telefon'), email = document.getElementById('k-email'), cs = document.getElementById('k-consent');
+      const phoneValue = tel.value.trim(), emailValue = email.value.trim();
       const okNm = nm.value.trim().length > 1;
-      const okKo = /^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(val) || /^[+0(][\d\s\/().-]{6,}$/.test(val);
-      mark(nm, !okNm); mark(ko, !okKo);
+      const hasContact = phoneValue !== '' || emailValue !== '';
+      const okTel = phoneValue === '' || /^[+0(][\d\s\/().-]{6,}$/.test(phoneValue);
+      const okEmail = emailValue === '' || /^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(emailValue);
+      mark(nm, !okNm); mark(tel, !hasContact || !okTel); mark(email, !hasContact || !okEmail);
       if(!okNm){ setErr('err4','Bitte nennen Sie mir Ihren Namen.'); nm.focus(); return false; }
-      if(!okKo){ setErr('err4','Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.'); ko.focus(); return false; }
+      if(!hasContact){ setErr('err4','Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.'); tel.focus(); return false; }
+      if(!okTel){ setErr('err4','Bitte geben Sie eine gültige Telefonnummer ein.'); tel.focus(); return false; }
+      if(!okEmail){ setErr('err4','Bitte geben Sie eine gültige E-Mail-Adresse ein.'); email.focus(); return false; }
       if(!cs.checked){ setErr('err4','Bitte bestätigen Sie, dass Sie die Datenschutzerklärung zur Kenntnis genommen haben.'); cs.focus(); return false; }
       setErr('err4',''); return true;
     }
@@ -120,6 +124,12 @@
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     if(submitting || !check(3)) return;
+
+    // Keep the original contact field available for existing form notifications.
+    document.getElementById('k-kontakt').value = [
+      document.getElementById('k-telefon').value.trim(),
+      document.getElementById('k-email').value.trim()
+    ].filter(Boolean).join(' / ');
 
     if(window.PaschenCookieConsent){
       window.PaschenCookieConsent.syncLeadFields(form);
