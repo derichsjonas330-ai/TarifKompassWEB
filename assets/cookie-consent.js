@@ -3,7 +3,7 @@
 
   if(window.PaschenCookieConsent) return;
 
-  const VERSION = '3';
+  const VERSION = '4';
   const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
   const META_PIXEL_ID = '1853128992346096';
   const MAX_AGE = 60 * 60 * 24 * 180;
@@ -38,15 +38,17 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    // Preserve earlier lead/analytics choices, but never infer Meta consent.
-    const legacy = parts[0] === '2' && parts.length === 4;
-    if(!legacy && (parts[0] !== VERSION || parts.length !== 5)) return null;
-    const purposes = legacy ? parts.slice(1,3) : parts.slice(1,4);
+    // Keep existing lead/analytics choices; the expanded Meta notice requires a fresh choice.
+    const legacyV2 = parts[0] === '2' && parts.length === 4;
+    const legacyV3 = parts[0] === '3' && parts.length === 5;
+    const needsUpdate = legacyV2 || legacyV3;
+    if(!needsUpdate && (parts[0] !== VERSION || parts.length !== 5)) return null;
+    const purposes = legacyV2 ? parts.slice(1,3) : parts.slice(1,4);
     if(!purposes.every(function(value){ return ['granted','denied'].includes(value); })) return null;
-    const at = parts[legacy ? 3 : 4];
+    const at = parts[legacyV2 ? 3 : 4];
     const timestamp = Date.parse(at);
     if(!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp >= MAX_AGE * 1000) return null;
-    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!legacy && parts[3] === 'granted', at:at, version:parts[0], needsUpdate:legacy};
+    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!needsUpdate && parts[3] === 'granted', at:at, version:parts[0], needsUpdate:needsUpdate};
   }
 
   function clearCookies(names){
@@ -238,8 +240,9 @@
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
-            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited erhält Daten zu Seitenaufrufen und Ihrem Browser, um die Wirkung unserer Facebook- und Instagram-Werbung zu messen und Werbung auszuspielen. Eine Verarbeitung in den USA ist möglich. Nur mit Ihrer Zustimmung.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited verarbeitet Ihre IP-Adresse, Seitenaufrufe und Browserkennungen zur Werbemessung und für personalisierte Werbung auf Facebook und Instagram. Eine Verknüpfung mit Ihrem Meta-Konto und eine Verarbeitung in den USA sind möglich. Pixel-Cookies: in der Regel 90 Tage, bei weiteren Besuchen erneuerbar. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +
+          '<p class="pe-cookie-details"><a href="/datenschutz#meta-pixel">Details zu Meta Pixel und Widerruf</a></p>' +
         '</div>' +
         '<div class="pe-cookie-actions">' +
           '<button class="pe-cookie-choice" type="button" data-pe-cookie="denied">Nur erforderliche Cookies</button>' +

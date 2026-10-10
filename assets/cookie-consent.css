@@ -42,6 +42,7 @@
   text-decoration:underline;
   text-underline-offset:2px;
 }
+.pe-cookie-copy .pe-cookie-details{margin-top:.75rem;font-size:.9rem}
 .pe-cookie-actions{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
