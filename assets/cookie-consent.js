@@ -3,14 +3,18 @@
 
   if(window.PaschenCookieConsent) return;
 
-  const VERSION = '2';
+  const VERSION = '3';
   const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
+  const META_PIXEL_ID = '1853128992346096';
   const MAX_AGE = 60 * 60 * 24 * 180;
   const CHOICE_COOKIE = 'pe_cookie_choice';
   const LEAD_COOKIE = 'pe_lead_id';
   const FIRST_CONTACT_COOKIE = 'pe_first_contact';
   const pageEnteredAt = new Date().toISOString();
   let analyticsStarted = false;
+  let metaStarted = false;
+  let metaReady = false;
+  let metaPageViewSent = false;
   window['ga-disable-' + MEASUREMENT_ID] = true;
 
   function readCookie(name){
@@ -34,15 +38,18 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    // An earlier consent covered lead cookies only, never Google Analytics.
-    if(parts.length !== 4 || parts[0] !== VERSION) return null;
-    if(!['granted','denied'].includes(parts[1]) || !['granted','denied'].includes(parts[2])) return null;
-    const timestamp = Date.parse(parts[3]);
+    // Preserve earlier lead/analytics choices, but never infer Meta consent.
+    const legacy = parts[0] === '2' && parts.length === 4;
+    if(!legacy && (parts[0] !== VERSION || parts.length !== 5)) return null;
+    const purposes = legacy ? parts.slice(1,3) : parts.slice(1,4);
+    if(!purposes.every(function(value){ return ['granted','denied'].includes(value); })) return null;
+    const at = parts[legacy ? 3 : 4];
+    const timestamp = Date.parse(at);
     if(!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp >= MAX_AGE * 1000) return null;
-    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', at:parts[3]};
+    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!legacy && parts[3] === 'granted', at:at, version:parts[0], needsUpdate:legacy};
   }
 
-  function clearAnalyticsCookies(){
+  function clearCookies(names){
     const domains = ['', window.location.hostname, '.' + window.location.hostname];
     const parts = window.location.hostname.split('.');
     while(parts.length > 2){
@@ -51,11 +58,19 @@
     }
     document.cookie.split(';').forEach(function(cookie){
       const name = cookie.trim().split('=')[0];
-      if(name !== '_ga' && name !== '_ga_' + MEASUREMENT_ID.slice(2)) return;
+      if(!names.includes(name)) return;
       domains.forEach(function(domain){
         document.cookie = name + '=; Path=/; Max-Age=0; SameSite=Lax; Secure' + (domain ? '; Domain=' + domain : '');
       });
     });
+  }
+
+  function clearAnalyticsCookies(){
+    clearCookies(['_ga', '_ga_' + MEASUREMENT_ID.slice(2)]);
+  }
+
+  function clearMarketingCookies(){
+    clearCookies(['_fbp', '_fbc']);
   }
 
   function consentSettings(granted){
@@ -109,6 +124,46 @@
       if(!choice || !choice.analytics) syncAnalytics(false);
     });
     document.head.appendChild(script);
+  }
+
+  function syncMarketing(granted){
+    if(!granted){
+      if(metaStarted && typeof window.fbq === 'function') window.fbq('consent', 'revoke');
+      clearMarketingCookies();
+      return;
+    }
+    if(!metaStarted){
+      metaStarted = true;
+      // Meta Pixel base code: even the SDK is loaded only after marketing opt-in.
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq) return;
+        n=f.fbq=function(){n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments);};
+        if(!f._fbq) f._fbq=n;
+        n.push=n; n.loaded=true; n.version='2.0'; n.queue=[];
+        t=b.createElement(e); t.id='pe-meta-pixel'; t.async=true; t.src=v;
+        t.addEventListener('load',function(){
+          metaReady = true;
+          const choice = parseChoice();
+          syncMarketing(!!(choice && choice.marketing));
+        });
+        s=b.getElementsByTagName(e)[0];
+        if(s) s.parentNode.insertBefore(t,s);
+        else b.head.appendChild(t);
+      }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      window.fbq('consent', 'revoke');
+      // Keep this integration to PageView; do not enable automatic form events.
+      window.fbq('set', 'autoConfig', false, META_PIXEL_ID);
+      window.fbq('optOut', META_PIXEL_ID, 'AutomaticMatching');
+      window.fbq('optOut', META_PIXEL_ID, 'AutomaticMatchingForPartnerIntegrations');
+      window.fbq('init', META_PIXEL_ID);
+    }
+    // Recheck consent after SDK loading, so a quick withdrawal cannot send a queued PageView.
+    if(!metaReady) return;
+    window.fbq('consent', 'grant');
+    if(!metaPageViewSent){
+      window.fbq('track', 'PageView');
+      metaPageViewSent = true;
+    }
   }
 
   function createLeadId(){
@@ -166,7 +221,7 @@
       if(leadField) leadField.value = '';
       if(firstField) firstField.value = '';
     }
-    if(consentField) consentField.value = choice ? 'Lead-Cookies: ' + (choice.lead ? 'erteilt' : 'abgelehnt') + '; Google Analytics: ' + (choice.analytics ? 'erteilt' : 'abgelehnt') + '; am ' + choice.at + ' (Version ' + VERSION + ')' : 'Keine Entscheidung';
+    if(consentField) consentField.value = choice ? 'Lead-Cookies: ' + (choice.lead ? 'erteilt' : 'abgelehnt') + '; Google Analytics: ' + (choice.analytics ? 'erteilt' : 'abgelehnt') + '; Meta Pixel: ' + (choice.marketing ? 'erteilt' : 'abgelehnt') + '; am ' + choice.at + ' (Version ' + choice.version + ')' : 'Keine Entscheidung';
   }
 
   function buildBanner(){
@@ -183,6 +238,7 @@
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited erhält Daten zu Seitenaufrufen und Ihrem Browser, um die Wirkung unserer Facebook- und Instagram-Werbung zu messen und Werbung auszuspielen. Eine Verarbeitung in den USA ist möglich. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +
         '</div>' +
         '<div class="pe-cookie-actions">' +
@@ -202,6 +258,7 @@
     const choice = parseChoice();
     banner.querySelector('#pe-consent-lead').checked = !!(choice && choice.lead);
     banner.querySelector('#pe-consent-analytics').checked = !!(choice && choice.analytics);
+    banner.querySelector('#pe-consent-marketing').checked = !!(choice && choice.marketing);
     banner.hidden = false;
   }
 
@@ -213,14 +270,16 @@
     if(!['granted','denied','selected'].includes(status)) return;
     const lead = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-lead').checked);
     const analytics = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-analytics').checked);
+    const marketing = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-marketing').checked);
     const now = new Date().toISOString();
-    writeCookie(CHOICE_COOKIE, VERSION + '|' + (lead ? 'granted' : 'denied') + '|' + (analytics ? 'granted' : 'denied') + '|' + now, MAX_AGE);
+    writeCookie(CHOICE_COOKIE, VERSION + '|' + (lead ? 'granted' : 'denied') + '|' + (analytics ? 'granted' : 'denied') + '|' + (marketing ? 'granted' : 'denied') + '|' + now, MAX_AGE);
     if(lead) ensureLeadCookies(pageEnteredAt);
     else clearLeadCookies();
     syncAnalytics(analytics);
+    syncMarketing(marketing);
     syncLeadFields();
     hideBanner();
-    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:lead ? 'granted' : 'denied',lead:lead,analytics:analytics,at:now}}));
+    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:lead ? 'granted' : 'denied',lead:lead,analytics:analytics,marketing:marketing,at:now}}));
   }
 
   function openSettings(){
@@ -248,7 +307,9 @@
   } else {
     clearLeadCookies();
   }
+  if(choice && choice.needsUpdate) showBanner();
   syncAnalytics(!!(choice && choice.analytics));
+  syncMarketing(!!(choice && choice.marketing));
   syncLeadFields();
 
   window.PaschenCookieConsent = {
