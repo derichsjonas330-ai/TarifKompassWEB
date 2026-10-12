@@ -50,7 +50,7 @@ async function walk(directory) {
   return result;
 }
 
-const topLevel = (await readdir(root)).filter(name => /\.html$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name));
+const topLevel = (await readdir(root)).filter(name => /\.html$/.test(name) || ['robots.txt', 'sitemap.xml', 'favicon.ico'].includes(name));
 const publicFiles = [...topLevel, ...await walk('assets'), ...await walk('news')];
 
 // Stop deployment if an HTML or CSS resource is absent from the repository.
@@ -64,7 +64,7 @@ for (const file of publicFiles) {
   }
   for (const match of content.matchAll(/<(script|img|source|link)\b[^>]*>/gi)) {
     const tag = match[0];
-    if (match[1].toLowerCase() === 'link' && !/\brel=["'](?:stylesheet|preload)["']/i.test(tag)) continue;
+    if (match[1].toLowerCase() === 'link' && !/\brel=["'](?:stylesheet|preload|icon|apple-touch-icon)["']/i.test(tag)) continue;
     const reference = tag.match(/\b(?:src|href)=["']([^"']+)["']/i)?.[1];
     if (reference) await requireAsset(reference, source);
     const srcset = tag.match(/\bsrcset=["']([^"']+)["']/i)?.[1];
