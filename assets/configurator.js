@@ -148,6 +148,8 @@
       });
       if(!response.ok) throw new Error('Übermittlung fehlgeschlagen: ' + response.status);
       show(4);
+      // Keep the confirmation visible while the success page loads.
+      window.location.assign(form.getAttribute('action') || '/danke');
     } catch(err){
       submitting = false;
       if(submitButton){ submitButton.disabled = false; submitButton.textContent = submitLabel; }
