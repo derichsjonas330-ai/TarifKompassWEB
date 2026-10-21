@@ -72,6 +72,7 @@
         <!-- Netlify Forms: automatische Erkennung und Verarbeitung aktiviert -->
         <form id="konfForm" name="tarifanfrage" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="tarifanfrage">
+          <input type="hidden" name="pe_integration_source" value="tarifanfrage">
           <input type="hidden" name="subject" value="Neue Tarif-Anfrage über paschenenergie.de">
           <input type="hidden" id="k-verbrauch-berechnet" name="verbrauch_berechnet" value="">
           <input type="hidden" id="k-sparpotenzial" name="sparpotenzial" value="">
@@ -270,3 +271,4 @@
   <div class="mobile-dock" aria-label="Schnellzugriff"><a href="#analyse">Tarif prüfen lassen <span aria-hidden="true">↗</span></a></div>
 </body>
 </html>
+

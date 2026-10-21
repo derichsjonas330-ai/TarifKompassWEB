@@ -1,0 +1,15 @@
+{
+  "name": "paschen-energie-website",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "test": "node --test tests/hubspot-submission.test.mts",
+    "typecheck": "tsc --noEmit --strict --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions netlify/functions/tarifanfrage-hubspot.mts tests/hubspot-submission.test.mts"
+  },
+  "engines": { "node": ">=22.18.0" },
+  "devDependencies": {
+    "@netlify/functions": "6.0.3",
+    "@types/node": "^24.0.0",
+    "typescript": "5.9.3"
+  }
+}

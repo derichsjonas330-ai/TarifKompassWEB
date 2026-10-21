@@ -439,6 +439,7 @@ section h2{max-width:30ch}
         <!-- Netlify Forms: automatische Erkennung und Verarbeitung aktiviert -->
         <form id="konfForm" name="tarifanfrage" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="tarifanfrage">
+          <input type="hidden" name="pe_integration_source" value="tarifanfrage">
           <input type="hidden" name="subject" value="Neue Tarif-Anfrage über paschenenergie.de">
           <input type="hidden" id="k-verbrauch-berechnet" name="verbrauch_berechnet" value="">
           <input type="hidden" id="k-sparpotenzial" name="sparpotenzial" value="">
@@ -824,7 +825,7 @@ section h2{max-width:30ch}
     </div>
     <div class="footer-legal">
       <div id="datenschutz">
-        <p><strong>Datenschutz bei Online-Anfragen:</strong> Beim Absenden des Tarif-Konfigurators werden Ihre Angaben über Netlify Forms verarbeitet, dort gespeichert und als Benachrichtigung an das bei Hostinger geführte Postfach info@paschenenergie.de übermittelt. Die Verarbeitung erfolgt zur Bearbeitung Ihrer Anfrage und zur Durchführung vorvertraglicher Maßnahmen (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO).</p>
+        <p><strong>Datenschutz bei Online-Anfragen:</strong> Beim Absenden des Tarif-Konfigurators werden Ihre Angaben über Netlify Forms verarbeitet und gespeichert. Eine E-Mail-Benachrichtigung geht an unser Hostinger-Postfach info@paschenenergie.de. Zusätzlich werden die erforderlichen Anfrage- und Kontaktdaten an HubSpot zur Anfragenverwaltung und für interne Benachrichtigungen übertragen. Die Bearbeitung Ihrer Anfrage und vorvertragliche Maßnahmen erfolgen auf Grundlage von Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO. Die interne Organisation und Benachrichtigung dienen unserem berechtigten Interesse an einer zuverlässigen, zügigen Bearbeitung (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).</p>
         <p style="margin-top:.6rem">Anfragen ohne anschließenden Vertrag werden spätestens sechs Monate nach abschließender Bearbeitung gelöscht, soweit keine gesetzlichen Aufbewahrungspflichten oder die Erforderlichkeit zur Rechtsverteidigung entgegenstehen. Einzelheiten finden Sie in der <a href="/datenschutz.html" style="display:inline;color:inherit;text-decoration:underline">Datenschutzerklärung</a>.</p>
       </div>
     </div>
@@ -864,3 +865,4 @@ section h2{max-width:30ch}
 <script src="/assets/configurator.js"></script>
 </body>
 </html>
+
