@@ -3,8 +3,10 @@
 
   if(window.PaschenCookieConsent) return;
 
-  const VERSION = '4';
+  const VERSION = '5';
   const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
+  const ADS_ID = 'AW-18528448427';
+  const ADS_CONVERSION_LABEL = 'Oo2-CN76uaUdEKvfhoNF';
   const META_PIXEL_ID = '1853128992346096';
   const MAX_AGE = 60 * 60 * 24 * 180;
   const CHOICE_COOKIE = 'pe_cookie_choice';
@@ -12,6 +14,10 @@
   const FIRST_CONTACT_COOKIE = 'pe_first_contact';
   const pageEnteredAt = new Date().toISOString();
   let analyticsStarted = false;
+  let googleStarted = false;
+  let googleReady = false;
+  let adsStarted = false;
+  let adsConversionSent = false;
   let metaStarted = false;
   let metaReady = false;
   let metaPageViewSent = false;
@@ -38,17 +44,18 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    // Keep existing lead/analytics choices; the expanded Meta notice requires a fresh choice.
+    // Keep existing choices, but never infer Google Ads consent from earlier versions.
     const legacyV2 = parts[0] === '2' && parts.length === 4;
     const legacyV3 = parts[0] === '3' && parts.length === 5;
-    const needsUpdate = legacyV2 || legacyV3;
-    if(!needsUpdate && (parts[0] !== VERSION || parts.length !== 5)) return null;
-    const purposes = legacyV2 ? parts.slice(1,3) : parts.slice(1,4);
+    const legacyV4 = parts[0] === '4' && parts.length === 5;
+    const needsUpdate = legacyV2 || legacyV3 || legacyV4;
+    if(!needsUpdate && (parts[0] !== VERSION || parts.length !== 6)) return null;
+    const purposes = parts.slice(1, legacyV2 ? 3 : needsUpdate ? 4 : 5);
     if(!purposes.every(function(value){ return ['granted','denied'].includes(value); })) return null;
-    const at = parts[legacyV2 ? 3 : 4];
+    const at = parts[legacyV2 ? 3 : needsUpdate ? 4 : 5];
     const timestamp = Date.parse(at);
     if(!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp >= MAX_AGE * 1000) return null;
-    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!needsUpdate && parts[3] === 'granted', at:at, version:parts[0], needsUpdate:needsUpdate};
+    return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!legacyV2 && !legacyV3 && parts[3] === 'granted', ads:!needsUpdate && parts[4] === 'granted', at:at, version:parts[0], needsUpdate:needsUpdate};
   }
 
   function clearCookies(names){
@@ -75,11 +82,16 @@
     clearCookies(['_fbp', '_fbc']);
   }
 
-  function consentSettings(granted){
+  function clearAdsCookies(){
+    const names = document.cookie.split(';').map(function(cookie){ return cookie.trim().split('=')[0]; });
+    clearCookies(names.filter(function(name){ return /^_gcl_/.test(name); }));
+  }
+
+  function consentSettings(analytics, ads){
     return {
-      analytics_storage:granted ? 'granted' : 'denied',
-      ad_storage:'denied',
-      ad_user_data:'denied',
+      analytics_storage:analytics ? 'granted' : 'denied',
+      ad_storage:ads ? 'granted' : 'denied',
+      ad_user_data:ads ? 'granted' : 'denied',
       ad_personalization:'denied'
     };
   }
@@ -90,42 +102,76 @@
     catch(_error){ return ''; }
   }
 
-  function syncAnalytics(granted){
-    window['ga-disable-' + MEASUREMENT_ID] = !granted;
-    if(!granted){
-      if(analyticsStarted) window.gtag('consent', 'update', consentSettings(false));
-      clearAnalyticsCookies();
-      return;
-    }
-    if(analyticsStarted){
-      window.gtag('consent', 'update', consentSettings(true));
-      return;
-    }
-    analyticsStarted = true;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
-    // Basic consent mode: no Google script or request before analytics opt-in.
-    window.gtag('consent', 'default', consentSettings(false));
-    window.gtag('consent', 'update', consentSettings(true));
-    window.gtag('js', new Date());
-    window.gtag('config', MEASUREMENT_ID, {
-      allow_google_signals:false,
-      allow_ad_personalization_signals:false,
-      page_location:withoutUrlParameters(window.location.href),
-      page_referrer:withoutUrlParameters(document.referrer),
-      cookie_expires:MAX_AGE,
-      cookie_update:false,
-      cookie_flags:'SameSite=Lax;Secure'
+  function adsPageLocation(){
+    const location = new URL(window.location.href);
+    const clean = new URL(location.origin + location.pathname);
+    // Preserve attribution identifiers, without forwarding arbitrary query/form values.
+    ['gclid','gbraid','wbraid'].forEach(function(name){
+      const value = location.searchParams.get(name);
+      if(value) clean.searchParams.set(name, value);
     });
-    const script = document.createElement('script');
-    script.id = 'pe-google-analytics';
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
-    script.addEventListener('load', function(){
-      const choice = parseChoice();
-      if(!choice || !choice.analytics) syncAnalytics(false);
-    });
-    document.head.appendChild(script);
+    return clean.href;
+  }
+
+  function syncGoogle(choice){
+    const analytics = !!(choice && choice.analytics);
+    const ads = !!(choice && choice.ads);
+    window['ga-disable-' + MEASUREMENT_ID] = !analytics;
+    if(!analytics) clearAnalyticsCookies();
+    if(!ads) clearAdsCookies();
+    if(googleStarted) window.gtag('consent', 'update', consentSettings(analytics, ads));
+    if(!analytics && !ads) return;
+    if(!googleStarted){
+      googleStarted = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      window.gtag('consent', 'default', consentSettings(false, false));
+      window.gtag('set', 'ads_data_redaction', true);
+      window.gtag('set', 'allow_ad_personalization_signals', false);
+      window.gtag('consent', 'update', consentSettings(analytics, ads));
+      window.gtag('js', new Date());
+      // Basic consent mode: one library, loaded only after a relevant opt-in.
+      const script = document.createElement('script');
+      script.id = 'pe-google-tag';
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + (ads ? ADS_ID : MEASUREMENT_ID);
+      script.addEventListener('load', function(){
+        googleReady = true;
+        // Re-read the saved choice: consent may have been withdrawn while loading.
+        syncGoogle(parseChoice());
+      });
+      document.head.appendChild(script);
+    }
+    if(!googleReady) return;
+    if(analytics && !analyticsStarted){
+      analyticsStarted = true;
+      window.gtag('config', MEASUREMENT_ID, {
+        allow_google_signals:false,
+        allow_ad_personalization_signals:false,
+        page_location:withoutUrlParameters(window.location.href),
+        page_referrer:withoutUrlParameters(document.referrer),
+        cookie_expires:MAX_AGE,
+        cookie_update:false,
+        cookie_flags:'SameSite=Lax;Secure'
+      });
+    }
+    if(ads && !adsStarted){
+      adsStarted = true;
+      window.gtag('config', ADS_ID, {
+        allow_ad_personalization_signals:false,
+        allow_enhanced_conversions:false,
+        page_location:adsPageLocation(),
+        page_referrer:withoutUrlParameters(document.referrer)
+      });
+    }
+    if(ads && ADS_CONVERSION_LABEL && !adsConversionSent && /^\/danke(?:\.html)?\/?$/.test(window.location.pathname)){
+      adsConversionSent = true;
+      window.gtag('event', 'conversion', {
+        send_to:ADS_ID + '/' + ADS_CONVERSION_LABEL,
+        page_location:withoutUrlParameters(window.location.href),
+        page_referrer:withoutUrlParameters(document.referrer)
+      });
+    }
   }
 
   function syncMarketing(granted){
@@ -223,7 +269,7 @@
       if(leadField) leadField.value = '';
       if(firstField) firstField.value = '';
     }
-    if(consentField) consentField.value = choice ? 'Lead-Cookies: ' + (choice.lead ? 'erteilt' : 'abgelehnt') + '; Google Analytics: ' + (choice.analytics ? 'erteilt' : 'abgelehnt') + '; Meta Pixel: ' + (choice.marketing ? 'erteilt' : 'abgelehnt') + '; am ' + choice.at + ' (Version ' + choice.version + ')' : 'Keine Entscheidung';
+    if(consentField) consentField.value = choice ? 'Lead-Cookies: ' + (choice.lead ? 'erteilt' : 'abgelehnt') + '; Google Analytics: ' + (choice.analytics ? 'erteilt' : 'abgelehnt') + '; Meta Pixel: ' + (choice.marketing ? 'erteilt' : 'abgelehnt') + '; Google Ads: ' + (choice.ads ? 'erteilt' : 'abgelehnt') + '; am ' + choice.at + ' (Version ' + choice.version + ')' : 'Keine Entscheidung';
   }
 
   function buildBanner(){
@@ -241,8 +287,9 @@
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited verarbeitet Ihre IP-Adresse, Seitenaufrufe und Browserkennungen zur Werbemessung und für personalisierte Werbung auf Facebook und Instagram. Eine Verknüpfung mit Ihrem Meta-Konto und eine Verarbeitung in den USA sind möglich. Pixel-Cookies: in der Regel 90 Tage, bei weiteren Besuchen erneuerbar. Nur mit Ihrer Zustimmung.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-ads"><span><strong>Werbemessung mit Google Ads</strong><span>Google Ireland Limited verarbeitet Seitenaufrufe, den Aufruf der Bestätigungsseite, IP-Adresse, Browserdaten und Anzeigenklickkennungen, um den Erfolg unserer Google-Anzeigen zu messen. Eine Verarbeitung in den USA ist möglich. Cookies zur Anzeigenzuordnung: in der Regel bis zu 90 Tage. Keine personalisierte Werbung durch diese Einbindung. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +
-          '<p class="pe-cookie-details"><a href="/datenschutz#meta-pixel">Details zu Meta Pixel und Widerruf</a></p>' +
+          '<p class="pe-cookie-details"><a href="/datenschutz#google-ads">Details zu Google Ads</a> · <a href="/datenschutz#meta-pixel">Details zu Meta Pixel</a> · <a href="/datenschutz#cookie-widerruf">Einwilligung widerrufen</a></p>' +
         '</div>' +
         '<div class="pe-cookie-actions">' +
           '<button class="pe-cookie-choice" type="button" data-pe-cookie="denied">Nur erforderliche Cookies</button>' +
@@ -262,6 +309,7 @@
     banner.querySelector('#pe-consent-lead').checked = !!(choice && choice.lead);
     banner.querySelector('#pe-consent-analytics').checked = !!(choice && choice.analytics);
     banner.querySelector('#pe-consent-marketing').checked = !!(choice && choice.marketing);
+    banner.querySelector('#pe-consent-ads').checked = !!(choice && choice.ads);
     banner.hidden = false;
   }
 
@@ -274,15 +322,16 @@
     const lead = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-lead').checked);
     const analytics = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-analytics').checked);
     const marketing = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-marketing').checked);
+    const ads = status === 'granted' || (status === 'selected' && banner.querySelector('#pe-consent-ads').checked);
     const now = new Date().toISOString();
-    writeCookie(CHOICE_COOKIE, VERSION + '|' + (lead ? 'granted' : 'denied') + '|' + (analytics ? 'granted' : 'denied') + '|' + (marketing ? 'granted' : 'denied') + '|' + now, MAX_AGE);
+    writeCookie(CHOICE_COOKIE, VERSION + '|' + (lead ? 'granted' : 'denied') + '|' + (analytics ? 'granted' : 'denied') + '|' + (marketing ? 'granted' : 'denied') + '|' + (ads ? 'granted' : 'denied') + '|' + now, MAX_AGE);
     if(lead) ensureLeadCookies(pageEnteredAt);
     else clearLeadCookies();
-    syncAnalytics(analytics);
+    syncGoogle(parseChoice());
     syncMarketing(marketing);
     syncLeadFields();
     hideBanner();
-    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:lead ? 'granted' : 'denied',lead:lead,analytics:analytics,marketing:marketing,at:now}}));
+    document.dispatchEvent(new CustomEvent('pe:cookie-choice',{detail:{status:lead ? 'granted' : 'denied',lead:lead,analytics:analytics,marketing:marketing,ads:ads,at:now}}));
   }
 
   function openSettings(){
@@ -311,7 +360,7 @@
     clearLeadCookies();
   }
   if(choice && choice.needsUpdate) showBanner();
-  syncAnalytics(!!(choice && choice.analytics));
+  syncGoogle(choice);
   syncMarketing(!!(choice && choice.marketing));
   syncLeadFields();
 
@@ -322,3 +371,4 @@
     ensureRequestId:ensureRequestId
   };
 })();
+
