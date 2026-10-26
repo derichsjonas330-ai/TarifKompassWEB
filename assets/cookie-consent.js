@@ -3,10 +3,13 @@
 
   if(window.PaschenCookieConsent) return;
 
-  const VERSION = '5';
+  const VERSION = '6';
   const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
   const ADS_ID = 'AW-18528448427';
   const ADS_CONVERSION_LABEL = 'Oo2-CN76uaUdEKvfhoNF';
+  const ADS_PHONE_LABEL = '6-NtCJzgiKodEKvfhoNF';
+  const ADS_PHONE_NUMBER = '0176 16818944';
+  const ADS_PHONE_HREF = 'tel:+4917616818944';
   const META_PIXEL_ID = '1853128992346096';
   const MAX_AGE = 60 * 60 * 24 * 180;
   const CHOICE_COOKIE = 'pe_cookie_choice';
@@ -18,6 +21,9 @@
   let googleReady = false;
   let adsStarted = false;
   let adsConversionSent = false;
+  let adsPhoneStarted = false;
+  let adsPhoneGeneration = 0;
+  let adsPhoneLinks = [];
   let metaStarted = false;
   let metaReady = false;
   let metaPageViewSent = false;
@@ -44,15 +50,17 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    // Keep existing choices, but never infer Google Ads consent from earlier versions.
+    // Keep other choices, but request fresh Ads consent for the added call measurement.
     const legacyV2 = parts[0] === '2' && parts.length === 4;
     const legacyV3 = parts[0] === '3' && parts.length === 5;
     const legacyV4 = parts[0] === '4' && parts.length === 5;
-    const needsUpdate = legacyV2 || legacyV3 || legacyV4;
+    const legacyV5 = parts[0] === '5' && parts.length === 6;
+    const needsUpdate = legacyV2 || legacyV3 || legacyV4 || legacyV5;
     if(!needsUpdate && (parts[0] !== VERSION || parts.length !== 6)) return null;
-    const purposes = parts.slice(1, legacyV2 ? 3 : needsUpdate ? 4 : 5);
+    const purposeEnd = legacyV2 ? 3 : (legacyV3 || legacyV4) ? 4 : 5;
+    const purposes = parts.slice(1, purposeEnd);
     if(!purposes.every(function(value){ return ['granted','denied'].includes(value); })) return null;
-    const at = parts[legacyV2 ? 3 : needsUpdate ? 4 : 5];
+    const at = parts[purposeEnd];
     const timestamp = Date.parse(at);
     if(!Number.isFinite(timestamp) || timestamp > Date.now() || Date.now() - timestamp >= MAX_AGE * 1000) return null;
     return {status:parts[1], lead:parts[1] === 'granted', analytics:parts[2] === 'granted', marketing:!legacyV2 && !legacyV3 && parts[3] === 'granted', ads:!needsUpdate && parts[4] === 'granted', at:at, version:parts[0], needsUpdate:needsUpdate};
@@ -84,7 +92,54 @@
 
   function clearAdsCookies(){
     const names = document.cookie.split(';').map(function(cookie){ return cookie.trim().split('=')[0]; });
-    clearCookies(names.filter(function(name){ return /^_gcl_/.test(name); }));
+    clearCookies(names.filter(function(name){ return /^_gcl_/.test(name) || name === 'gwcc'; }));
+  }
+
+  function restorePhoneLinks(){
+    if(adsPhoneStarted) adsPhoneGeneration++;
+    adsPhoneStarted = false;
+    adsPhoneLinks.forEach(function(item){
+      item.link.setAttribute('href', item.href);
+      item.texts.forEach(function(text){ text.node.nodeValue = text.value; });
+    });
+    adsPhoneLinks = [];
+  }
+
+  function configurePhoneTracking(){
+    if(adsPhoneStarted) return;
+    const numberPattern = /(?:0176|\+49\s*176)\s*16818944/g;
+    adsPhoneLinks = Array.from(document.querySelectorAll('a[href^="tel:"]'))
+      .filter(function(link){ return link.getAttribute('href') === ADS_PHONE_HREF; })
+      .map(function(link){
+        const texts = [];
+        // Preserve nested markup, icons and CTA labels; only replace actual number text.
+        const walker = document.createTreeWalker(link, 4);
+        let node;
+        while((node = walker.nextNode())){
+          if(node.nodeValue.search(numberPattern) !== -1) texts.push({node:node, value:node.nodeValue});
+        }
+        return {link:link, href:link.getAttribute('href'), texts:texts};
+      });
+    if(!adsPhoneLinks.length) return;
+    adsPhoneStarted = true;
+    const generation = ++adsPhoneGeneration;
+    window.gtag('config', ADS_ID + '/' + ADS_PHONE_LABEL, {
+      phone_conversion_number:ADS_PHONE_NUMBER,
+      phone_conversion_options:{cache:false},
+      phone_conversion_callback:function(formattedNumber, mobileNumber){
+        const choice = parseChoice();
+        if(!choice || !choice.ads || generation !== adsPhoneGeneration) return;
+        if(typeof formattedNumber !== 'string' || typeof mobileNumber !== 'string' || !/^\+?\d+$/.test(mobileNumber)) return;
+        adsPhoneLinks.forEach(function(item){
+          item.link.setAttribute('href', 'tel:' + mobileNumber);
+          item.texts.forEach(function(text){ text.node.nodeValue = text.value.replace(numberPattern, function(){ return formattedNumber; }); });
+        });
+      },
+      allow_ad_personalization_signals:false,
+      allow_enhanced_conversions:false,
+      page_location:adsPageLocation(),
+      page_referrer:withoutUrlParameters(document.referrer)
+    });
   }
 
   function consentSettings(analytics, ads){
@@ -118,7 +173,10 @@
     const ads = !!(choice && choice.ads);
     window['ga-disable-' + MEASUREMENT_ID] = !analytics;
     if(!analytics) clearAnalyticsCookies();
-    if(!ads) clearAdsCookies();
+    if(!ads){
+      clearAdsCookies();
+      restorePhoneLinks();
+    }
     if(googleStarted) window.gtag('consent', 'update', consentSettings(analytics, ads));
     if(!analytics && !ads) return;
     if(!googleStarted){
@@ -164,6 +222,7 @@
         page_referrer:withoutUrlParameters(document.referrer)
       });
     }
+    if(ads) configurePhoneTracking();
     if(ads && ADS_CONVERSION_LABEL && !adsConversionSent && /^\/danke(?:\.html)?\/?$/.test(window.location.pathname)){
       adsConversionSent = true;
       window.gtag('event', 'conversion', {
@@ -287,7 +346,7 @@
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited verarbeitet Ihre IP-Adresse, Seitenaufrufe und Browserkennungen zur Werbemessung und für personalisierte Werbung auf Facebook und Instagram. Eine Verknüpfung mit Ihrem Meta-Konto und eine Verarbeitung in den USA sind möglich. Pixel-Cookies: in der Regel 90 Tage, bei weiteren Besuchen erneuerbar. Nur mit Ihrer Zustimmung.</span></span></label>' +
-            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-ads"><span><strong>Werbemessung mit Google Ads</strong><span>Google Ireland Limited verarbeitet Seitenaufrufe, den Aufruf der Bestätigungsseite, IP-Adresse, Browserdaten und Anzeigenklickkennungen, um den Erfolg unserer Google-Anzeigen zu messen. Eine Verarbeitung in den USA ist möglich. Cookies zur Anzeigenzuordnung: in der Regel bis zu 90 Tage. Keine personalisierte Werbung durch diese Einbindung. Nur mit Ihrer Zustimmung.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-ads"><span><strong>Werbemessung mit Google Ads</strong><span>Google Ireland Limited verarbeitet Seitenaufrufe, den Aufruf der Bestätigungsseite, IP-Adresse, Browserdaten und Anzeigenklickkennungen zur Werbemessung. Nach Anzeigenbesuchen kann eine Google-Weiterleitungsnummer Anrufe zuordnen; dabei werden Anrufzeitpunkt, Dauer, Verbindungsstatus und gegebenenfalls die Anrufernummer verarbeitet. Eine Verarbeitung in den USA ist möglich. Cookies zur Anzeigenzuordnung: in der Regel bis zu 90 Tage. Keine personalisierte Werbung durch diese Einbindung. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +
           '<p class="pe-cookie-details"><a href="/datenschutz#google-ads">Details zu Google Ads</a> · <a href="/datenschutz#meta-pixel">Details zu Meta Pixel</a> · <a href="/datenschutz#cookie-widerruf">Einwilligung widerrufen</a></p>' +
         '</div>' +
