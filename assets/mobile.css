@@ -32,9 +32,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .topbar-pages a{color:var(--navy);font-size:.84rem;font-weight:700;text-decoration:none;line-height:1.2;padding:9px 13px;border-radius:8px;white-space:nowrap}
 .topbar-pages a:hover,.topbar-pages a[aria-current="page"]{background:var(--navy-hell)}
 .topbar-pages a[aria-current="page"]{box-shadow:inset 0 -2px var(--gold)}
-.mobile-welcome{position:relative;isolation:isolate;overflow:hidden;background:#f7f8fa}
-/* A soft photo band stays fixed while the form extends onto the light section. */
-.mobile-scene{position:absolute;inset:0 0 auto;height:430px;overflow:hidden;pointer-events:none;background:#55616a}
+.mobile-welcome{position:relative;isolation:isolate;overflow:hidden;background:#55616a}
+/* The soft photograph covers the complete welcome area, including the form. */
+.mobile-scene{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:#55616a}
 .mobile-scene img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:42% center;filter:blur(4px) saturate(.8);transform:scale(1.045)}
 .mobile-scene::after{content:"";position:absolute;inset:0;background:rgba(12,32,45,.44)}
 
@@ -110,5 +110,5 @@ footer .pe-cookie-settings{color:#ADC2D3;text-align:left;text-decoration:none}
 body:has(.pe-cookie-banner:not([hidden])) .mobile-dock{display:none}
 @media(max-width:370px){.wrap{width:calc(100% - 28px)}.mobile-hero{padding-top:16px}.mobile-hero h1{font-size:1.5rem}.analysis-section .konf-body{padding:18px 13px 14px}.tile .t-lbl{font-size:.76rem}.advisor-card{gap:10px;padding:12px}.advisor-card .advisor-experience{font-size:.7rem}}
 @media(max-width:430px){.konf-nav{flex-wrap:wrap}.konf-nav .btn{flex:1 0 100%;order:1}.konf-nav .konf-back{order:2;min-height:44px}.konf-result .konf-nav .btn{font-size:.94rem}}
-@media(min-width:700px){body{padding-bottom:0}.mobile-dock{display:none}.mobile-scene{height:540px}.mobile-scene img{object-position:center 48%;filter:blur(5px) saturate(.8);transform:scale(1.035)}.mobile-hero{padding:28px 0 24px}.mobile-hero h1{font-size:2rem;max-width:100%}.analysis-section{padding-bottom:35px}.human-section{padding:36px 0}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:700px){body{padding-bottom:0}.mobile-dock{display:none}.mobile-scene img{object-position:center 48%;filter:blur(5px) saturate(.8);transform:scale(1.035)}.mobile-hero{padding:28px 0 24px}.mobile-hero h1{font-size:2rem;max-width:100%}.analysis-section{padding-bottom:35px}.human-section{padding:36px 0}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mobile-dock{transition:none}}
