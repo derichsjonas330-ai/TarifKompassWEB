@@ -73,12 +73,13 @@ nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.98);box-shadow
 @media(max-width:720px){.nav-inner{min-height:0;flex-wrap:wrap;gap:0;padding-top:13px}.logo{margin-right:auto;font-size:1.24rem}.nav-right{display:none}.nav-pages{order:3;flex-basis:100%;margin:12px 0 0;justify-content:center;border-top:1px solid var(--linie)}.nav-pages a{padding:10px 13px;font-size:.84rem}}
 
 /* Hero */
-.hero{position:relative;isolation:isolate;overflow:hidden;background:#b7ae9d;border-bottom:1px solid var(--linie)}
-.hero-scene{position:absolute;pointer-events:none;z-index:0;inset:0}
-.hero-scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:35% top}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:#f7f8fa;border-bottom:1px solid var(--linie)}
+.hero-scene{position:absolute;pointer-events:none;z-index:0;inset:0 0 auto;height:540px;overflow:hidden;background:#55616a}
+.hero-scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 48%;filter:blur(5px) saturate(.8);transform:scale(1.035)}
+.hero-scene::after{content:"";position:absolute;inset:0;background:rgba(12,32,45,.44)}
 
 .ai-image-label{position:absolute;z-index:3;right:12px;bottom:12px;padding:3px 6px;border-radius:3px;background:rgba(11,38,60,.88);color:#fff;font:400 .75rem/1.4 var(--fb);letter-spacing:0;text-shadow:none}
-.hero .wrap{position:relative;z-index:1;display:block;max-width:720px;padding-top:28px;padding-bottom:36px}
+.hero .wrap{position:relative;z-index:1;display:block;max-width:760px;padding-top:28px;padding-bottom:36px}
 .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);color:var(--navy);margin-bottom:1.2rem;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .hero .sub{color:var(--grau);font-size:1.12rem;max-width:36rem}
@@ -391,26 +392,27 @@ section h2{max-width:30ch}
 }
 
 /* A compact introduction leads directly into the configurator. */
-.hero-intro{text-align:center;margin-bottom:20px;padding:12px 16px;border:1px solid #8196a8;border-radius:12px;background:#fffcf7;box-shadow:0 6px 20px rgba(12,42,71,.14)}
-.hero-intro .eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:10px;padding:0;background:none;color:var(--grau)}
-.hero .hero-intro h1{font-size:clamp(1.7rem,3vw,2.25rem);line-height:1.16;margin:0 auto 10px;max-width:29ch;text-shadow:none}
-.hero .hero-intro h1 em{color:var(--navy)}
-.hero-scope{font-size:.8rem;line-height:1.45;color:var(--grau)}
-.hero-side{gap:16px}
-.hero .konf{box-shadow:0 12px 40px rgba(12,42,71,.24);border:1px solid #8196a8}
+.hero-intro{text-align:center;margin-bottom:24px;padding:14px 18px;border:1px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(12,32,45,.18)}
+.hero-intro .eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:8px;padding:0;background:none;color:#f2e4c6}
+.hero .hero-intro h1{font-size:clamp(1.7rem,3vw,2.25rem);line-height:1.16;margin:0 auto 10px;max-width:32ch;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.12)}
+.hero .hero-intro h1 em{color:#fff}
+.hero-scope{font-size:.8rem;line-height:1.45;color:#fff}
+.hero-side{gap:16px;max-width:560px;margin-inline:auto}
+.hero .konf{box-shadow:0 8px 26px rgba(12,42,71,.13);border:1px solid #d6dee5}
 .hero .konf-body{padding:22px 28px}
+.hero .konf-step{padding:0}
 .hero .konf-kicker{margin-bottom:12px}
 .hero .tiles{margin-bottom:18px}
 .hero .tile{padding:13px 8px;gap:6px}
 .hero .konf .btn{background:#d6a543;color:#142c42;box-shadow:none;font-weight:700}
-.price-promise{text-align:center;padding:10px 16px;background:rgba(250,248,244,.96);border-radius:10px;color:var(--navy);font-size:.9rem;line-height:1.4}
+.price-promise{text-align:center;padding:10px 16px;background:#fff;border-radius:10px;color:var(--navy);font-size:.9rem;line-height:1.4}
 .price-promise p{font-size:.74rem;color:var(--grau);max-width:57ch;margin:4px auto 0}
 .hero .berater-card{padding:16px 20px;box-shadow:none;gap:16px}
 .hero .berater-card h2{font-size:1.15rem;margin:0 0 3px}
 .hero .berater-card .role{margin-bottom:4px}
 .hero .advisor-slot{width:60px;height:74px;border-width:2px}
 .advisor-trust{font-size:.8rem;line-height:1.45;color:var(--navy);font-weight:600}
-.hero-advice{font-size:.94rem;line-height:1.6;color:var(--grau);padding:14px 16px;background:rgba(250,248,244,.96);border-radius:10px}
+.hero-advice{font-size:.94rem;line-height:1.6;color:var(--grau);padding:14px 16px;background:#fff;border-radius:10px}
 .hero-advice p+p{margin-top:10px}
 .hero-advice .advice-note{font-size:.78rem}
 .steps,.experts{padding:42px 0}
@@ -428,7 +430,7 @@ section h2{max-width:30ch}
 .landing-faq p{max-width:75ch;color:var(--grau);font-size:.94rem;padding:0 0 18px}
 .contact-strip{margin-top:28px}
 .final{padding:42px 0}
-@media(max-width:600px){.hero .wrap{padding:22px 16px 28px}.hero .konf-body{padding:20px 16px}.hero .berater-card{padding:14px}.advisor-trust{font-size:.76rem}}
+@media(max-width:600px){.hero-scene{height:430px}.hero-scene img{object-position:42% center;filter:blur(4px) saturate(.8)}.hero .wrap{padding:22px 16px 28px}.hero .konf-body{padding:20px 16px}.hero .berater-card{padding:14px}.advisor-trust{font-size:.76rem}}
 </style>
 </head>
 <body>
