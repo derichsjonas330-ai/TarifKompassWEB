@@ -149,8 +149,11 @@ test('compact banner keeps every decision available outside initially collapsed 
   for (const purpose of ['lead', 'analytics', 'marketing', 'ads']) {
     assert.equal(banner.querySelector(`#pe-consent-${purpose}`).checked, false);
   }
-  for (const context of ['Stefanos Paschen', 'Lead-Zuordnung', 'Google Analytics', 'Google Ads', 'Meta Pixel', 'USA']) {
+  for (const context of ['Paschen Energie', 'Lead-Zuordnung', 'Google-Statistik', 'Anrufmessung', 'Meta-Werbemessung', 'personalisierte Werbung', 'USA']) {
     assert.ok(visible.includes(context), `${context} remains visible before opening details`);
+  }
+  for (const context of ['Stefanos Paschen Vertrieb &amp; Energie', 'Google Analytics', 'Google Ads', 'Meta Pixel']) {
+    assert.ok(disclosure[2].includes(context), `${context} remains available in the full disclosure`);
   }
 });
 

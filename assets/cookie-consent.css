@@ -133,6 +133,10 @@ footer .footer-links .pe-cookie-settings:hover{
   .pe-cookie-actions{min-width:0;width:100%}
 }
 @media(max-width:460px){
+  .pe-cookie-panel{padding:1rem;gap:.75rem}
+  .pe-cookie-copy p{font-size:.94rem;line-height:1.45}
+  .pe-cookie-copy .pe-cookie-notice{margin-top:.4rem}
+  .pe-cookie-disclosure{margin-top:.5rem}
   .pe-cookie-actions{grid-template-columns:1fr}
   .pe-cookie-choice{width:100%}
 }

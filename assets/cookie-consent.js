@@ -340,13 +340,13 @@
     banner.innerHTML =
       '<div class="pe-cookie-panel">' +
         '<div class="pe-cookie-copy">' +
-          '<h2>Ihre Entscheidung zu Cookies</h2>' +
-          '<p>Stefanos Paschen Vertrieb &amp; Energie nutzt mit Ihrer Zustimmung Cookies für Lead-Zuordnung, Statistik (Google Analytics), Werbe- und Anrufmessung (Google Ads) sowie Werbemessung und personalisierte Werbung (Meta Pixel). Datenverarbeitung in den USA ist möglich.</p>' +
-          '<p class="pe-cookie-notice">Ablehnen hat keine Nachteile. Ihre Auswahl ist jederzeit über „Cookie-Einstellungen“ änderbar.</p>' +
+          '<h2>Ihre Cookie-Auswahl</h2>' +
+          '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
+          '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
           '<details class="pe-cookie-disclosure">' +
             '<summary>Einstellungen und Cookie-Details</summary>' +
             '<div class="pe-cookie-disclosure-content">' +
-              '<p>Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
+              '<p>Verantwortlicher: Stefanos Paschen Vertrieb &amp; Energie. Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
