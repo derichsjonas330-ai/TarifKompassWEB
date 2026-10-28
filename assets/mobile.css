@@ -32,26 +32,27 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .topbar-pages a{color:var(--navy);font-size:.84rem;font-weight:700;text-decoration:none;line-height:1.2;padding:9px 13px;border-radius:8px;white-space:nowrap}
 .topbar-pages a:hover,.topbar-pages a[aria-current="page"]{background:var(--navy-hell)}
 .topbar-pages a[aria-current="page"]{box-shadow:inset 0 -2px var(--gold)}
-.mobile-welcome{position:relative;isolation:isolate;overflow:hidden;background:#b7ae9d}
-/* The fixed-height scene keeps its crop stable between form steps. */
-.mobile-scene{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.mobile-scene img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:27% top}
+.mobile-welcome{position:relative;isolation:isolate;overflow:hidden;background:#f7f8fa}
+/* A soft photo band stays fixed while the form extends onto the light section. */
+.mobile-scene{position:absolute;inset:0 0 auto;height:430px;overflow:hidden;pointer-events:none;background:#55616a}
+.mobile-scene img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:42% center;filter:blur(4px) saturate(.8);transform:scale(1.045)}
+.mobile-scene::after{content:"";position:absolute;inset:0;background:rgba(12,32,45,.44)}
 
 .mobile-hero,.analysis-section{position:relative;z-index:1}
-.mobile-hero{color:var(--navy);padding:18px 0 15px}
-.hero-copy{max-width:630px;padding:13px 15px;border:1px solid #8196a8;border-radius:12px;background:#fffcf7;box-shadow:0 6px 20px rgba(12,42,71,.14)}
+.mobile-hero{color:#fff;padding:22px 0 20px;text-align:center}
+.hero-copy{max-width:630px;padding:13px 15px;border:1px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(12,32,45,.32)}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;font:700 .68rem/1.2 var(--fb);text-transform:uppercase;letter-spacing:.11em;color:var(--navy);margin-bottom:9px}
 .eyebrow.light{color:#EBD8AA}
 .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
 .mobile-hero h1{font-size:clamp(1.5rem,6.1vw,1.7rem);letter-spacing:-.035em;max-width:100%;margin:0 0 10px;text-wrap:balance}
-.mobile-hero h1 em{font-style:normal;color:var(--navy)}
-.hero-scope{font-size:.79rem;line-height:1.4;color:#42546a;margin:0;max-width:50ch}
+.mobile-hero h1 em{font-style:normal;color:#fff}
+.hero-scope{font-size:.79rem;line-height:1.4;color:#fff;margin:0 auto;max-width:50ch}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:54px;padding:13px 22px;border:0;border-radius:11px;background:var(--gold);color:#162a3a;font-weight:800;text-decoration:none;line-height:1.25;box-shadow:0 8px 22px rgba(10,28,44,.15);cursor:pointer}
 .btn:hover{background:#e0aa49}
 .btn:disabled{opacity:.6;cursor:wait}
 .btn span{font-size:1.3em;line-height:0}
 .analysis-section{padding:0 0 25px}
-.analysis-section .konf{max-width:630px;margin:auto;scroll-margin-top:88px;border:1px solid #8196a8;box-shadow:0 12px 36px rgba(12,42,71,.24)}
+.analysis-section .konf{max-width:560px;margin:auto;scroll-margin-top:88px;border:1px solid #d6dee5;box-shadow:0 8px 26px rgba(12,42,71,.13)}
 .analysis-section .konf-body{padding:20px 18px 16px}
 .advisor-card{display:flex;align-items:center;gap:12px;background:#fff;color:var(--tinte);padding:14px;border:1px solid var(--linie);border-radius:12px;margin-bottom:23px}
 .advisor-card img{flex:none;width:54px;height:67px;object-fit:cover;object-position:center 18%;border-radius:8px}
@@ -64,9 +65,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .field input:focus,.field select:focus{border-color:var(--navy)}
 .consent{display:flex;align-items:flex-start;gap:9px;margin:14px 0;font-size:.81rem;line-height:1.45;color:var(--grau)}
 .consent input{flex:none;width:19px;height:19px;margin:2px 0 0;accent-color:var(--navy)}
-.form-assurance{max-width:630px;margin:12px auto 0;padding:8px 12px;border-radius:9px;background:#fffcf7;text-align:center;color:var(--grau);font-size:.78rem}
+.form-assurance{max-width:560px;margin:12px auto 0;padding:8px 12px;border-radius:9px;background:#fff;text-align:center;color:var(--grau);font-size:.78rem}
 .form-assurance span{color:#906317;margin-right:4px}
-.price-assurance{max-width:630px;margin:18px auto 0;padding:13px 16px;border-left:3px solid var(--gold);background:#F7F9FC;color:var(--navy)}
+.price-assurance{max-width:560px;margin:18px auto 0;padding:13px 16px;border-left:3px solid var(--gold);background:#fff;color:var(--navy)}
 .price-assurance strong{font-size:.92rem}
 .price-assurance p{font-size:.77rem;line-height:1.45;color:var(--grau);margin:4px 0 0}
 .benefits-section,.faq-section{padding:35px 0;background:#fff}
@@ -109,5 +110,5 @@ footer .pe-cookie-settings{color:#ADC2D3;text-align:left;text-decoration:none}
 body:has(.pe-cookie-banner:not([hidden])) .mobile-dock{display:none}
 @media(max-width:370px){.wrap{width:calc(100% - 28px)}.mobile-hero{padding-top:16px}.mobile-hero h1{font-size:1.5rem}.analysis-section .konf-body{padding:18px 13px 14px}.tile .t-lbl{font-size:.76rem}.advisor-card{gap:10px;padding:12px}.advisor-card .advisor-experience{font-size:.7rem}}
 @media(max-width:430px){.konf-nav{flex-wrap:wrap}.konf-nav .btn{flex:1 0 100%;order:1}.konf-nav .konf-back{order:2;min-height:44px}.konf-result .konf-nav .btn{font-size:.94rem}}
-@media(min-width:700px){body{padding-bottom:0}.mobile-dock{display:none}.mobile-scene img{object-position:35% top}.mobile-hero{padding:32px 0 22px}.mobile-hero h1{font-size:2rem;max-width:100%}.analysis-section{padding-bottom:35px}.human-section{padding:36px 0}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:700px){body{padding-bottom:0}.mobile-dock{display:none}.mobile-scene{height:540px}.mobile-scene img{object-position:center 48%;filter:blur(5px) saturate(.8);transform:scale(1.035)}.mobile-hero{padding:28px 0 24px}.mobile-hero h1{font-size:2rem;max-width:100%}.analysis-section{padding-bottom:35px}.human-section{padding:36px 0}.footer-grid{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mobile-dock{transition:none}}
