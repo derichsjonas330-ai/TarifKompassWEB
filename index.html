@@ -24,6 +24,7 @@
 <title>Sparangebot für Strom und Gas anfordern | Paschen-Energie</title>
 <meta name="description" content="Ihr günstiger Strom- und Gastarif – persönlich gefunden. Stefanos Paschen prüft Angebote ausgewählter Partneranbieter. Jetzt unverbindlich Sparangebot anfordern.">
 <link rel="stylesheet" href="assets/fonts.css">
+<link rel="preload" as="image" href="/assets/tarifkompass-hero-eigenheim-paar.webp" type="image/webp">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
 <script defer src="/assets/cookie-consent.js"></script>
 <style>
@@ -72,9 +73,12 @@ nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.98);box-shadow
 @media(max-width:720px){.nav-inner{min-height:0;flex-wrap:wrap;gap:0;padding-top:13px}.logo{margin-right:auto;font-size:1.24rem}.nav-right{display:none}.nav-pages{order:3;flex-basis:100%;margin:12px 0 0;justify-content:center;border-top:1px solid var(--linie)}.nav-pages a{padding:10px 13px;font-size:.84rem}}
 
 /* Hero */
-.hero{background:linear-gradient(160deg,#f1f5f9,#fff 75%);border-bottom:1px solid var(--linie)}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:#f6f2ea;border-bottom:1px solid var(--linie)}
+.hero-scene{position:absolute;pointer-events:none;z-index:0;top:0;left:calc(50% - 940px);width:1580px;height:890px}
+.hero-scene img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(246,242,234,0) 48%,#f6f2ea 100%),linear-gradient(0deg,#f6f2ea 0%,rgba(246,242,234,0) 34%)}
 .ai-image-label{position:absolute;z-index:3;right:12px;bottom:12px;padding:3px 6px;border-radius:3px;background:rgba(11,38,60,.88);color:#fff;font:400 .75rem/1.4 var(--fb);letter-spacing:0;text-shadow:none}
-.hero .wrap{display:block;max-width:720px;padding-top:28px;padding-bottom:36px}
+.hero .wrap{position:relative;z-index:1;display:block;max-width:720px;padding-top:28px;padding-bottom:36px}
 .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);color:var(--navy);margin-bottom:1.2rem;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .hero .sub{color:var(--grau);font-size:1.12rem;max-width:36rem}
@@ -387,7 +391,7 @@ section h2{max-width:30ch}
 }
 
 /* A compact introduction leads directly into the configurator. */
-.hero-intro{text-align:center;margin-bottom:20px}
+.hero-intro{text-align:center;margin-bottom:20px;padding:12px 16px;border-radius:12px;background:rgba(250,248,244,.95)}
 .hero-intro .eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:10px;padding:0;background:none;color:var(--grau)}
 .hero .hero-intro h1{font-size:clamp(1.7rem,3vw,2.25rem);line-height:1.16;margin:0 auto 10px;max-width:29ch;text-shadow:none}
 .hero .hero-intro h1 em{color:var(--navy)}
@@ -399,14 +403,14 @@ section h2{max-width:30ch}
 .hero .tiles{margin-bottom:18px}
 .hero .tile{padding:13px 8px;gap:6px}
 .hero .konf .btn{background:#d6a543;color:#142c42;box-shadow:none;font-weight:700}
-.price-promise{text-align:center;padding:2px 12px 4px;color:var(--navy);font-size:.9rem;line-height:1.4}
+.price-promise{text-align:center;padding:10px 16px;background:rgba(250,248,244,.96);border-radius:10px;color:var(--navy);font-size:.9rem;line-height:1.4}
 .price-promise p{font-size:.74rem;color:var(--grau);max-width:57ch;margin:4px auto 0}
 .hero .berater-card{padding:16px 20px;box-shadow:none;gap:16px}
 .hero .berater-card h2{font-size:1.15rem;margin:0 0 3px}
 .hero .berater-card .role{margin-bottom:4px}
 .hero .advisor-slot{width:60px;height:74px;border-width:2px}
 .advisor-trust{font-size:.8rem;line-height:1.45;color:var(--navy);font-weight:600}
-.hero-advice{font-size:.94rem;line-height:1.6;color:var(--grau);padding:2px 4px}
+.hero-advice{font-size:.94rem;line-height:1.6;color:var(--grau);padding:14px 16px;background:rgba(250,248,244,.96);border-radius:10px}
 .hero-advice p+p{margin-top:10px}
 .hero-advice .advice-note{font-size:.78rem}
 .steps,.experts{padding:42px 0}
@@ -444,6 +448,7 @@ section h2{max-width:30ch}
 
 <!-- 1. HERO -->
 <header class="hero">
+  <div class="hero-scene"><img src="/assets/tarifkompass-hero-eigenheim-paar.webp" alt="Symbolbild zum Stromvergleich: ein Paar vor seinem Eigenheim im Abendlicht" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async"></div>
   <div class="wrap">
     <div class="hero-intro">
       <span class="eyebrow">Persönliche Tarifberatung</span>
@@ -615,7 +620,7 @@ section h2{max-width:30ch}
       <p>Je nach Tarif; Dauer, Umfang und ausgenommene Preisbestandteile werden im Angebot erläutert.</p>
     </div>
     <div class="berater-card">
-      <img class="advisor-slot advisor-photo" src="assets/stefanos-paschen-portrait.webp" alt="Stefanos Paschen, persönlicher Energieberater" width="84" height="104" decoding="async">
+      <img class="advisor-slot advisor-photo" src="assets/stefanos-paschen-portrait.webp" alt="Stefanos Paschen, persönlicher Berater für Stromvergleich und Gasvergleich" width="84" height="104" decoding="async">
       <div>
         <h2>Stefanos Paschen</h2>
         <p class="role">Ihr persönlicher Energieberater</p>
