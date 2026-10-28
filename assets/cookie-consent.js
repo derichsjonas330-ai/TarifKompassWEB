@@ -340,8 +340,13 @@
     banner.innerHTML =
       '<div class="pe-cookie-panel">' +
         '<div class="pe-cookie-copy">' +
-          '<h2>Ihre Entscheidung zu Cookies</h2>' +
-          '<p>Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. Eine Ablehnung hat keine Nachteile. Änderungen sind jederzeit über „Cookie-Einstellungen“ möglich. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
+          '<h2>Ihre Cookie-Auswahl</h2>' +
+          '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
+          '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
+          '<details class="pe-cookie-disclosure">' +
+            '<summary>Einstellungen und Cookie-Details</summary>' +
+            '<div class="pe-cookie-disclosure-content">' +
+              '<p>Verantwortlicher: Stefanos Paschen Vertrieb &amp; Energie. Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
@@ -349,6 +354,8 @@
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-ads"><span><strong>Werbemessung mit Google Ads</strong><span>Google Ireland Limited verarbeitet Seitenaufrufe, den Aufruf der Bestätigungsseite, IP-Adresse, Browserdaten und Anzeigenklickkennungen zur Werbemessung. Nach Anzeigenbesuchen kann eine Google-Weiterleitungsnummer Anrufe zuordnen; dabei werden Anrufzeitpunkt, Dauer, Verbindungsstatus und gegebenenfalls die Anrufernummer verarbeitet. Eine Verarbeitung in den USA ist möglich. Cookies zur Anzeigenzuordnung: in der Regel bis zu 90 Tage. Keine personalisierte Werbung durch diese Einbindung. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +
           '<p class="pe-cookie-details"><a href="/datenschutz#google-ads">Details zu Google Ads</a> · <a href="/datenschutz#meta-pixel">Details zu Meta Pixel</a> · <a href="/datenschutz#cookie-widerruf">Einwilligung widerrufen</a></p>' +
+            '</div>' +
+          '</details>' +
         '</div>' +
         '<div class="pe-cookie-actions">' +
           '<button class="pe-cookie-choice" type="button" data-pe-cookie="denied">Nur erforderliche Cookies</button>' +

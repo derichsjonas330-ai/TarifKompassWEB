@@ -21,9 +21,8 @@
   }
 })();
 </script>
-<title>Strom und Gas vergleichen | Paschen-Energie</title>
-<meta name="description" content="Strom und Gas persönlich vergleichen: Ich prüfe Angebote ausgewählter Partneranbieter für Sie. Lassen Sie Ihren Tarif jetzt unverbindlich prüfen.">
-<link rel="preload" as="image" href="assets/tarifkompass-hero-eigenheim-paar.webp" type="image/webp" fetchpriority="high">
+<title>Sparangebot für Strom und Gas anfordern | Paschen-Energie</title>
+<meta name="description" content="Ihr günstiger Strom- und Gastarif – persönlich gefunden. Stefanos Paschen prüft Angebote ausgewählter Partneranbieter. Jetzt unverbindlich Sparangebot anfordern.">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
 <script defer src="/assets/cookie-consent.js"></script>
@@ -73,15 +72,9 @@ nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.98);box-shadow
 @media(max-width:720px){.nav-inner{min-height:0;flex-wrap:wrap;gap:0;padding-top:13px}.logo{margin-right:auto;font-size:1.24rem}.nav-right{display:none}.nav-pages{order:3;flex-basis:100%;margin:12px 0 0;justify-content:center;border-top:1px solid var(--linie)}.nav-pages a{padding:10px 13px;font-size:.84rem}}
 
 /* Hero */
-.hero{background-color:var(--navy-hell);background-image:linear-gradient(90deg,rgba(238,243,248,.76) 0%,rgba(246,249,252,.66) 42%,rgba(255,255,255,.42) 62%,rgba(255,255,255,.16) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-size:cover;background-position:center center;background-repeat:no-repeat;border-bottom:1px solid var(--linie);position:relative;overflow:hidden}
+.hero{background:linear-gradient(160deg,#f1f5f9,#fff 75%);border-bottom:1px solid var(--linie)}
 .ai-image-label{position:absolute;z-index:3;right:12px;bottom:12px;padding:3px 6px;border-radius:3px;background:rgba(11,38,60,.88);color:#fff;font:400 .75rem/1.4 var(--fb);letter-spacing:0;text-shadow:none}
-.hero>.ai-image-label{top:14px;bottom:auto;right:max(14px,calc((100vw - var(--maxw))/2))}
-.hero::before{content:"";position:absolute;top:-15%;right:-10%;width:50%;padding-bottom:50%;background:radial-gradient(circle,rgba(201,150,46,.10),transparent 70%);border-radius:50%;pointer-events:none}
-.hero-motif{position:absolute;top:-8%;right:-4%;width:300px;height:300px;opacity:.08;pointer-events:none}
-@media(max-width:900px){.hero{background-image:linear-gradient(90deg,rgba(238,243,248,.84) 0%,rgba(250,252,254,.78) 72%,rgba(255,255,255,.64) 100%),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:65% center}.hero-motif{display:none}}
-@media(max-width:600px){.hero{background-image:linear-gradient(rgba(242,246,250,.88),rgba(255,255,255,.91)),url('assets/tarifkompass-hero-eigenheim-paar.webp');background-position:68% center}}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;align-items:center;padding-top:clamp(3rem,7vh,5rem);padding-bottom:clamp(3rem,7vh,5rem);position:relative;z-index:2}
-@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+.hero .wrap{display:block;max-width:720px;padding-top:28px;padding-bottom:36px}
 .hero h1{font-size:clamp(2.1rem,4.6vw,3.3rem);color:var(--navy);margin-bottom:1.2rem;text-wrap:balance}
 .hero h1 em{font-style:normal;color:var(--gold)}
 .hero .sub{color:var(--grau);font-size:1.12rem;max-width:36rem}
@@ -348,10 +341,7 @@ footer a:hover{color:var(--gold)}
 section h2{max-width:30ch}
 
 /* Hero: Formularkarte behält ihre Breite, der Text bekommt den Platz */
-@media(min-width:1024px){
-  .hero .wrap{grid-template-columns:minmax(0,1fr) 460px}
-  .hero-side{width:100%}
-}
+
 
 /* Dringlichkeit: Briefkarte nicht überdehnen */
 @media(min-width:861px){
@@ -395,6 +385,46 @@ section h2{max-width:30ch}
   .secure .couple-slot{aspect-ratio:auto;min-height:clamp(300px,28vw,430px);
     border-right:0;border-radius:var(--radius) 0 0 var(--radius)}
 }
+
+/* A compact introduction leads directly into the configurator. */
+.hero-intro{text-align:center;margin-bottom:20px}
+.hero-intro .eyebrow{font-size:.7rem;letter-spacing:.1em;margin-bottom:10px;padding:0;background:none;color:var(--grau)}
+.hero .hero-intro h1{font-size:clamp(1.7rem,3vw,2.25rem);line-height:1.16;margin:0 auto 10px;max-width:29ch;text-shadow:none}
+.hero .hero-intro h1 em{color:var(--navy)}
+.hero-scope{font-size:.8rem;line-height:1.45;color:var(--grau)}
+.hero-side{gap:16px}
+.hero .konf{box-shadow:0 12px 40px rgba(18,60,99,.12);border-color:#bdcddd}
+.hero .konf-body{padding:22px 28px}
+.hero .konf-kicker{margin-bottom:12px}
+.hero .tiles{margin-bottom:18px}
+.hero .tile{padding:13px 8px;gap:6px}
+.hero .konf .btn{background:#d6a543;color:#142c42;box-shadow:none;font-weight:700}
+.price-promise{text-align:center;padding:2px 12px 4px;color:var(--navy);font-size:.9rem;line-height:1.4}
+.price-promise p{font-size:.74rem;color:var(--grau);max-width:57ch;margin:4px auto 0}
+.hero .berater-card{padding:16px 20px;box-shadow:none;gap:16px}
+.hero .berater-card h2{font-size:1.15rem;margin:0 0 3px}
+.hero .berater-card .role{margin-bottom:4px}
+.hero .advisor-slot{width:60px;height:74px;border-width:2px}
+.advisor-trust{font-size:.8rem;line-height:1.45;color:var(--navy);font-weight:600}
+.hero-advice{font-size:.94rem;line-height:1.6;color:var(--grau);padding:2px 4px}
+.hero-advice p+p{margin-top:10px}
+.hero-advice .advice-note{font-size:.78rem}
+.steps,.experts{padding:42px 0}
+.steps h2,.experts h2{font-size:clamp(1.5rem,2.6vw,2rem)}
+.steps-grid{margin-top:22px;gap:16px}
+.step{padding:24px}.step .num{font-size:2rem}
+.decision-details{padding:22px 0}
+.decision-details summary,.landing-faq summary{cursor:pointer;color:var(--navy);font-weight:700;line-height:1.45;padding:16px 0}
+.decision-details summary:focus-visible,.landing-faq summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.decision-details .decision-intro{margin-top:22px}
+.decision-details .secure-grid{margin-top:20px}
+.decision-details details[open]{padding-bottom:22px}
+.proof-grid{display:block;margin-top:18px}
+.landing-faq{border-bottom:1px solid var(--linie)}
+.landing-faq p{max-width:75ch;color:var(--grau);font-size:.94rem;padding:0 0 18px}
+.contact-strip{margin-top:28px}
+.final{padding:42px 0}
+@media(max-width:600px){.hero .wrap{padding:22px 16px 28px}.hero .konf-body{padding:20px 16px}.hero .berater-card{padding:14px}.advisor-trust{font-size:.76rem}}
 </style>
 </head>
 <body>
@@ -405,7 +435,7 @@ section h2{max-width:30ch}
     <div class="nav-pages"><a href="#top" aria-current="page">Startseite</a><a href="/ueber-uns">Über uns</a><a href="/news">News</a></div>
     <div class="nav-right">
       <a class="nav-phone" href="tel:+4917616818944">0176 16818944</a>
-      <a class="btn nav-cta" href="#analyse">Tarif prüfen lassen</a>
+      <a class="btn nav-cta" href="#analyse">Sparangebot anfordern</a>
     </div>
   </div>
 </nav>
@@ -414,21 +444,11 @@ section h2{max-width:30ch}
 
 <!-- 1. HERO -->
 <header class="hero">
-  <span class="ai-image-label">KI-generiertes Bild</span>
   <div class="wrap">
-    <div>
-      <span class="eyebrow rv" data-hero>Persönliche Energieberatung</span>
-      <h1 class="rv" data-hero>Strom und Gas vergleichen, <em>bevor Sie wechseln.</em></h1>
-      <p class="sub rv" data-hero>Sie möchten wissen, ob Ihre Strom- und Gastarife noch zu Ihrem Verbrauch passen? Ich prüfe verfügbare Angebote ausgewählter Partneranbieter und erkläre Ihnen die Konditionen. Die Beratung und Vermittlung kostet Sie kein Honorar. Bei erfolgreicher Vermittlung erhalte ich ausschließlich eine Provision vom vermittelten Energieversorger.</p>
-      <ul class="checks rv" data-hero>
-        <li>Persönliche Einschätzung zu Strom, Gas oder Heizstrom</li>
-        <li>Kein Honorar für Beratung und Vermittlung</li>
-        <li>Ein Wechsel erfolgt nur mit Ihrem ausdrücklichen Auftrag</li>
-      </ul>
-      <div class="review-line rv" data-hero>
-        <span class="stars" aria-hidden="true">✓</span>
-        <span>Ausgewählte Partnerangebote, kein vollständiger Marktvergleich</span>
-      </div>
+    <div class="hero-intro">
+      <span class="eyebrow">Persönliche Tarifberatung</span>
+      <h1>Ihr günstiger Strom- und Gastarif – <em>persönlich gefunden.</em></h1>
+      <p class="hero-scope">Aus verfügbaren Angeboten ausgewählter Partneranbieter.</p>
     </div>
     <div class="hero-side">
     <div class="konf rv" data-hero id="analyse">
@@ -451,9 +471,9 @@ section h2{max-width:30ch}
 
           <!-- Schritt 1: Sparte & Objekt -->
           <section class="konf-step" data-step="1" tabindex="-1">
-            <span class="konf-kicker">Ihre Tarifanfrage · Schritt 1 von 4</span>
+            <span class="konf-kicker">Ihr Sparangebot · Schritt 1 von 4</span>
             <fieldset>
-              <legend>Welchen Tarif möchten Sie prüfen lassen?</legend>
+              <legend>Für welchen Tarif möchten Sie sparen?</legend>
               <div class="tiles">
                 <label class="tile sel"><input type="radio" name="sparte" value="Strom" checked>
                   <span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M15.1 14c.2-1 .7-1.8 1.4-2.5A4.6 4.6 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.2 1.5 1.4 2.5"/></svg></span>
@@ -482,7 +502,7 @@ section h2{max-width:30ch}
                   <span class="t-lbl">Gewerbe</span></label>
               </div>
             </fieldset>
-            <button class="btn" type="button" data-next>Tarifanfrage starten</button>
+            <button class="btn" type="button" data-next>Sparangebot anfordern</button>
             <p class="konf-note">Beratung und Vermittlung ohne Honorar</p>
           </section>
 
@@ -542,7 +562,7 @@ section h2{max-width:30ch}
           <!-- Schritt 4: Kontakt -->
           <section class="konf-step" data-step="4" tabindex="-1" hidden>
             <span class="konf-kicker">Ihre Rückmeldung · Schritt 4 von 4</span>
-            <p class="konf-q">Wohin darf ich Ihre persönliche Einschätzung senden?</p>
+            <p class="konf-q">Wie darf ich Sie zu Ihrem Sparangebot kontaktieren?</p>
             <p class="konf-err" id="err4" role="alert"></p>
             <div class="field"><label for="k-name">Vor- und Nachname</label>
               <input id="k-name" name="name" type="text" placeholder="Ihr Name" autocomplete="name"></div>
@@ -564,7 +584,7 @@ section h2{max-width:30ch}
               <label for="k-consent">Ich habe die <a href="/datenschutz.html" target="_blank" rel="noopener" style="color:var(--navy)">Datenschutzerklärung</a> zur Kenntnis genommen.</label></div>
             <div class="konf-nav">
               <button class="konf-back" type="button" data-back>‹ Zurück</button>
-              <button class="btn" type="submit">Unverbindlich anfragen</button>
+              <button class="btn" type="submit">Sparangebot anfordern</button>
             </div>
             <p class="konf-sub">Kostenfrei &amp; unverbindlich · persönliche Prüfung, kein Automat</p>
           </section>
@@ -590,69 +610,26 @@ section h2{max-width:30ch}
         </form>
       </div>
     </div>
-    <!-- Persönlicher Ansprechpartner -->
-    <div class="berater-card rv" data-hero>
+    <div class="price-promise">
+      <strong>Bis zu 24 Monate Preisgarantie möglich</strong>
+      <p>Je nach Tarif; Dauer, Umfang und ausgenommene Preisbestandteile werden im Angebot erläutert.</p>
+    </div>
+    <div class="berater-card">
       <img class="advisor-slot advisor-photo" src="assets/stefanos-paschen-portrait.webp" alt="Stefanos Paschen, persönlicher Energieberater" width="84" height="104" decoding="async">
       <div>
-        <h3>Stefanos Paschen</h3>
-        <p class="role">Persönlicher Energieberater · Ihr fester Ansprechpartner</p>
-        <p class="bq">Ich sehe mir Ihre Angaben an, erkläre verfügbare Angebote und beantworte Ihre Fragen persönlich.</p>
+        <h2>Stefanos Paschen</h2>
+        <p class="role">Ihr persönlicher Energieberater</p>
+        <p class="advisor-trust">3 Jahre Erfahrung · Direkter Kontakt statt Callcenter</p>
       </div>
     </div>
+    <div class="hero-advice">
+      <p>Seit drei Jahren finde ich für meine Kunden günstige Tarife mit passenden Konditionen – im persönlichen Gespräch und bei Beratungen vor Ort. Denn der niedrigste Preis allein macht noch keinen guten Vertrag. Ich schaue für Sie auch auf Laufzeit, Preisgarantie und Vertragsbedingungen.</p>
+      <p>Bei Fragen erreichen Sie mich direkt. Wenn ich gerade in einer Beratung bin, melde ich mich persönlich zurück.</p>
+      <p class="advice-note">Kein Honorar für Beratung und Vermittlung. Meine Vergütung erfolgt ausschließlich durch Provisionen des vermittelten Versorgers; der Energietarif hat eigene Kosten.</p>
+    </div>
     </div>
   </div>
-  <svg class="hero-motif" viewBox="0 0 200 200" aria-hidden="true">
-    <path d="M20 95 L100 25 L180 95" fill="none" stroke="#123C63" stroke-width="3"/>
-    <rect x="38" y="95" width="124" height="85" fill="none" stroke="#123C63" stroke-width="3"/>
-    <rect x="92" y="130" width="28" height="50" fill="none" stroke="#123C63" stroke-width="3"/>
-    <rect x="52" y="112" width="22" height="22" fill="none" stroke="#123C63" stroke-width="3"/>
-    <rect x="128" y="112" width="22" height="22" fill="none" stroke="#123C63" stroke-width="3"/>
-    <path d="M150 18 L134 54 L148 54 L128 92" fill="none" stroke="#C9962E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  </svg>
 </header>
-
-<div class="bekannt rv">
-  <div class="wrap">
-    <span class="badge-item"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span><strong>Persönlich</strong> von Stefanos Paschen</span></span>
-    <span class="badge-item"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><strong>Transparent</strong> ausgewählte Partnerangebote</span></span>
-    <span class="badge-item"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span><strong>Ohne Honorar</strong> für Beratung</span></span>
-    <span class="badge-item"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span><strong>Unverbindlich</strong> anfragen</span></span>
-  </div>
-</div>
-
-<!-- 2b. FOTO-BAND: EIGENHEIM -->
-<section class="photo-band">
-  <div class="wrap">
-    <div class="photo-slot band-slot has-photo rv">
-      <img class="slot-image" src="assets/tarifkompass-eigenheim.avif" alt="Illustration eines Eigenheims mit Garten im Abendlicht" width="1448" height="1086" loading="lazy" decoding="async">
-      <span class="ai-image-label">KI-generiertes Bild</span>
-    </div>
-    <div class="rv pb-text">
-      <span class="eyebrow">Strom, Gas und Heizstrom</span>
-      <h2>Welche Tarife passen zu Ihrem Verbrauch?</h2>
-      <p class="lead">Für eine sinnvolle Tarifprüfung brauche ich Ihren Wohnort, den bisherigen Vertrag und möglichst Ihren Jahresverbrauch. Bei Strom und Gas sehe ich mir die Kosten getrennt an. Wenn Sie beide Verträge prüfen möchten, geben Sie das in Ihrer Anfrage an.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 2. DRINGLICHKEIT -->
-<section class="urgency">
-  <div class="wrap">
-    <div class="rv">
-      <span class="eyebrow">Anlass für eine Tarifprüfung</span>
-      <h2>Eine neue Rechnung oder Preiserhöhung ist ein guter Zeitpunkt zum Prüfen.</h2>
-      <p class="lead">Vielleicht hat sich Ihr Verbrauch verändert, vielleicht wurden Grundpreis oder Arbeitspreis angepasst. Mit Ihrer letzten Rechnung kann ich Ihre bisherigen Konditionen und verfügbare Angebote ausgewählter Partneranbieter gegenüberstellen.</p>
-      <p class="lead" style="margin-top:1rem">Bei einer angekündigten Preiserhöhung schaue ich mit Ihnen auch auf die genannten Fristen. Ob ein Wechsel für Sie sinnvoll ist, entscheiden Sie erst nach der persönlichen Einschätzung.</p>
-      <div class="cta-row"><a class="btn" href="#analyse">Tarif prüfen lassen</a><span class="cta-note" style="color:#8FA9C0">Ohne Honorar und unverbindlich</span></div>
-    </div>
-    <div class="letterbox rv">
-      <svg class="envelope-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="m2 7 10 6L22 7"/></svg>
-      <p class="brief">Was ändert sich bei Ihrem Vertrag?</p>
-      <p>Vergleichen Sie auf der Mitteilung den neuen Grundpreis, den Arbeitspreis und das Datum der Änderung mit Ihrer bisherigen Rechnung.</p>
-      <div class="antwort"><strong>Meine Empfehlung:</strong> Bewahren Sie die Mitteilung auf. Ich kann damit Ihre Konditionen prüfen und mögliche nächste Schritte mit Ihnen besprechen.</div>
-    </div>
-  </div>
-</section>
 
 <!-- 3. PROZESS -->
 <section class="steps">
@@ -673,22 +650,20 @@ section h2{max-width:30ch}
         <p>Erst wenn Sie sich ausdrücklich für ein Angebot entscheiden, unterstütze ich Sie bei der Vermittlung und den dafür nötigen Angaben. Ohne Auftrag bleibt es bei der Beratung.</p>
         <ul><li>Sie behalten die Entscheidung</li><li>Unterstützung bei Anmeldung und Wechsel</li></ul></div>
     </div>
-    <div class="cta-row rv"><a class="btn blau" href="#analyse">Unverbindlich anfragen</a></div>
+    <div class="cta-row rv"><a class="btn blau" href="#analyse">Sparangebot anfordern</a></div>
   </div>
 </section>
 
 <!-- 4. SICHERHEIT -->
-<section class="secure">
+<section class="secure decision-details">
   <div class="wrap">
-    <div class="intro-grid">
+    <details>
+      <summary>Was macht einen günstigen Strom- und Gastarif aus?</summary>
+    <div class="decision-intro">
       <div class="rv">
         <span class="eyebrow">Konditionen verstehen</span>
         <h2>Was bei einem Strom- und Gasvergleich wichtig ist</h2>
         <p class="lead">Ein günstiger Einstiegspreis allein sagt wenig über einen Tarif aus. Ich schaue mit Ihnen auf die jährlichen Kosten und die Bedingungen, die später wichtig werden.</p>
-      </div>
-      <div class="photo-slot band-slot couple-slot has-photo rv">
-        <img class="slot-image" src="assets/tarifkompass-ehepaar-unterlagen.webp" alt="Illustration eines Ehepaars bei der Durchsicht von Tarifunterlagen" width="1448" height="1086" loading="lazy" decoding="async">
-        <span class="ai-image-label">KI-generiertes Bild</span>
       </div>
     </div>
     <div class="secure-grid">
@@ -725,80 +700,27 @@ section h2{max-width:30ch}
         <span class="yes">Vermittlung erst nach Beauftragung</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- 5. ANLÄSSE FÜR EINE TARIFPRÜFUNG -->
-<section>
-  <div class="wrap">
-    <div class="rv">
-      <span class="eyebrow">Wann sich eine Prüfung lohnt</span>
-      <h2>Wann sollten Sie Ihren Strom- oder Gasanbieter prüfen?</h2>
-      <p class="lead">Ein neuer Vertrag ist nicht immer die beste Lösung. Diese Anlässe helfen Ihnen zu entscheiden, wann sich eine persönliche Prüfung anbietet.</p>
-    </div>
-    <div class="timeline rv">
-      <div class="t-item"><span class="t-when"><span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h3"/></svg></span>Beim aktuellen Vertrag</span><div><h3>Jahreskosten prüfen</h3><p>Sehen Sie auf Ihre letzte Abrechnung: Verbrauch, Grundpreis und Arbeitspreis bilden die Grundlage für einen sinnvollen Vergleich.</p></div></div>
-      <div class="t-item"><span class="t-when"><span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></span>Bei einer Preisänderung</span><div><h3>Neue Konditionen verstehen</h3><p>Prüfen Sie die Mitteilung und ihre Fristen. Ich kann mit Ihnen besprechen, welche verfügbaren Partnerangebote infrage kommen.</p></div></div>
-      <div class="t-item"><span class="t-when"><span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>Vor Vertragsende</span><div><h3>Weitere Laufzeit bedenken</h3><p>Wenn Ihr Vertrag ausläuft, lohnt ein Blick auf die folgenden Kosten. Einen neuen Tarif vermittle ich nur, wenn Sie mich damit beauftragen.</p></div></div>
-      <div class="t-item gold"><span class="t-when"><span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>Bei einem Umzug</span><div><h3>Strom und Gas anmelden</h3><p>Nennen Sie mir die neue Postleitzahl und den gewünschten Beginn. Ich prüfe, welche Partnerangebote für Ihre neue Adresse verfügbar sind.</p></div></div>
-    </div>
-    <div class="manual-note rv"><strong>Gut zu wissen:</strong> Ihre Anfrage ist unverbindlich. Ein Wechsel wird erst nach Ihrer ausdrücklichen Beauftragung eingeleitet.</div>
-  </div>
-</section>
-
-<!-- 6. EXPERTEN -->
-<section class="experts">
-  <div class="wrap">
-    <div class="rv"><span class="eyebrow">Gut zu wissen</span><h2>Woran Sie ein passendes Angebot erkennen</h2></div>
-    <div class="quote-grid">
-      <div class="quote rv"><h3>Gesamtkosten</h3><p>Ein niedriger Abschlag ist noch kein günstiger Tarif. Entscheidend sind Grundpreis, Arbeitspreis und Ihr voraussichtlicher Verbrauch.</p></div>
-      <div class="quote rv"><h3>Bonus und Laufzeit</h3><p>Ein einmaliger Bonus kann den Preis im ersten Jahr verändern. Prüfen Sie, was der Vertrag danach kostet und wann Sie kündigen können.</p></div>
-      <div class="quote rv"><h3>Preisgarantie</h3><p>Wenn ein Tarif eine Preisgarantie enthält, lohnt sich der Blick auf ihre Dauer und ihren Umfang. Nicht jeder Preisbestandteil muss davon erfasst sein.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 7. STATISTIK -->
-<section class="stats">
-  <div class="wrap">
-    <div class="rv">
-      <div class="donut">
-        <svg viewBox="0 0 120 120" aria-hidden="true">
-          <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="12"/>
-          <circle class="arc" id="donutArc" cx="60" cy="60" r="52" fill="none" stroke-width="12" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
-        </svg>
-        <div class="donut-label"><span class="big">0 €</span><span class="small">Honorar für Beratung und Vermittlung</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="rv"><span class="eyebrow">Ihre Beratung</span><h2>Was Sie von meiner Tarifprüfung erwarten können</h2></div>
-      <div class="stat-rows">
-        <div class="stat-row rv"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8l-5.7 5.7-4-4L3 16"/></svg></span><div class="txt"><span class="val">Persönlich</span><p>Ihre Angaben werden manuell geprüft; eine Empfehlung erfolgt nicht vollautomatisch.</p></div></div>
-        <div class="stat-row rv"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 8.8c-.8-.6-1.8-.9-3-.9-2.3 0-4.2 1.8-4.2 4.1s1.9 4.1 4.2 4.1c1.2 0 2.2-.3 3-.9M7.5 11h6M7.5 13.5h5"/></svg></span><div class="txt"><span class="val">Transparent</span><p>Die Auswahl ist auf Partnerangebote begrenzt; die Vergütung erfolgt durch Provision des vermittelten Energieversorgers.</p></div></div>
-        <div class="stat-row rv"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span><div class="txt"><span class="val" data-count="24" data-suffix=" h">24 h</span><p>In der Regel erhalten Sie innerhalb von 24 Stunden eine persönliche Rückmeldung mit einer ersten Einschätzung.</p></div></div>
-      </div>
-      <p class="disclaimer rv">Ob ein günstigeres Angebot verfügbar ist, hängt unter anderem von Verbrauch, Wohnort, bisherigem Vertrag und den verfügbaren Partnerangeboten ab. Eine Ersparnis wird nicht garantiert.</p>
-    </div>
+    </details>
   </div>
 </section>
 
 <!-- 8. SOCIAL PROOF & KONTAKT -->
 <section class="experts" id="kontakt">
   <div class="wrap">
-    <div class="rv"><span class="eyebrow">Häufige Fragen</span><h2>Strom und Gas gemeinsam oder getrennt prüfen?</h2></div>
+    <div class="rv"><span class="eyebrow">Häufige Fragen</span><h2 id="faq-title">Ihre Fragen vor dem Sparangebot</h2></div>
     <div class="proof-grid">
-      <div class="review rv"><h3>Gibt es einen Kombitarif für Strom und Gas?</h3><p>Wenn Sie beide Sparten über einen Anbieter beziehen möchten, prüfe ich, ob ein entsprechendes Partnerangebot für Ihre Adresse verfügbar ist. Ein Kombitarif ist nicht automatisch günstiger.</p></div>
-      <div class="review rv"><h3>Lohnt sich Strom und Gas bei einem Anbieter?</h3><p>Ein gemeinsamer Anbieter kann für Sie übersichtlicher sein. Ob die Kosten passen, zeigt erst der Vergleich der beiden Tarife mit Ihren bisherigen Verträgen und den verfügbaren Alternativen.</p></div>
-      <div class="review rv"><h3>Wie vergleiche ich Kombitarife für Strom und Gas?</h3><p>Ich prüfe die Kosten und Vertragsbedingungen für Strom und Gas jeweils einzeln. Danach lässt sich beurteilen, ob ein verfügbares gemeinsames Angebot für Sie passt.</p></div>
-      <div class="review rv"><h3>Woran erkenne ich günstige Strom- und Gastarife?</h3><p>Der Preis hängt von Wohnort, Verbrauch und Tarifbedingungen ab. Ich vergleiche verfügbare Partnerangebote mit Ihren bisherigen Kosten; einen günstigsten Anbieter am ganzen Markt kann ich nicht zusagen.</p></div>
-      <div class="review rv"><h3>Kann ich Strom und Gas bei einem Umzug anmelden?</h3><p>Ja, Sie können mir Ihre neue Adresse und den gewünschten Starttermin nennen. Ich prüfe die verfügbaren Partnerangebote und unterstütze Sie nach Ihrer Beauftragung bei der Anmeldung.</p></div>
-      <div class="review rv"><h3>Wann kann ich den Strom- oder Gasanbieter wechseln?</h3><p>Das hängt von Ihren bestehenden Verträgen und den geltenden Fristen ab. Eine Anfrage löst keinen Wechsel aus. Erst nach Ihrem ausdrücklichen Auftrag leite ich die Vermittlung ein.</p></div>
+      <details class="landing-faq"><summary>Gibt es einen Kombitarif für Strom und Gas?</summary><p>Wenn Sie beide Sparten über einen Anbieter beziehen möchten, prüfe ich, ob ein entsprechendes Partnerangebot für Ihre Adresse verfügbar ist. Ein Kombitarif ist nicht automatisch günstiger.</p></details>
+      <details class="landing-faq"><summary>Lohnt sich Strom und Gas bei einem Anbieter?</summary><p>Ein gemeinsamer Anbieter kann für Sie übersichtlicher sein. Ob die Kosten passen, zeigt erst der Vergleich der beiden Tarife mit Ihren bisherigen Verträgen und den verfügbaren Alternativen.</p></details>
+      <details class="landing-faq"><summary>Wie vergleiche ich Kombitarife für Strom und Gas?</summary><p>Ich prüfe die Kosten und Vertragsbedingungen für Strom und Gas jeweils einzeln. Danach lässt sich beurteilen, ob ein verfügbares gemeinsames Angebot für Sie passt.</p></details>
+      <details class="landing-faq"><summary>Woran erkenne ich günstige Strom- und Gastarife?</summary><p>Der Preis hängt von Wohnort, Verbrauch und Tarifbedingungen ab. Ich vergleiche verfügbare Partnerangebote mit Ihren bisherigen Kosten; einen günstigsten Anbieter am ganzen Markt kann ich nicht zusagen.</p></details>
+      <details class="landing-faq"><summary>Kann ich Strom und Gas bei einem Umzug anmelden?</summary><p>Ja, Sie können mir Ihre neue Adresse und den gewünschten Starttermin nennen. Ich prüfe die verfügbaren Partnerangebote und unterstütze Sie nach Ihrer Beauftragung bei der Anmeldung.</p></details>
+      <details class="landing-faq"><summary>Wann kann ich den Strom- oder Gasanbieter wechseln?</summary><p>Das hängt von Ihren bestehenden Verträgen und den geltenden Fristen ab. Eine Anfrage löst keinen Wechsel aus. Erst nach Ihrem ausdrücklichen Auftrag leite ich die Vermittlung ein.</p></details>
     </div>
     <div class="contact-strip rv">
       <img class="advisor-slot advisor-photo sm" src="assets/stefanos-paschen-portrait.webp" alt="Stefanos Paschen" width="72" height="88" loading="lazy" decoding="async">
-      <div><span class="lbl">Telefonisch</span><a href="tel:+4917616818944">0176 16818944</a><div class="avail">Erreichbar zu den angegebenen Bürozeiten, falls ich gerade nicht im Gespräch bin.</div></div>
+      <div><span class="lbl">Telefonisch</span><a href="tel:+4917616818944">0176 16818944</a><div class="avail">Ihr direkter Kontakt zu Stefanos Paschen – ohne Callcenter. Bei einem verpassten Anruf melde ich mich persönlich zurück.</div></div>
       <div><span class="lbl">Per E-Mail</span><a href="mailto:info@paschenenergie.de">info@paschenenergie.de</a><div class="avail">Persönliche Rückmeldung in der Regel innerhalb von 24 Stunden.</div></div>
-      <a class="btn" href="#analyse">Tarif prüfen lassen</a>
+      <a class="btn" href="#analyse">Sparangebot anfordern</a>
     </div>
   </div>
 </section>
@@ -806,9 +728,9 @@ section h2{max-width:30ch}
 <!-- 9. FINALER CTA -->
 <section class="final">
   <div class="wrap rv">
-    <h2>Strom- und Gastarif unverbindlich prüfen lassen.</h2>
+    <h2>Ihr persönliches Sparangebot für Strom und Gas.</h2>
     <p class="lead">Nennen Sie mir Ihre wichtigsten Angaben im Formular. Ich melde mich in der Regel innerhalb von 24 Stunden mit einer ersten persönlichen Rückmeldung.</p>
-    <div class="cta-row"><a class="btn" href="#analyse">Tarifanfrage starten</a></div>
+    <div class="cta-row"><a class="btn" href="#analyse">Sparangebot anfordern</a></div>
     <p class="cta-note" style="margin-top:1rem">Kostenfrei · unverbindlich · persönlicher Ansprechpartner</p>
   </div>
 </section>
@@ -852,7 +774,7 @@ section h2{max-width:30ch}
       gsap.from(el,{opacity:0,y:26,immediateRender:false,duration:.85,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
     });
     const arc=document.getElementById('donutArc');
-    gsap.to(arc,{strokeDashoffset:0,duration:1.5,ease:'power2.out',scrollTrigger:{trigger:arc,start:'top 85%'}});
+    if(arc) gsap.to(arc,{strokeDashoffset:0,duration:1.5,ease:'power2.out',scrollTrigger:{trigger:arc,start:'top 85%'}});
     counters(false);
   } else {
     document.querySelectorAll('.rv').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
