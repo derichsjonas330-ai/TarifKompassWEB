@@ -3,7 +3,7 @@
 
   if(window.PaschenCookieConsent) return;
 
-  const VERSION = '7';
+  const VERSION = '8';
   const MEASUREMENT_ID = 'G-RB9D1EMFDZ';
   const ADS_ID = 'AW-18528448427';
   const ADS_CONVERSION_LABEL = 'Oo2-CN76uaUdEKvfhoNF';
@@ -53,14 +53,15 @@
     const raw = readCookie(CHOICE_COOKIE);
     if(!raw) return null;
     const parts = raw.split('|');
-    // Preserve existing choices; Contentsquare always needs its own new opt-in.
+    // Preserve other choices; renewed Contentsquare information needs a fresh opt-in.
     const legacyV2 = parts[0] === '2' && parts.length === 4;
     const legacyV3 = parts[0] === '3' && parts.length === 5;
     const legacyV4 = parts[0] === '4' && parts.length === 5;
     const legacyV5 = parts[0] === '5' && parts.length === 6;
     const legacyV6 = parts[0] === '6' && parts.length === 6;
+    const legacyV7 = parts[0] === '7' && parts.length === 7;
     const needsAdsUpdate = legacyV2 || legacyV3 || legacyV4 || legacyV5;
-    const needsUpdate = needsAdsUpdate || legacyV6;
+    const needsUpdate = needsAdsUpdate || legacyV6 || legacyV7;
     if(!needsUpdate && (parts[0] !== VERSION || parts.length !== 7)) return null;
     const purposeEnd = legacyV2 ? 3 : (legacyV3 || legacyV4) ? 4 : (legacyV5 || legacyV6) ? 5 : 6;
     const purposes = parts.slice(1, purposeEnd);
@@ -400,7 +401,7 @@
       '<div class="pe-cookie-panel">' +
         '<div class="pe-cookie-copy">' +
           '<h2>Ihre Cookie-Auswahl</h2>' +
-          '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Contentsquare-Nutzungsanalyse einschließlich Sitzungsaufzeichnungen, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
+          '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Contentsquare-Nutzungsanalyse einschließlich Sitzungsaufzeichnungen und Weiterentwicklung der Contentsquare-Dienste, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
           '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
           '<details class="pe-cookie-disclosure">' +
             '<summary>Einstellungen und Cookie-Details</summary>' +
@@ -409,7 +410,7 @@
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
-            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-contentsquare"><span><strong>Nutzungsanalyse mit Contentsquare</strong><span>Contentsquare verarbeitet Klicks, Scrollbewegungen, Seitenaufrufe und technische Gerätedaten zur Verbesserung der Bedienung. Je nach Projekteinstellung werden Sitzungsaufzeichnungen erstellt. Formulareingaben und Ihre Anfrage-Zusammenfassung werden maskiert. Analyse-Kennungen: bis zu 13 Monate. Verarbeitung außerhalb der EU, auch in den USA, möglich. Nur mit Ihrer eigenen Zustimmung.</span></span></label>' +
+            '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-contentsquare"><span><strong>Nutzungsanalyse mit Contentsquare</strong><span>Contentsquare verarbeitet Klicks, Scrollbewegungen, Seitenaufrufe und technische Gerätedaten für unsere Nutzungsanalyse, Heatmaps und Sitzungswiedergaben. Formulareingaben und Ihre Anfrage-Zusammenfassung werden maskiert. Der Anbieter beschreibt auch eigene Zwecke zur Weiterentwicklung seiner Dienste einschließlich maschinellen Lernens sowie Benchmarking bei Nutzung entsprechender Dienste. Analyse-Kennungen: bis zu 13 Monate; Nutzungsdaten werden davon getrennt gespeichert. Verarbeitung außerhalb der EU, auch in den USA, möglich. Nur mit Ihrer eigenen Zustimmung.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-marketing"><span><strong>Marketing mit Meta Pixel</strong><span>Meta Platforms Ireland Limited verarbeitet Ihre IP-Adresse, Seitenaufrufe und Browserkennungen zur Werbemessung und für personalisierte Werbung auf Facebook und Instagram. Eine Verknüpfung mit Ihrem Meta-Konto und eine Verarbeitung in den USA sind möglich. Pixel-Cookies: in der Regel 90 Tage, bei weiteren Besuchen erneuerbar. Nur mit Ihrer Zustimmung.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-ads"><span><strong>Werbemessung mit Google Ads</strong><span>Google Ireland Limited verarbeitet Seitenaufrufe, den Aufruf der Bestätigungsseite, IP-Adresse, Browserdaten und Anzeigenklickkennungen zur Werbemessung. Nach Anzeigenbesuchen kann eine Google-Weiterleitungsnummer Anrufe zuordnen; dabei werden Anrufzeitpunkt, Dauer, Verbindungsstatus und gegebenenfalls die Anrufernummer verarbeitet. Eine Verarbeitung in den USA ist möglich. Cookies zur Anzeigenzuordnung: in der Regel bis zu 90 Tage. Keine personalisierte Werbung durch diese Einbindung. Nur mit Ihrer Zustimmung.</span></span></label>' +
           '</fieldset>' +

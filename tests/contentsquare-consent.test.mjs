@@ -9,7 +9,7 @@ const source = await readFile(new URL('../assets/cookie-consent.js', import.meta
 const TAG = 'https://t.contentsquare.net/uxa/8aa1363a40e89.js';
 const purposes = ['lead', 'analytics', 'marketing', 'ads', 'contentsquare'];
 const iso = () => new Date(Date.now() - 1000).toISOString();
-const choice = (selected = {}, version = '7', at = iso()) =>
+const choice = (selected = {}, version = '8', at = iso()) =>
   [version, ...purposes.slice(0, version === '6' ? 4 : 5).map(key => selected[key] ? 'granted' : 'denied'), at].join('|');
 const plain = value => JSON.parse(JSON.stringify(value));
 
@@ -131,6 +131,22 @@ test('version 6 preserves prior Google/Meta choices but cannot grant Contentsqua
   assert.deepEqual(configs, ['G-RB9D1EMFDZ', 'AW-18528448427']);
 });
 
+test('version 7 requires renewed Contentsquare consent while retaining other valid purposes', () => {
+  const h = harness({ saved: choice(Object.fromEntries(purposes.map(key => [key, true])), '7') });
+  for (const purpose of purposes.slice(0, 4)) assert.equal(h.current()[purpose], true, purpose);
+  assert.equal(h.current().contentsquare, false);
+  assert.equal(h.current().needsUpdate, true);
+  assert.equal(h.banner().hidden, false);
+  assert.equal(h.banner().querySelector('#pe-consent-contentsquare').checked, false);
+  assert.equal(h.csScripts().length, 0);
+  h.load('pe-google-tag');
+  assert.deepEqual(h.googleCommands().filter(command => command[0] === 'config').map(command => command[1]), ['G-RB9D1EMFDZ', 'AW-18528448427']);
+  h.select({ lead: true, analytics: true, marketing: true, ads: true, contentsquare: true });
+  assert.equal(h.current().version, '8');
+  assert.equal(h.current().needsUpdate, false);
+  assert.equal(h.csScripts().length, 1);
+});
+
 test('Contentsquare-only consent requests the exact tag once and buffers privacy commands first', () => {
   const h = harness();
   h.select({ contentsquare: true });
@@ -149,11 +165,11 @@ test('Contentsquare-only consent requests the exact tag once and buffers privacy
   assert.ok(JSON.stringify(commands.find(command => command[0] === 'setPIISelectors')).includes('#k-sum'));
   assert.doesNotMatch(JSON.stringify(commands), /PRIVATE_/);
   assert.equal(h.current().contentsquare, true);
-  assert.equal(h.current().version, '7');
+  assert.equal(h.current().version, '8');
   assert.match(h.fields.get('[name="cookie_einwilligung"]').value, /Contentsquare: erteilt/);
 });
 
-test('a valid version 7 Contentsquare choice loads on a later page but does not open the banner', () => {
+test('a valid version 8 Contentsquare choice loads on a later page but does not open the banner', () => {
   const h = harness({ saved: choice({ contentsquare: true }), path: '/news' });
   assert.equal(h.current().needsUpdate, false);
   assert.equal(h.csScripts().length, 1);
@@ -172,8 +188,8 @@ test('an existing Contentsquare opt-out overrides saved consent until a fresh ex
 
 test('expired, malformed or future-dated choices do not load Contentsquare', () => {
   for (const saved of [
-    choice({ contentsquare: true }, '7', new Date(Date.now() - 181 * 86400000).toISOString()),
-    choice({ contentsquare: true }, '7', new Date(Date.now() + 86400000).toISOString()),
+    choice({ contentsquare: true }, '8', new Date(Date.now() - 181 * 86400000).toISOString()),
+    choice({ contentsquare: true }, '8', new Date(Date.now() + 86400000).toISOString()),
     choice({ contentsquare: true }).replace('|granted|', '|invalid|'),
   ]) {
     const h = harness({ saved });
