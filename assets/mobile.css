@@ -40,7 +40,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 
 .mobile-hero,.analysis-section{position:relative;z-index:1}
 .mobile-hero{color:#fff;padding:22px 0 20px;text-align:center}
-.hero-copy{max-width:630px;padding:13px 15px;border:1px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(12,32,45,.18)}
+.hero-copy{max-width:630px;padding:13px 15px;border:1px solid rgba(255,255,255,.3);border-radius:12px;background:rgba(12,32,45,.32)}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;font:700 .68rem/1.2 var(--fb);text-transform:uppercase;letter-spacing:.11em;color:var(--navy);margin-bottom:9px}
 .eyebrow.light{color:#EBD8AA}
 .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
@@ -65,7 +65,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,su
 .field input:focus,.field select:focus{border-color:var(--navy)}
 .consent{display:flex;align-items:flex-start;gap:9px;margin:14px 0;font-size:.81rem;line-height:1.45;color:var(--grau)}
 .consent input{flex:none;width:19px;height:19px;margin:2px 0 0;accent-color:var(--navy)}
-.form-assurance{max-width:560px;margin:12px auto 0;padding:8px 12px;text-align:center;color:var(--grau);font-size:.78rem}
+.form-assurance{max-width:560px;margin:12px auto 0;padding:8px 12px;border-radius:9px;background:#fff;text-align:center;color:var(--grau);font-size:.78rem}
 .form-assurance span{color:#906317;margin-right:4px}
 .price-assurance{max-width:560px;margin:18px auto 0;padding:13px 16px;border-left:3px solid var(--gold);background:#fff;color:var(--navy)}
 .price-assurance strong{font-size:.92rem}
