@@ -216,7 +216,7 @@ test('v5 consent preserves other choices but requires renewed Ads consent for ca
   assert.equal(h.phoneConfigs().length, 0);
   assert.equal(h.conversions().length, 0);
   h.select({ lead: true, analytics: true, marketing: true, ads: true });
-  assert.equal(h.window.PaschenCookieConsent.getChoice().version, '7');
+  assert.equal(h.window.PaschenCookieConsent.getChoice().version, '8');
   assert.equal(h.window.PaschenCookieConsent.getChoice().needsUpdate, false);
   assert.equal(h.phoneConfigs().length, 1);
   assert.equal(h.conversions().length, 1);
