@@ -134,6 +134,26 @@ test('no consent or rejected consent creates no Google/Meta library or conversio
   }
 });
 
+test('compact banner keeps every decision available outside initially collapsed settings', () => {
+  const h = run();
+  const banner = h.document.getElementById('pe-cookie-banner');
+  const html = banner.innerHTML;
+  const disclosure = html.match(/<details\b([^>]*)>([\s\S]*?)<\/details>/);
+  assert.ok(disclosure, 'Optional purpose details use a native keyboard-accessible disclosure');
+  assert.doesNotMatch(disclosure[1], /\bopen\b/, 'Long details are initially collapsed');
+  assert.match(disclosure[2], /<summary>[^<]+<\/summary>/);
+  const visible = html.replace(disclosure[0], '');
+  for (const decision of ['denied', 'selected', 'granted']) {
+    assert.match(visible, new RegExp(`<button\\b[^>]*data-pe-cookie="${decision}"`));
+  }
+  for (const purpose of ['lead', 'analytics', 'marketing', 'ads']) {
+    assert.equal(banner.querySelector(`#pe-consent-${purpose}`).checked, false);
+  }
+  for (const context of ['Stefanos Paschen', 'Lead-Zuordnung', 'Google Analytics', 'Google Ads', 'Meta Pixel', 'USA']) {
+    assert.ok(visible.includes(context), `${context} remains visible before opening details`);
+  }
+});
+
 test('analytics-only consent never configures an Ads destination or conversion', () => {
   const h = run({ choice: saved({ analytics: true }) });
   assert.equal(h.scripts.length, 1);

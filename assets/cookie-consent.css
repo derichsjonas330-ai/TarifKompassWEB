@@ -43,6 +43,25 @@
   text-underline-offset:2px;
 }
 .pe-cookie-copy .pe-cookie-details{margin-top:.75rem;font-size:.9rem}
+.pe-cookie-copy .pe-cookie-notice{margin-top:.55rem;font-size:.9rem}
+.pe-cookie-disclosure{margin-top:.7rem;border-top:1px solid #D5DFE9}
+.pe-cookie-disclosure summary{
+  min-height:44px;
+  padding:.65rem .2rem;
+  color:#123C63;
+  font-size:.97rem;
+  font-weight:700;
+  line-height:1.4;
+  cursor:pointer;
+}
+.pe-cookie-disclosure summary::marker{color:#123C63}
+.pe-cookie-disclosure summary:focus-visible{outline:3px solid #C9962E;outline-offset:2px}
+.pe-cookie-disclosure-content{
+  max-height:36dvh;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding:.25rem .25rem .5rem;
+}
 .pe-cookie-actions{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
