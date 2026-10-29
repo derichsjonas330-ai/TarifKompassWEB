@@ -1,13 +1,27 @@
-.pe-cookie-banner[hidden]{display:none!important}
+.pe-cookie-banner[hidden],.pe-cookie-banner:not([open]){display:none!important}
+html.pe-cookie-modal-open,html.pe-cookie-modal-open body{
+  overflow:hidden;
+  overscroll-behavior:none;
+}
+.pe-cookie-banner::backdrop{
+  background:rgba(8,31,53,.48);
+  touch-action:none;
+}
 .pe-cookie-banner{
+  box-sizing:border-box;
   position:fixed;
   inset:auto 1rem 1rem;
   z-index:10000;
+  width:calc(100% - 2rem);
   max-width:940px;
   max-height:calc(100dvh - 2rem);
   overflow-y:auto;
   overscroll-behavior:contain;
   margin:0 auto;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  background:transparent;
   color:#1B2B3A;
   font-family:'Source Sans 3',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
@@ -127,7 +141,7 @@ footer .footer-links .pe-cookie-settings:hover{
   text-underline-offset:3px;
 }
 @media(max-width:760px){
-  .pe-cookie-banner{inset:auto .6rem .6rem;max-height:calc(100dvh - 1.2rem)}
+  .pe-cookie-banner{inset:auto .6rem .6rem;width:calc(100% - 1.2rem);max-height:calc(100dvh - 1.2rem)}
   .pe-cookie-panel{grid-template-columns:1fr;padding:1.1rem;gap:1rem}
   .pe-cookie-options{grid-template-columns:1fr;gap:.8rem}
   .pe-cookie-actions{min-width:0;width:100%}

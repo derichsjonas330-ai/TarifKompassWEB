@@ -32,12 +32,16 @@ function harness({ saved, cookies = {}, path = '/?email=PRIVATE_EMAIL#PRIVATE_FR
     const handlers = new Map();
     const children = new Map();
     const attributes = new Map();
+    const classes = new Set();
     return {
-      tagName: tag.toUpperCase(), hidden: false, checked: false,
+      tagName: tag.toUpperCase(), hidden: false, checked: false, open: false,
+      classList: { add: name => classes.add(name), remove: name => classes.delete(name), contains: name => classes.has(name) },
+      showModal() { assert.equal(tag, 'dialog'); this.open = true; },
+      close() { this.open = false; handlers.get('close')?.(); },
       setAttribute(key, value) { attributes.set(key, String(value)); },
       getAttribute(key) { return attributes.get(key) ?? null; },
       addEventListener(type, fn) { handlers.set(type, fn); },
-      dispatch(type) { handlers.get(type)?.(); },
+      dispatch(type, event = {}) { handlers.get(type)?.(event); },
       focus() {},
       querySelector(selector) {
         if (!children.has(selector)) children.set(selector, element('input'));
@@ -57,7 +61,7 @@ function harness({ saved, cookies = {}, path = '/?email=PRIVATE_EMAIL#PRIVATE_FR
     };
   }
   const document = {
-    head: element('head'), body: element('body'),
+    head: element('head'), body: element('body'), documentElement: element('html'),
     referrer: 'https://example.invalid/?email=PRIVATE_REFERRER',
     createElement: element,
     getElementById(id) { return id === 'konfForm' ? { querySelector: key => fields.get(key) || null } : elements.get(id) || null; },
@@ -105,6 +109,65 @@ function harness({ saved, cookies = {}, path = '/?email=PRIVATE_EMAIL#PRIVATE_FR
     reloadCount: () => reloads,
   };
 }
+
+test('a first visit requires a modal choice and Escape cannot bypass it', () => {
+  const h = harness();
+  const banner = h.banner();
+  assert.equal(banner.tagName, 'DIALOG', 'Native modal dialog makes the background inert');
+  assert.equal(banner.open, true);
+  assert.equal(banner.hidden, false);
+  assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), true);
+  let prevented = false;
+  banner.dispatch('cancel', { preventDefault() { prevented = true; } });
+  assert.equal(prevented, true, 'Escape must not dismiss an undecided consent dialog');
+  assert.equal(banner.open, true);
+  assert.equal(h.current(), null);
+  assert.equal(h.scripts.length, 0, 'Showing the dialog must not load optional tracking');
+});
+
+test('rejecting, saving selected purposes and accepting all each release the modal lock', () => {
+  for (const decide of [h => h.reject(), h => h.select({ analytics: true }), h => h.grantAll()]) {
+    const h = harness();
+    decide(h);
+    assert.equal(h.banner().open, false);
+    assert.equal(h.banner().hidden, true);
+    assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), false);
+    assert.ok(h.current(), 'Each choice is recorded before returning to the page');
+  }
+  const rejected = harness();
+  rejected.reject();
+  assert.equal(rejected.scripts.length, 0, 'Rejecting grants page access without optional tracking');
+  assert.ok(purposes.every(purpose => rejected.current()[purpose] === false));
+});
+
+test('a valid saved choice leaves the page unlocked and settings can be reopened and saved', () => {
+  const h = harness({ saved: choice(), path: '/mobil.html' });
+  assert.equal(h.banner().open, false);
+  assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), false);
+  h.window.PaschenCookieConsent.openSettings();
+  assert.equal(h.banner().open, true);
+  assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), true);
+  h.window.PaschenCookieConsent.openSettings();
+  h.select();
+  assert.equal(h.banner().open, false);
+  assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), false);
+  assert.equal(h.scripts.length, 0);
+});
+
+test('privacy and imprint information remains readable without consent', () => {
+  for (const path of ['/datenschutz', '/datenschutz.html#cookies', '/datenschutz/', '/impressum', '/impressum.html']) {
+    const h = harness({ path });
+    assert.equal(h.banner().open, false, path);
+    assert.equal(h.document.documentElement.classList.contains('pe-cookie-modal-open'), false, path);
+    assert.equal(h.current(), null, 'Reading legal information must not record implicit consent');
+    assert.equal(h.scripts.length, 0);
+    h.window.PaschenCookieConsent.openSettings();
+    assert.equal(h.banner().open, true, 'Legal pages retain explicit access to cookie settings');
+  }
+  for (const path of ['/', '/mobil.html', '/news', '/news/datenschutz', '/datenschutz-other']) {
+    assert.equal(harness({ path }).banner().open, true, path);
+  }
+});
 
 test('Contentsquare has a separate, initially unchecked consent and does not load before opt-in', () => {
   for (const saved of [undefined, choice(), choice({ analytics: true }), choice({ ads: true })]) {

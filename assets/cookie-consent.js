@@ -392,17 +392,21 @@
   }
 
   function buildBanner(){
-    const banner = document.createElement('section');
+    const banner = document.createElement('dialog');
     banner.className = 'pe-cookie-banner';
     banner.id = 'pe-cookie-banner';
-    banner.setAttribute('aria-label','Cookie-Einstellungen');
+    banner.setAttribute('aria-labelledby','pe-cookie-title');
+    banner.setAttribute('closedby','none');
+    // Escape/backdrop must not dismiss an unanswered choice or imply consent.
+    banner.addEventListener('cancel', function(event){ event.preventDefault(); });
     banner.hidden = true;
     banner.innerHTML =
       '<div class="pe-cookie-panel">' +
         '<div class="pe-cookie-copy">' +
-          '<h2>Ihre Cookie-Auswahl</h2>' +
+          '<h2 id="pe-cookie-title" tabindex="-1" autofocus>Ihre Cookie-Auswahl</h2>' +
           '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Contentsquare-Nutzungsanalyse einschließlich Sitzungsaufzeichnungen und Weiterentwicklung der Contentsquare-Dienste, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
           '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
+          '<p class="pe-cookie-notice"><a href="/datenschutz">Datenschutz</a> · <a href="/impressum">Impressum</a></p>' +
           '<details class="pe-cookie-disclosure">' +
             '<summary>Einstellungen und Cookie-Details</summary>' +
             '<div class="pe-cookie-disclosure-content">' +
@@ -439,10 +443,19 @@
     banner.querySelector('#pe-consent-ads').checked = !!(choice && choice.ads);
     banner.querySelector('#pe-consent-contentsquare').checked = !!(choice && choice.contentsquare);
     banner.hidden = false;
+    if(!banner.open){
+      // Native modal dialogs make the background inert for pointer, keyboard and assistive technology.
+      banner.showModal();
+      document.documentElement.classList.add('pe-cookie-modal-open');
+    }
   }
 
   function hideBanner(){
-    if(banner) banner.hidden = true;
+    if(banner){
+      if(banner.open) banner.close();
+      banner.hidden = true;
+    }
+    document.documentElement.classList.remove('pe-cookie-modal-open');
   }
 
   function saveChoice(status){
@@ -466,8 +479,6 @@
 
   function openSettings(){
     showBanner();
-    const firstButton = banner.querySelector('[data-pe-cookie="denied"]');
-    if(firstButton) firstButton.focus();
   }
 
   document.addEventListener('click',function(event){
@@ -481,15 +492,17 @@
 
   banner = buildBanner();
   const choice = parseChoice();
+  // Visitors must be able to read the information behind the banner before deciding.
+  const isLegalInfoPage = /^\/(?:datenschutz|impressum)(?:\.html)?\/?$/.test(window.location.pathname);
   if(!choice){
     clearLeadCookies();
-    showBanner();
+    if(!isLegalInfoPage) showBanner();
   } else if(choice.lead){
     ensureLeadCookies();
   } else {
     clearLeadCookies();
   }
-  if(choice && choice.needsUpdate) showBanner();
+  if(choice && choice.needsUpdate && !isLegalInfoPage) showBanner();
   syncGoogle(choice);
   syncMarketing(!!(choice && choice.marketing));
   syncContentsquare(!!(choice && choice.contentsquare));
