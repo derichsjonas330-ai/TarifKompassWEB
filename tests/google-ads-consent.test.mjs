@@ -33,8 +33,12 @@ function run({ choice, path = '/danke', referrer = '', label = TEST_LABEL, cooki
     const handlers = new Map();
     const children = new Map();
     const attributes = new Map();
+    const classes = new Set();
     return {
-      tagName: tag.toUpperCase(), nodeType: 1, childNodes: [], hidden: false, checked: false,
+      tagName: tag.toUpperCase(), nodeType: 1, childNodes: [], hidden: false, checked: false, open: false,
+      classList: { add: name => classes.add(name), remove: name => classes.delete(name), contains: name => classes.has(name) },
+      showModal() { assert.equal(tag, 'dialog'); this.open = true; },
+      close() { this.open = false; handlers.get('close')?.(); },
       setAttribute(name, value) { attributes.set(name, String(value)); },
       getAttribute(name) { return attributes.get(name) ?? null; },
       get href() { return this.getAttribute('href') || ''; },
@@ -42,7 +46,7 @@ function run({ choice, path = '/danke', referrer = '', label = TEST_LABEL, cooki
       get textContent() { return this.childNodes.map(child => child.nodeType === 3 ? child.nodeValue : child.textContent).join(''); },
       focus() {},
       addEventListener(type, fn) { handlers.set(type, fn); },
-      dispatch(type) { handlers.get(type)?.(); },
+      dispatch(type, event = {}) { handlers.get(type)?.(event); },
       querySelector(selector) {
         if (!children.has(selector)) children.set(selector, element('input'));
         return children.get(selector);
@@ -69,7 +73,7 @@ function run({ choice, path = '/danke', referrer = '', label = TEST_LABEL, cooki
     return link;
   });
   const document = {
-    head: element('head'), body: element('body'), referrer,
+    head: element('head'), body: element('body'), documentElement: element('html'), referrer,
     createElement: element,
     getElementById(id) { return id === 'konfForm' ? { querySelector: s => formFields.get(s) || null } : elements.get(id) || null; },
     getElementsByTagName(tag) { return tag === 'script' ? scripts : []; },
