@@ -44,6 +44,7 @@ html.pe-cookie-modal-open,html.pe-cookie-modal-open body{
   font-size:clamp(1.25rem,3vw,1.55rem);
   line-height:1.2;
 }
+.pe-cookie-copy h2:focus{outline:none}
 .pe-cookie-copy p{
   margin:0;
   color:#465A6E;
