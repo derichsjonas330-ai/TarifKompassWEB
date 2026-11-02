@@ -104,14 +104,15 @@ p{margin-bottom:1rem}
 .footer-links a:hover{color:#E6BA62}
 .footer-links .pe-cookie-settings{color:#B7CBDB;text-decoration:none}
 .footer-end{border-top:1px solid rgba(255,255,255,.15);margin-top:32px;padding-top:18px;font-size:.74rem}
-@media(max-width:940px){.header-call{display:none}}
+@media(max-width:1100px){.header-call{display:none}}
+@media(max-width:860px){.header-cta{display:none}}
 @media(max-width:720px){
   body{font-size:17px}
   .header-inner{min-height:0;flex-wrap:wrap;gap:0;padding-top:13px}
   .brand{margin-right:auto;font-size:1.24rem}
   .header-cta{display:none}
-  .page-nav{order:3;flex-basis:100%;margin-top:12px;justify-content:center;border-top:1px solid var(--line)}
-  .page-nav a{padding:10px 13px;font-size:.84rem}
+  .page-nav{order:3;flex-basis:100%;flex-wrap:wrap;gap:2px;margin-top:12px;justify-content:center;border-top:1px solid var(--line)}
+  .page-nav a{padding:10px 9px;font-size:.84rem}
   .about-hero .shell{grid-template-columns:1fr;gap:30px}
   .about-hero .shell,.news-hero .shell{padding-block:49px 62px}
   .page-hero h1{font-size:clamp(2.55rem,9vw,3.7rem)}
