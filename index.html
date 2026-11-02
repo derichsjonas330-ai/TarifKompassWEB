@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="preload" as="image" href="/assets/tarifkompass-hero-eigenheim-paar.webp" type="image/webp">
 <link rel="stylesheet" href="/assets/cookie-consent.css">
+<link rel="stylesheet" href="/assets/cost-example.css">
 <script defer src="/assets/cookie-consent.js"></script>
 <style>
 :root{
@@ -659,6 +660,44 @@ section h2{max-width:30ch}
         <ul><li>Sie behalten die Entscheidung</li><li>Unterstützung bei Anmeldung und Wechsel</li></ul></div>
     </div>
     <div class="cta-row rv"><a class="btn blau" href="#analyse">Sparangebot anfordern</a></div>
+  </div>
+</section>
+
+<!-- Beispielrechnung direkt nach dem Beratungsablauf -->
+<section class="cost-example" id="beispielrechnung" aria-labelledby="example-title">
+  <div class="wrap">
+    <span class="example-kicker">Fiktives Rechenbeispiel · Strom</span>
+    <h2 id="example-title">Stromkosten verständlich vergleichen.</h2>
+    <p class="example-intro">Ein Haushalt verbraucht in diesem Beispiel <strong>3.500 kWh im Jahr</strong>. Wir vergleichen zwei angenommene Tarife – mit demselben Verbrauch und allen laufenden Tarifkosten.</p>
+    <div class="example-grid">
+      <div class="example-calculation">
+        <table class="example-table">
+          <caption>Zwei Beispieltarife im Jahresvergleich</caption>
+          <thead><tr><th scope="col">Kostenpunkt</th><th scope="col">Bisheriger<br>Beispieltarif</th><th scope="col">Neuer<br>Beispieltarif</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Arbeitspreis</th><td>35 ct/kWh</td><td>28 ct/kWh</td></tr>
+            <tr><th scope="row">Verbrauchs&shy;kosten<br>pro Jahr</th><td>1.225 €<small>3.500 × 0,35 €</small></td><td>980 €<small>3.500 × 0,28 €</small></td></tr>
+            <tr><th scope="row">Grundpreis<br>pro Monat</th><td>15 €</td><td>12 €</td></tr>
+            <tr><th scope="row">Grundpreis<br>pro Jahr</th><td>180 €<small>12 × 15 €</small></td><td>144 €<small>12 × 12 €</small></td></tr>
+            <tr class="example-total"><th scope="row">Gesamt&shy;kosten<br>pro Jahr</th><td>1.405 €</td><td>1.124 €</td></tr>
+          </tbody>
+        </table>
+        <p class="example-formula"><strong>So wird gerechnet:</strong> Jahresverbrauch × Arbeitspreis + 12 × monatlicher Grundpreis = Jahreskosten.</p>
+      </div>
+      <aside class="example-saving" aria-labelledby="example-saving-title">
+        <p class="example-result-label">Ersparnis in diesem Beispiel</p>
+        <h3 id="example-saving-title">281 €<span>pro Jahr</span></h3>
+        <p class="example-month">Das entspricht rund <strong>23,42 € pro Monat</strong> im rechnerischen Durchschnitt.</p>
+        <p class="example-difference">1.405 € − 1.124 € = <strong>281 €</strong><br>Ohne Wechselbonus gerechnet.</p>
+      </aside>
+    </div>
+    <div class="example-explanation">
+      <div><h3>1. Verbrauchskosten vergleichen</h3><p>Der Arbeitspreis gilt für jede verbrauchte Kilowattstunde. 7 Cent weniger ergeben bei 3.500 kWh im Jahr <strong>245 € weniger Verbrauchskosten</strong>.</p></div>
+      <div><h3>2. Den Grundpreis einbeziehen</h3><p>Der Grundpreis fällt unabhängig vom Verbrauch an. Im Beispiel sinkt er um 3 € monatlich, also <strong>36 € im Jahr</strong>. Zusammen mit den 245 € ergibt das 281 €.</p></div>
+      <div><h3>3. Jahreskosten statt Abschlag</h3><p>Ein Abschlag ist eine Vorauszahlung. Der Monatsdurchschnitt hier ist kein zugesagter Abschlag. Für Ihre Entscheidung prüfe ich auch Laufzeit, Preisgarantie und Vertragsbedingungen.</p></div>
+    </div>
+    <p class="example-assumptions"><strong>Rechenannahmen:</strong> Alle Preise sind frei gewählte Bruttopreise einschließlich Steuern und Abgaben. Gerechnet wird für zwölf Monate bei gleichem Verbrauch und unveränderten Preisen, ohne Boni. Das Beispiel ist kein konkretes Tarifangebot und keine Spargarantie. Ihre tatsächlichen Kosten und eine mögliche Ersparnis hängen von Ihrem Vertrag, Verbrauch, Wohnort und dem verfügbaren Partnerangebot ab.</p>
+    <a class="example-cta" href="#analyse">Meine Tarife persönlich prüfen lassen <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
