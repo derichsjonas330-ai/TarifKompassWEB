@@ -405,7 +405,7 @@
         '<div class="pe-cookie-copy">' +
           '<h2 id="pe-cookie-title" tabindex="-1" autofocus>Ihre Cookie-Auswahl</h2>' +
           '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Contentsquare-Nutzungsanalyse einschließlich Sitzungsaufzeichnungen und Weiterentwicklung der Contentsquare-Dienste, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
-          '<p class="pe-cookie-notice"><strong>Website und Anfragen:</strong> Netlify stellt die Website bereit. Abgesendete Anfragen werden mit Netlify Forms, Hostinger (E-Mail) und HubSpot (Anfragenverwaltung) bearbeitet – unabhängig von Ihrer Cookie-Auswahl.</p>' +
+          '<p class="pe-cookie-notice"><strong>Website und Anfragen:</strong> Netlify stellt die Website bereit. Abgesendete Anfragen werden mit Netlify Forms, Hostinger (E-Mail) und HubSpot (Anfragenverwaltung) bearbeitet, unabhängig von Ihrer Cookie-Auswahl.</p>' +
           '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
           '<p class="pe-cookie-notice"><a href="/datenschutz">Datenschutz</a> · <a href="/impressum">Impressum</a></p>' +
           '<details class="pe-cookie-disclosure">' +
