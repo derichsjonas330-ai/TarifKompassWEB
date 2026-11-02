@@ -1,0 +1,8 @@
+/* Quiet reassurance below the configurator, with no competing action. */
+.service-promises{width:100%;max-width:560px;margin:0 auto;padding:16px 20px;background:#fff;border:1px solid var(--linie);border-radius:10px;color:var(--navy)}
+.service-promise+.service-promise{margin-top:13px;padding-top:13px;border-top:1px solid var(--linie)}
+.service-promises .service-promise h2{font-family:var(--fb);font-size:1rem;line-height:1.35;font-weight:700;letter-spacing:0;text-wrap:pretty;margin:0 0 5px;color:var(--navy)}
+.service-promises .service-promise p{font-size:.85rem;line-height:1.5;margin:0;color:var(--grau)}
+.service-promises .service-promises-note{font-size:.75rem;line-height:1.45;margin:13px 0 0;color:var(--grau)}
+.analysis-section .service-promises{margin-top:14px}
+@media(max-width:600px){.service-promises{padding:15px 16px}}

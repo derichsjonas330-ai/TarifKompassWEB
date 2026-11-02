@@ -10,11 +10,11 @@ const embeddedFonts = new Set([
 ]);
 const pageAssets = {
   'index.html': {
-    styles: ['/assets/cookie-consent.css', '/assets/cost-example.css'],
+    styles: ['/assets/cookie-consent.css', '/assets/cost-example.css', '/assets/service-promises.css'],
     scripts: ['/assets/cookie-consent.js', '/assets/configurator.js']
   },
   'mobil.html': {
-    styles: ['/assets/configurator-mobile.css', '/assets/mobile.css', '/assets/cookie-consent.css', '/assets/cost-example.css'],
+    styles: ['/assets/configurator-mobile.css', '/assets/mobile.css', '/assets/cookie-consent.css', '/assets/cost-example.css', '/assets/service-promises.css'],
     scripts: ['/assets/cookie-consent.js', '/assets/configurator.js', '/assets/mobile.js']
   }
 };
