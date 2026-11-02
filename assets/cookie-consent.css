@@ -59,6 +59,8 @@ html.pe-cookie-modal-open,html.pe-cookie-modal-open body{
 }
 .pe-cookie-copy .pe-cookie-details{margin-top:.75rem;font-size:.9rem}
 .pe-cookie-copy .pe-cookie-notice{margin-top:.55rem;font-size:.9rem}
+.pe-cookie-services{margin-top:1rem;padding-bottom:1rem;border-bottom:1px solid #D5DFE9}
+.pe-cookie-services h3{margin:0 0 .5rem;color:#123C63;font-size:1rem;line-height:1.3}
 .pe-cookie-disclosure{margin-top:.7rem;border-top:1px solid #D5DFE9}
 .pe-cookie-disclosure summary{
   min-height:44px;
