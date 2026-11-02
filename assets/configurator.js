@@ -6,7 +6,7 @@
   const steps = Array.prototype.slice.call(form.querySelectorAll('.konf-step'));
   const bar   = Array.prototype.slice.call(card.querySelectorAll('.konf-bar i'));
   const submitButton = form.querySelector('button[type="submit"]');
-  const submitLabel = submitButton ? submitButton.textContent : 'Sparangebot anfordern';
+  const submitLabel = submitButton ? submitButton.textContent : 'Sparangebot kostenlos anfordern';
   let cur = 0;
   let submitting = false;
 
