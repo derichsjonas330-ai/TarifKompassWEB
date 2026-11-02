@@ -405,12 +405,20 @@
         '<div class="pe-cookie-copy">' +
           '<h2 id="pe-cookie-title" tabindex="-1" autofocus>Ihre Cookie-Auswahl</h2>' +
           '<p>Paschen Energie: Optionale Cookies für Lead-Zuordnung, Google-Statistik, Contentsquare-Nutzungsanalyse einschließlich Sitzungsaufzeichnungen und Weiterentwicklung der Contentsquare-Dienste, Google-Werbe- und Anrufmessung sowie Meta-Werbemessung und personalisierte Werbung. Datenverarbeitung in den USA möglich.</p>' +
+          '<p class="pe-cookie-notice"><strong>Website und Anfragen:</strong> Netlify stellt die Website bereit. Abgesendete Anfragen werden mit Netlify Forms, Hostinger (E-Mail) und HubSpot (Anfragenverwaltung) bearbeitet – unabhängig von Ihrer Cookie-Auswahl.</p>' +
           '<p class="pe-cookie-notice">Ablehnen ohne Nachteile; über „Cookie-Einstellungen“ jederzeit änderbar.</p>' +
           '<p class="pe-cookie-notice"><a href="/datenschutz">Datenschutz</a> · <a href="/impressum">Impressum</a></p>' +
           '<details class="pe-cookie-disclosure">' +
-            '<summary>Einstellungen und Cookie-Details</summary>' +
+            '<summary>Einstellungen und Dienste im Detail</summary>' +
             '<div class="pe-cookie-disclosure-content">' +
               '<p>Verantwortlicher: Stefanos Paschen Vertrieb &amp; Energie. Sie entscheiden, welche optionalen Cookies Sie erlauben. Ihre Auswahl speichern wir für sechs Monate. <a href="/datenschutz#cookies">Details in der Datenschutzerklärung</a>.</p>' +
+              '<section class="pe-cookie-services" aria-labelledby="pe-cookie-services-title">' +
+                '<h3 id="pe-cookie-services-title">Website und Anfragen</h3>' +
+                '<p>Diese Verarbeitung hängt nicht von Ihrer Zustimmung zu optionalen Cookies ab. Auch bei Ablehnung können Sie die Website und das Anfrageformular nutzen.</p>' +
+                '<p class="pe-cookie-notice"><strong>Netlify:</strong> Liefert die Website aus und verarbeitet dabei technische Zugriffsdaten wie Ihre IP-Adresse. Erst wenn Sie das Formular absenden, nimmt Netlify Forms Ihre Anfragedaten entgegen und speichert sie. <a href="/datenschutz#hosting">Hosting</a> · <a href="/datenschutz#formular">Formularverarbeitung</a></p>' +
+                '<p class="pe-cookie-notice"><strong>Hostinger:</strong> Betreibt unser E-Mail-Postfach für Anfragebenachrichtigungen und Ihre E-Mail-Kommunikation mit uns. Eine Hostinger-Tracking-Einbindung im Browser verwenden wir nicht. <a href="/datenschutz#kontakt">Details zu Hostinger</a></p>' +
+                '<p class="pe-cookie-notice"><strong>HubSpot:</strong> Erhält nach Absenden der Tarifanfrage die erforderlichen Kontakt- und Anfragedaten serverseitig zur Bearbeitung. Diese Anbindung lädt keinen HubSpot-Tracking-Code und setzt keine HubSpot-Cookies im Browser. Beim bloßen Seitenbesuch erhält HubSpot dadurch keine Daten. <a href="/datenschutz#hubspot">Details zu HubSpot</a></p>' +
+              '</section>' +
           '<fieldset class="pe-cookie-options"><legend>Optionale Zwecke auswählen</legend>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-lead"><span><strong>Lead-Zuordnung</strong><span>Ein zufälliger Lead-Code und Ihr erster Besuchszeitpunkt helfen uns, wiederkehrende Anfragen zuzuordnen und Website-Leads abzurechnen. Speicherdauer: sechs Monate.</span></span></label>' +
             '<label class="pe-cookie-option"><input type="checkbox" id="pe-consent-analytics"><span><strong>Statistik mit Google Analytics</strong><span>Google Ireland Limited verarbeitet Nutzungs- und Gerätedaten, damit wir unsere Website verbessern können. Eine Verarbeitung in den USA ist möglich. Analyse-Cookies: bis zu sechs Monate. Keine personalisierte Werbung.</span></span></label>' +
