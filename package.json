@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-site.mjs",
-    "test": "node --test tests/hubspot-submission.test.mts",
+    "test": "node --test tests/hubspot-submission.test.mts tests/configurator.test.mjs tests/google-ads-consent.test.mjs tests/contentsquare-consent.test.mjs",
     "typecheck": "tsc --noEmit --strict --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions netlify/functions/tarifanfrage-hubspot.mts tests/hubspot-submission.test.mts"
   },
   "engines": { "node": ">=22.18.0" },

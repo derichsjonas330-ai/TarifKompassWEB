@@ -45,12 +45,16 @@ export function toHubSpotSubmission(data: SubmissionData | undefined): HubSpotSu
   }
 
   const selectedEnergy = value(data, 'sparte');
+  const consumption = value(data, 'kwh');
   const lines: [string, string][] = [
     ['Tarifprüfung', value(data, 'beide_sparten') ? 'Strom und Gas' : selectedEnergy],
     ['Gewählte Sparte für die Verbrauchsangabe', selectedEnergy],
     ['Objekt', value(data, 'objekt')],
     [value(data, 'objekt') === 'Gewerbe' ? 'Beschäftigte im Betrieb' : 'Personen im Haushalt', value(data, 'personen')],
-    ['Jahresverbrauch (kWh, Kundeneingabe)', value(data, 'kwh')],
+    // Missing consumption needs follow-up, not an estimate from a hidden field.
+    consumption
+      ? ['Jahresverbrauch (kWh, Kundeneingabe)', consumption]
+      : ['Jahresverbrauch', 'Nicht bekannt, persönlich klären'],
     ['Aktuelle Versorgung', value(data, 'situation')],
     ['Aktueller Anbieter', value(data, 'anbieter')],
     ['Preiserhöhung / Sonderkündigungsrecht prüfen', value(data, 'erhoehung') ? 'Ja' : 'Nicht angegeben'],

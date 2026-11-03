@@ -48,12 +48,16 @@
       <div class="wrap">
             <div class="konf">
       <div class="konf-bar" aria-hidden="true">
-        <i class="now"></i><i></i><i></i><i></i><i></i>
+        <i class="now"></i><i></i>
       </div>
       <div class="konf-body">
         <!-- Netlify Forms: automatische Erkennung und Verarbeitung aktiviert -->
         <form id="konfForm" name="tarifanfrage" method="POST" action="/danke" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="tarifanfrage">
+          <input type="hidden" name="situation" value="">
+          <input type="hidden" name="anbieter" value="">
+          <input type="hidden" name="erhoehung" value="">
+          <input type="hidden" name="rueckruf" value="">
           <input type="hidden" name="pe_integration_source" value="tarifanfrage">
           <input type="hidden" name="subject" value="Neue Tarif-Anfrage über paschenenergie.de">
           <input type="hidden" id="k-verbrauch-berechnet" name="verbrauch_berechnet" value="">
@@ -64,9 +68,9 @@
           <input type="hidden" name="cookie_einwilligung" value="Keine Entscheidung">
           <p hidden aria-hidden="true"><label>Dieses Feld nicht ausfüllen: <input name="bot-field" autocomplete="off" tabindex="-1"></label></p>
 
-          <!-- Schritt 1: Sparte & Objekt -->
+          <!-- Schritt 1: Tarifdaten -->
           <section class="konf-step" data-step="1" tabindex="-1">
-            <span class="konf-kicker">Ihr Sparangebot · Schritt 1 von 4</span>
+            <span class="konf-kicker">Ihre Tarifdaten · Schritt 1 von 2</span>
             <fieldset>
               <legend>Wobei möchten Sie sparen?</legend>
               <div class="tiles">
@@ -97,66 +101,32 @@
                   <span class="t-lbl">Gewerbe</span></label>
               </div>
             </fieldset>
-            <button class="btn" type="button" data-next>Sparangebot kostenlos anfordern</button>
-            <p class="konf-note">Beratung und Vermittlung ohne Honorar</p>
-          </section>
-
-          <!-- Schritt 2: Verbrauch -->
-          <section class="konf-step" data-step="2" tabindex="-1" hidden>
-            <span class="konf-kicker">Ihr Verbrauch · Schritt 2 von 4</span>
-            <p class="konf-q">Wo und wie viel verbrauchen Sie?</p>
             <p class="konf-err" id="err2" role="alert"></p>
             <div class="konf-row">
               <div class="field"><label for="k-plz">Postleitzahl</label>
-                <input id="k-plz" name="plz" type="text" inputmode="numeric" maxlength="5" placeholder="z. B. 80331" autocomplete="postal-code"></div>
-              <div class="field"><label for="k-pers" id="k-pers-lbl">Personen im Haushalt</label>
-                <select id="k-pers" name="personen">
-                  <option value="1">1 Person</option>
-                  <option value="2" selected>2 Personen</option>
-                  <option value="3">3 Personen</option>
-                  <option value="4">4 Personen</option>
-                  <option value="5">5 oder mehr</option>
-                </select></div>
+                <input id="k-plz" name="plz" type="text" inputmode="numeric" maxlength="5" placeholder="z. B. 80331" autocomplete="postal-code" required></div>
+              <div class="field"><label for="k-kwh" id="k-kwh-lbl">Stromverbrauch pro Jahr (kWh)</label>
+                <input id="k-kwh" name="kwh" type="text" inputmode="numeric" placeholder="z. B. 3200" aria-describedby="k-verbrauch-hint" required></div>
             </div>
-            <div class="field"><label for="k-kwh">Jahresverbrauch der gewählten Sparte in kWh <span class="opt">(optional)</span></label>
-              <input id="k-kwh" name="kwh" type="text" inputmode="numeric" placeholder="z. B. 3200">
-              <p class="hint">Tragen Sie den Verbrauch der gewählten Sparte ein. Wenn Sie beide prüfen lassen, können Sie die zweite Abrechnung später nachreichen.</p></div>
-            <div class="konf-nav">
-              <button class="konf-back" type="button" data-back>‹ Zurück</button>
-              <button class="btn" type="button" data-next>Weiter</button>
-            </div>
+            <div class="consent konf-unknown"><input type="checkbox" id="k-unbekannt">
+              <label for="k-unbekannt">Jahresverbrauch gerade nicht zur Hand</label></div>
+            <div class="field" id="k-pers-field" hidden><label for="k-pers">Personen im Haushalt <span class="opt">(falls bekannt)</span></label>
+              <select id="k-pers" name="personen" disabled>
+                <option value="" selected>Bitte wählen</option>
+                <option value="1">1 Person</option>
+                <option value="2">2 Personen</option>
+                <option value="3">3 Personen</option>
+                <option value="4">4 Personen</option>
+                <option value="5">5 oder mehr</option>
+              </select></div>
+            <p class="hint konf-consumption-hint" id="k-verbrauch-hint">Den Jahresverbrauch finden Sie auf Ihrer letzten Abrechnung.</p>
+            <button class="btn" type="button" data-next>Sparangebot kostenlos anfordern</button>
+            <p class="konf-note">Noch Ihre Kontaktdaten, dann ist Ihre Anfrage fertig.</p>
           </section>
 
-          <!-- Schritt 3: Aktuelle Situation -->
-          <section class="konf-step" data-step="3" tabindex="-1" hidden>
-            <span class="konf-kicker">Ihre Situation · Schritt 3 von 4</span>
-            <fieldset>
-              <legend>Wie sind Sie aktuell versorgt?</legend>
-              <div class="tiles wide">
-                <label class="tile sel"><input type="radio" name="situation" value="Grundversorgung" checked>
-                  <span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V6l7-3 7 3v15"/><path d="M9 10h2M13 10h2M9 14h2M13 14h2"/></svg></span>
-                  <span class="t-lbl">Grundversorgung oder unklar</span></label>
-                <label class="tile"><input type="radio" name="situation" value="Laufender Vertrag">
-                  <span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></span>
-                  <span class="t-lbl">Laufender Vertrag bei einem Anbieter</span></label>
-                <label class="tile"><input type="radio" name="situation" value="Umzug oder Neuanschluss">
-                  <span class="t-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 15.5h5M12 13v5"/></svg></span>
-                  <span class="t-lbl">Umzug oder Neuanschluss</span></label>
-              </div>
-            </fieldset>
-            <div class="field"><label for="k-anbieter">Aktueller Anbieter <span class="opt">(optional)</span></label>
-              <input id="k-anbieter" name="anbieter" type="text" placeholder="z. B. Stadtwerke, E.ON, Vattenfall"></div>
-            <div class="consent" style="margin:.2rem 0 1.2rem"><input type="checkbox" id="k-erhoehung" name="erhoehung" value="Ja, Preiserhöhung erhalten">
-              <label for="k-erhoehung">Ich habe eine <strong>Preiserhöhung</strong> erhalten. Bitte Sonderkündigungsrecht mitprüfen.</label></div>
-            <div class="konf-nav">
-              <button class="konf-back" type="button" data-back>‹ Zurück</button>
-              <button class="btn" type="button" data-next>Weiter</button>
-            </div>
-          </section>
-
-          <!-- Schritt 4: Kontakt -->
-          <section class="konf-step" data-step="4" tabindex="-1" hidden>
-            <span class="konf-kicker">Ihre Rückmeldung · Schritt 4 von 4</span>
+          <!-- Schritt 2: Kontakt -->
+          <section class="konf-step" data-step="2" tabindex="-1" hidden>
+            <span class="konf-kicker">Ihr Kontakt · Schritt 2 von 2</span>
             <p class="konf-q">Wohin darf ich Ihre persönliche Einschätzung senden?</p>
             <p class="konf-err" id="err4" role="alert"></p>
             <div class="field"><label for="k-name">Vor- und Nachname</label>
@@ -167,14 +137,6 @@
               <input id="k-email" name="email" type="email" placeholder="Ihre E-Mail-Adresse" autocomplete="email" aria-describedby="k-kontakt-hint">
               <p class="hint" id="k-kontakt-hint">Eine Telefonnummer oder E-Mail-Adresse genügt.</p></div>
             <input id="k-kontakt" name="kontakt" type="hidden">
-            <div class="field"><label for="k-zeit">Wann darf ich Sie zurückrufen? <span class="opt">(optional)</span></label>
-              <select id="k-zeit" name="rueckruf">
-                <option>Jederzeit zu den Bürozeiten (Mo bis Fr, 9 bis 18 Uhr)</option>
-                <option>Vormittags (9 bis 12 Uhr)</option>
-                <option>Mittags (12 bis 15 Uhr)</option>
-                <option>Nachmittags (15 bis 18 Uhr)</option>
-                <option>Kein Rückruf, lieber schriftlich</option>
-              </select></div>
             <div class="consent"><input type="checkbox" id="k-consent" name="datenschutzhinweis" value="zur Kenntnis genommen">
               <label for="k-consent">Ich habe die <a href="/datenschutz.html" target="_blank" rel="noopener" style="color:var(--navy)">Datenschutzerklärung</a> zur Kenntnis genommen.</label></div>
             <div class="konf-nav">
@@ -185,7 +147,7 @@
           </section>
 
           <!-- Ergebnis -->
-          <section class="konf-step konf-result" data-step="5" tabindex="-1" hidden>
+          <section class="konf-step konf-result" data-step="success" tabindex="-1" hidden>
             <div class="ok" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
             <h3>Ihre Anfrage ist angekommen.</h3>
             <p class="konf-sub" style="margin-top:0">Sie erhalten innerhalb von 24 Stunden nach Ihrer Anfrage eine persönliche Antwort von mir.</p>
