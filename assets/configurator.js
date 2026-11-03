@@ -55,13 +55,28 @@
   });
 
   /* Schrittsteuerung */
+  function showIntroduction(){
+    window.scrollTo({top:0, left:0, behavior:'instant'});
+  }
   function show(i){
     steps.forEach(function(s,n){ s.hidden = n !== i; });
     bar.forEach(function(b,n){ b.className = n < i ? 'done' : (n === i ? 'now' : ''); });
     cur = i;
-    if(card.getBoundingClientRect().top < 0) card.scrollIntoView({behavior:'smooth', block:'start'});
     steps[i].focus({preventScroll:true});
+    showIntroduction();
   }
+  // Entry links return to the same complete view and keep previously entered data.
+  document.addEventListener('click', function(e){
+    if(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const link = e.target.closest('a[href]');
+    if(!link || link.hasAttribute('download') || (link.getAttribute('target') && link.getAttribute('target') !== '_self')) return;
+    const target = new URL(link.href, window.location.href);
+    if(target.origin !== window.location.origin || target.pathname !== window.location.pathname || target.search !== window.location.search || target.hash !== '#analyse') return;
+    if(submitting){ e.preventDefault(); return; }
+    e.preventDefault();
+    clearErr();
+    show(0);
+  });
   form.addEventListener('click', function(e){
     const next = e.target.closest('[data-next]');
     const back = e.target.closest('[data-back]');
@@ -91,6 +106,10 @@
     const f = el.closest('.field');
     if(f) f.classList.toggle('bad', bad);
   }
+  function focusError(el){
+    el.focus({preventScroll:true});
+    showIntroduction();
+  }
   function check(i){
     if(i === 0){
       const plz = document.getElementById('k-plz'), kwh = document.getElementById('k-kwh');
@@ -98,8 +117,8 @@
       const raw = kwh.value.trim().replace(/[.\s']/g,'');
       const okKwh = document.getElementById('k-unbekannt').checked || (/^\d{1,6}$/.test(raw) && +raw > 0);
       mark(plz, !okPlz); mark(kwh, !okKwh);
-      if(!okPlz){ setErr('err2','Bitte geben Sie eine 5-stellige Postleitzahl ein.'); plz.focus(); return false; }
-      if(!okKwh){ setErr('err2','Bitte geben Sie Ihren Jahresverbrauch ein, z. B. 3200, oder wählen Sie „Jahresverbrauch gerade nicht zur Hand“.'); kwh.focus(); return false; }
+      if(!okPlz){ setErr('err2','Bitte geben Sie eine 5-stellige Postleitzahl ein.'); focusError(plz); return false; }
+      if(!okKwh){ setErr('err2','Bitte geben Sie Ihren Jahresverbrauch ein, z. B. 3200, oder wählen Sie „Jahresverbrauch gerade nicht zur Hand“.'); focusError(kwh); return false; }
       setErr('err2',''); return true;
     }
     if(i === 1){
@@ -110,11 +129,11 @@
       const okTel = phoneValue === '' || /^[+0(][\d\s\/().-]{6,}$/.test(phoneValue);
       const okEmail = emailValue === '' || /^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(emailValue);
       mark(nm, !okNm); mark(tel, !hasContact || !okTel); mark(email, !hasContact || !okEmail);
-      if(!okNm){ setErr('err4','Bitte nennen Sie mir Ihren Namen.'); nm.focus(); return false; }
-      if(!hasContact){ setErr('err4','Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.'); tel.focus(); return false; }
-      if(!okTel){ setErr('err4','Bitte geben Sie eine gültige Telefonnummer ein.'); tel.focus(); return false; }
-      if(!okEmail){ setErr('err4','Bitte geben Sie eine gültige E-Mail-Adresse ein.'); email.focus(); return false; }
-      if(!cs.checked){ setErr('err4','Bitte bestätigen Sie, dass Sie die Datenschutzerklärung zur Kenntnis genommen haben.'); cs.focus(); return false; }
+      if(!okNm){ setErr('err4','Bitte nennen Sie mir Ihren Namen.'); focusError(nm); return false; }
+      if(!hasContact){ setErr('err4','Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.'); focusError(tel); return false; }
+      if(!okTel){ setErr('err4','Bitte geben Sie eine gültige Telefonnummer ein.'); focusError(tel); return false; }
+      if(!okEmail){ setErr('err4','Bitte geben Sie eine gültige E-Mail-Adresse ein.'); focusError(email); return false; }
+      if(!cs.checked){ setErr('err4','Bitte bestätigen Sie, dass Sie die Datenschutzerklärung zur Kenntnis genommen haben.'); focusError(cs); return false; }
       setErr('err4',''); return true;
     }
     return true;

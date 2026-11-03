@@ -1,0 +1,46 @@
+/* Keep the introduction and the two-step form together without shrinking inputs. */
+.hero .wrap{padding-top:16px}
+.hero-intro{margin-bottom:12px;padding:10px 16px}
+.hero-intro .eyebrow{margin-bottom:4px}
+.hero .hero-intro h1{font-size:clamp(1.7rem,2.7vw,2rem);margin-bottom:6px}
+.hero .konf-body,.analysis-section .konf-body{padding:14px 22px}
+.konf legend,.konf .konf-q{font-size:1.02rem;line-height:1.25;margin-bottom:8px}
+.hero .konf-kicker,.konf .konf-kicker{margin-bottom:8px;line-height:1.3}
+.hero .tiles,.konf .tiles{gap:8px;margin-bottom:8px}
+.hero .tile,.konf .tile{padding:7px 6px;gap:3px;min-height:52px}
+.konf .t-ic{display:flex;line-height:1}
+.konf .tile svg{width:22px;height:22px}
+.konf .tile .t-sub{font-size:.62rem}
+.konf .consent{margin:6px 0 8px;min-height:24px;align-items:center;line-height:1.4}
+.konf .consent input{margin-top:0;flex:none}
+.konf .konf-row{gap:12px}
+.konf .field{margin-bottom:8px}
+.konf .field label{font-size:.88rem;line-height:1.3;margin-bottom:4px}
+.konf .field input,.konf .field select{min-height:44px;padding:8px 12px;font-size:16px;line-height:1.25}
+.konf .konf-consumption-hint{margin:0 0 8px;line-height:1.35}
+.konf .konf-err{padding:6px 10px;margin-bottom:8px;line-height:1.4}
+.hero .konf .btn,.analysis-section .konf .btn{min-height:44px;padding:10px 14px;font-size:1rem;line-height:1.3}
+.konf .konf-note,.konf .konf-sub{margin:8px 0 0;font-size:.8rem;line-height:1.35}
+.mobile-hero{padding:14px 0 12px}
+.mobile-hero .hero-copy{padding:10px 12px}
+.mobile-hero h1{margin-bottom:6px}
+@media(min-width:360px) and (max-width:600px){
+  .konf .konf-row{grid-template-columns:1fr 1.4fr}
+  .konf-row .field{display:flex;flex-direction:column;min-width:0}
+  .konf-row .field input{margin-top:auto;padding-inline:10px}
+}
+@media(min-width:901px) and (max-height:800px){
+  .hero .wrap{padding-top:10px}
+  .hero-intro{padding:8px 16px;margin-bottom:10px}
+  .hero-intro .eyebrow{display:none}
+  .hero .hero-intro h1{font-size:1.7rem}
+  .hero .konf-body{padding-block:12px}
+  .hero .tile{display:grid;grid-template-columns:22px auto;justify-content:center;align-content:center;column-gap:6px;row-gap:0;min-height:44px;padding:5px 7px}
+  .hero .tile .t-ic{grid-row:1 / 3;align-self:center}
+  .hero .tile .t-lbl,.hero .tile .t-sub{grid-column:2}
+}
+@media(max-width:600px){
+  .hero .wrap{padding-top:14px}
+  .hero .konf-body,.analysis-section .konf-body{padding:14px}
+  .konf .tile{padding-inline:4px}
+}
