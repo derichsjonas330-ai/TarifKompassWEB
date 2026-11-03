@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="/assets/cookie-consent.css">
   <link rel="stylesheet" href="/assets/cost-example.css">
   <link rel="stylesheet" href="/assets/service-promises.css">
+  <link rel="stylesheet" href="/assets/configurator-compact.css">
   <script defer src="/assets/cookie-consent.js"></script>
   <script defer src="/assets/configurator.js"></script>
   <script defer src="/assets/mobile.js"></script>
@@ -71,6 +72,7 @@
           <!-- Schritt 1: Tarifdaten -->
           <section class="konf-step" data-step="1" tabindex="-1">
             <span class="konf-kicker">Ihre Tarifdaten · Schritt 1 von 2</span>
+            <p class="konf-err" id="err2" role="alert"></p>
             <fieldset>
               <legend>Wobei möchten Sie sparen?</legend>
               <div class="tiles">
@@ -101,7 +103,6 @@
                   <span class="t-lbl">Gewerbe</span></label>
               </div>
             </fieldset>
-            <p class="konf-err" id="err2" role="alert"></p>
             <div class="konf-row">
               <div class="field"><label for="k-plz">Postleitzahl</label>
                 <input id="k-plz" name="plz" type="text" inputmode="numeric" maxlength="5" placeholder="z. B. 80331" autocomplete="postal-code" required></div>

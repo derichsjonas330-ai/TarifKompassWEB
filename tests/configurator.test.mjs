@@ -16,7 +16,7 @@ function attributes(tag) {
 function harness(page = 'index.html', response = async () => ({ ok: true, status: 200 })) {
   const html = pages[page];
   const formMarkup = html.match(/<form\b[^>]*id="konfForm"[^>]*>[\s\S]*?<\/form>/)[0];
-  const elements = new Map(), controls = [], requests = [], redirects = [], hooks = [];
+  const elements = new Map(), controls = [], requests = [], redirects = [], hooks = [], scrolls = [], focuses = [];
   let focused;
   function element(attrs = {}) {
     const handlers = new Map(), classes = new Set((attrs.class || '').split(/\s+/).filter(Boolean));
@@ -36,7 +36,7 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
       hasAttribute: key => key in attrs,
       addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); },
       async dispatch(type, event = {}) { for (const handler of handlers.get(type) || []) await handler({ target: node, preventDefault() {}, ...event }); },
-      focus() { focused = node; },
+      focus(options) { focused = node; focuses.push({ node, options }); },
       closest(selector) { return selector === '.field' ? node.field : selector === '.tile' ? node.tile : null; },
     };
     for (const [key, value] of Object.entries(attrs)) if (key.startsWith('data-')) node.dataset[key.slice(5)] = value;
@@ -95,9 +95,21 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
   card.querySelectorAll = selector => { assert.equal(selector, '.konf-bar i'); return bars; };
   card.getBoundingClientRect = () => ({ top: 100 });
   card.scrollIntoView = () => {};
-  const document = { getElementById: id => id === 'konfForm' ? form : elements.get(id) || null, querySelector: selector => selector === '.konf' ? card : null };
+  const document = Object.assign(element(), {
+    getElementById: id => id === 'konfForm' ? form : elements.get(id) || null,
+    querySelector: selector => selector === '.konf' ? card : null,
+  });
+  const location = new URL(page === 'mobil.html' ? 'https://paschenenergie.de/mobil.html' : 'https://paschenenergie.de/');
+  location.assign = path => redirects.push(path);
+  let reducedMotion = false;
   const window = {
-    location: { assign: path => redirects.push(path) },
+    location,
+    scrollTo: options => scrolls.push({ ...options }),
+    matchMedia: query => ({ matches: query === '(prefers-reduced-motion: reduce)' && reducedMotion }),
+    history: {
+      replaceState(data, title, href) { location.href = new URL(href, location.href).href; },
+      pushState(data, title, href) { location.href = new URL(href, location.href).href; },
+    },
     PaschenCookieConsent: {
       syncLeadFields(target) { assert.equal(target, form); hooks.push('sync'); named('cookie_einwilligung').value = 'OFFLINE_CONSENT'; },
       ensureRequestId(target) { assert.equal(target, form); hooks.push('id'); named('vorgangs_id').value = 'OFFLINE_REQUEST_ID'; },
@@ -113,11 +125,11 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
     }
   }
   vm.runInNewContext(source, {
-    window, document, Intl, URLSearchParams, FormData: LocalFormData,
+    window, document, Intl, URL, URLSearchParams, location, history: window.history, matchMedia: window.matchMedia, FormData: LocalFormData,
     fetch: async (url, options) => { requests.push({ url, ...options, data: new URLSearchParams(options.body) }); return response(requests.length); },
   }, { timeout: 1000 });
   const h = {
-    form, elements, controls, steps, bars, submitButton, requests, redirects, hooks,
+    form, elements, controls, steps, bars, submitButton, requests, redirects, hooks, scrolls, focuses,
     get: id => { assert.ok(elements.has(id), 'Missing real form element: ' + id); return elements.get(id); },
     value(id, value) { h.get(id).value = value; },
     async change(id, checked) { const input = h.get(id); input.checked = checked; await input.dispatch('change'); },
@@ -127,6 +139,20 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
       await input.dispatch('change');
     },
     click: action => form.dispatch('click', { target: { closest: selector => selector === `[data-${action}]` ? {} : null } }),
+    async cta(href = '#analyse', modifiers = {}, attributes = {}) {
+      const link = element({ href, ...attributes });
+      link.href = new URL(href, location.href).href;
+      link.target = attributes.target || '';
+      let prevented = false;
+      await document.dispatch('click', {
+        button: 0, defaultPrevented: false,
+        target: { closest: selector => selector.startsWith('a') ? link : null },
+        preventDefault() { prevented = true; },
+        ...modifiers,
+      });
+      return prevented;
+    },
+    reducedMotion(value) { reducedMotion = value; },
     submit: () => form.dispatch('submit'),
     active: () => steps.filter(step => !step.hidden).map(step => step.dataset.step),
     focused: () => focused,
@@ -175,6 +201,65 @@ test('first step validates ZIP and consumption, including Enter without prematur
   h.tariff(); h.contact();
   await h.submit();
   assert.deepEqual(h.active(), ['2']); assert.equal(h.requests.length, 0); assert.deepEqual(h.redirects, []);
+});
+
+for (const page of Object.keys(pages)) {
+  test(`${page}: offer links return to the hero and first step without deleting entered data or validating`, async () => {
+    const h = harness(page); h.tariff();
+    await h.choose('sparte', 'Gas'); await h.choose('objekt', 'Haus');
+    await h.click('next');
+    h.value('k-name', 'Offline Testperson'); h.value('k-email', 'unfinished@example');
+    await h.submit();
+    assert.equal(h.get('err4').classList.contains('on'), true);
+    assert.equal(await h.cta(), true, 'Normal offer-link clicks are handled on the current page');
+    assert.deepEqual(h.active(), ['1']);
+    assert.equal(h.get('k-plz').value, '01067'); assert.equal(h.get('k-kwh').value, '3.200');
+    assert.equal(h.form.sparte.value, 'Gas'); assert.equal(h.form.objekt.value, 'Haus');
+    assert.equal(h.get('k-name').value, 'Offline Testperson'); assert.equal(h.get('k-email').value, 'unfinished@example');
+    assert.equal(h.get('err4').classList.contains('on'), false);
+    assert.equal(h.controls.some(input => input.field.classList.contains('bad')), false);
+    assert.equal(h.scrolls.at(-1).top, 0, 'Keep the heading above the form in view');
+    assert.equal(h.requests.length, 0);
+    h.value('k-plz', ''); await h.click('next');
+    assert.equal(h.get('err2').classList.contains('on'), true);
+    assert.equal(await h.cta(), true, 'Repeated entry also clears old validation');
+    assert.equal(h.get('k-plz').value, '');
+    assert.equal(h.get('err2').classList.contains('on'), false);
+    assert.equal(h.requests.length, 0);
+  });
+}
+
+test('modified clicks and links to other destinations retain normal browser behavior', async () => {
+  const cases = [
+    ['#analyse', { ctrlKey: true }], ['#analyse', { metaKey: true }],
+    ['#analyse', { shiftKey: true }], ['#analyse', { altKey: true }],
+    ['#analyse', { button: 1 }], ['#analyse', {}, { target: '_blank' }],
+    ['#analyse', {}, { download: 'offer.html' }],
+    ['https://example.invalid/#analyse', {}], ['tel:+4917616818944', {}],
+    ['#kontakt', {}], ['/news#analyse', {}],
+  ];
+  for (const [href, modifiers, attributes] of cases) {
+    const h = harness(); h.tariff(); await h.click('next');
+    const scrollCount = h.scrolls.length;
+    assert.equal(await h.cta(href, modifiers, attributes), false, href + ' keeps browser behavior');
+    assert.deepEqual(h.active(), ['2']); assert.equal(h.scrolls.length, scrollCount);
+    assert.equal(h.requests.length, 0);
+  }
+});
+
+test('step changes and invalid fields keep the hero at the top instead of scrolling a field over the heading', async () => {
+  const h = harness();
+  await h.click('next');
+  assert.equal(h.focused(), h.get('k-plz')); assert.equal(h.focuses.at(-1).options.preventScroll, true);
+  assert.equal(h.scrolls.at(-1).top, 0);
+  h.tariff(); await h.click('next');
+  assert.deepEqual(h.active(), ['2']); assert.equal(h.scrolls.at(-1).top, 0);
+  assert.equal(h.focuses.at(-1).options.preventScroll, true);
+  await h.submit(); assert.equal(h.focused(), h.get('k-name'));
+  assert.equal(h.focuses.at(-1).options.preventScroll, true); assert.equal(h.scrolls.at(-1).top, 0);
+  await h.click('back'); assert.deepEqual(h.active(), ['1']); assert.equal(h.scrolls.at(-1).top, 0);
+  h.reducedMotion(true); await h.cta();
+  assert.notEqual(h.scrolls.at(-1).behavior, 'smooth', 'Reduced-motion preference prevents animated scrolling');
 });
 
 test('unknown private electricity shows optional household size and omits stale kWh', async () => {
@@ -282,6 +367,9 @@ test('pending delivery cannot submit twice and success appears only after the re
   assert.deepEqual(h.active(), ['2']); assert.deepEqual(h.redirects, []);
   await h.submit(); assert.equal(h.requests.length, 1);
   await h.click('back'); assert.deepEqual(h.active(), ['2'], 'Navigation stays locked during delivery');
+  const scrollCount = h.scrolls.length;
+  assert.equal(await h.cta(), true, 'Offer entry is intercepted while delivery is pending');
+  assert.deepEqual(h.active(), ['2']); assert.equal(h.scrolls.length, scrollCount);
   resolveResponse({ ok: true, status: 200 }); await pending;
   assert.deepEqual(h.active(), ['success']); assert.deepEqual(h.redirects, ['/danke']);
 });
