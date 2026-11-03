@@ -42,6 +42,31 @@ test('email-only requests work without a phone number', () => {
   assert.ok(!payload.fields.some(field => field.name === 'phone'));
 });
 
+test('short phone-only requests mark unknown consumption for follow-up without inventing data', () => {
+  const shortRequest = {
+    'pe_integration_source': 'tarifanfrage',
+    'form-name': 'tarifanfrage',
+    name: 'Offline Testperson',
+    telefon: '+49 30 1234567',
+    plz: '01067',
+    sparte: 'Strom',
+    objekt: 'Wohnung',
+    datenschutzhinweis: 'zur Kenntnis genommen',
+    // Client-computed summaries cannot establish a customer's actual usage.
+    verbrauch_berechnet: '9999 kWh (automatisch geschätzt)',
+  };
+  for (const usage of [{}, { kwh: '' }, { kwh: '  ' }]) {
+    const payload = toHubSpotSubmission({ ...shortRequest, ...usage })!;
+    const fields = Object.fromEntries(payload.fields.map(field => [field.name, field.value]));
+    assert.equal(fields.phone, shortRequest.telefon);
+    assert.equal(fields.email, undefined);
+    assert.equal(fields.zip, '01067');
+    assert.match(fields.pe_tarifanfrage_details, /Tarifprüfung: Strom/);
+    assert.match(fields.pe_tarifanfrage_details, /Jahresverbrauch: Nicht bekannt, persönlich klären/);
+    assert.doesNotMatch(fields.pe_tarifanfrage_details, /9999|automatisch geschätzt|Aktuelle Versorgung:|Aktueller Anbieter:|Gewünschter Rückruf:|Personen im Haushalt:/);
+  }
+});
+
 test('only explicit tariff source is forwarded; unknown forms and honeypot spam are skipped', () => {
   assert.equal(toHubSpotSubmission(undefined), null);
   assert.equal(toHubSpotSubmission({ ...example, pe_integration_source: '' }), null);
