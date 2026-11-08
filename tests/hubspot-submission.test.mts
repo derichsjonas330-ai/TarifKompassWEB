@@ -36,10 +36,24 @@ test('phone-only request preserves full name, phone and leading zero ZIP without
   assert.ok(payload.fields.every(field => field.objectTypeId === '0-1'));
 });
 
-test('email-only requests work without a phone number', () => {
-  const payload = toHubSpotSubmission({ ...example, telefon: '', email: 'person@example.com' })!;
-  assert.equal(payload.fields.find(field => field.name === 'email')?.value, 'person@example.com');
-  assert.ok(!payload.fields.some(field => field.name === 'phone'));
+test('email cannot replace a missing or blank phone number', () => {
+  for (const telefon of ['', '   ', undefined]) {
+    assert.throws(() => toHubSpotSubmission({ ...example, telefon, email: 'person@example.com' }), /incomplete contact data/);
+  }
+});
+
+test('invalid phone numbers cannot be forwarded even with a valid email', () => {
+  for (const telefon of ['abc', '012', '+-------', '0 ( ) / . -', '0'.repeat(101)]) {
+    assert.throws(() => toHubSpotSubmission({ ...example, telefon, email: 'person@example.com' }), /invalid contact data/);
+  }
+});
+
+test('national and international phone formats preserve the optional email', () => {
+  for (const telefon of ['030 1234567', '+49 (0) 30 1234567', '0049 30 1234567', '(030) 123-4567']) {
+    const payload = toHubSpotSubmission({ ...example, telefon, email: 'person@example.com' })!;
+    assert.equal(payload.fields.find(field => field.name === 'phone')?.value, telefon);
+    assert.equal(payload.fields.find(field => field.name === 'email')?.value, 'person@example.com');
+  }
 });
 
 test('short phone-only requests mark unknown consumption for follow-up without inventing data', () => {

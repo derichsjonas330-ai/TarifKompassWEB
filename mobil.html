@@ -132,11 +132,11 @@
             <p class="konf-err" id="err4" role="alert"></p>
             <div class="field"><label for="k-name">Vor- und Nachname</label>
               <input id="k-name" name="name" type="text" placeholder="Ihr Name" autocomplete="name"></div>
-            <div class="field"><label for="k-telefon">Telefon</label>
-              <input id="k-telefon" name="telefon" type="tel" placeholder="Ihre Telefonnummer" autocomplete="tel" aria-describedby="k-kontakt-hint"></div>
-            <div class="field"><label for="k-email">E-Mail</label>
+            <div class="field"><label for="k-telefon">Telefon (Pflichtfeld)</label>
+              <input id="k-telefon" name="telefon" type="tel" placeholder="Ihre Telefonnummer" autocomplete="tel" maxlength="100" aria-describedby="k-kontakt-hint" required></div>
+            <div class="field"><label for="k-email">E-Mail (optional)</label>
               <input id="k-email" name="email" type="email" placeholder="Ihre E-Mail-Adresse" autocomplete="email" aria-describedby="k-kontakt-hint">
-              <p class="hint" id="k-kontakt-hint">Eine Telefonnummer oder E-Mail-Adresse genügt.</p></div>
+              <p class="hint" id="k-kontakt-hint">Für die persönliche Rückmeldung benötigen wir Ihre Telefonnummer. Die E-Mail-Adresse ist freiwillig.</p></div>
             <input id="k-kontakt" name="kontakt" type="hidden">
             <div class="consent"><input type="checkbox" id="k-consent" name="datenschutzhinweis" value="zur Kenntnis genommen">
               <label for="k-consent">Ich habe die <a href="/datenschutz.html" target="_blank" rel="noopener" style="color:var(--navy)">Datenschutzerklärung</a> zur Kenntnis genommen.</label></div>

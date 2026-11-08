@@ -33,10 +33,11 @@ export function toHubSpotSubmission(data: SubmissionData | undefined): HubSpotSu
   const name = value(data, 'name');
   const phone = value(data, 'telefon');
   const email = value(data, 'email');
-  if (name.length < 2 || name.length > 300 || (!phone && !email)) {
+  if (name.length < 2 || name.length > 300 || !phone) {
     throw new Error('Tariff request has incomplete contact data');
   }
-  if (phone.length > 100 || email.length > 254 ||
+  if (phone.length > 100 || !/^[+0(][\d\s\/().-]{6,}$/.test(phone) ||
+      phone.replace(/\D/g, '').length < 7 || email.length > 254 ||
       (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))) {
     throw new Error('Tariff request has invalid contact data');
   }

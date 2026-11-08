@@ -125,12 +125,12 @@
       const nm = document.getElementById('k-name'), tel = document.getElementById('k-telefon'), email = document.getElementById('k-email'), cs = document.getElementById('k-consent');
       const phoneValue = tel.value.trim(), emailValue = email.value.trim();
       const okNm = nm.value.trim().length > 1;
-      const hasContact = phoneValue !== '' || emailValue !== '';
-      const okTel = phoneValue === '' || /^[+0(][\d\s\/().-]{6,}$/.test(phoneValue);
+      const okTel = phoneValue.length <= 100 && /^[+0(][\d\s\/().-]{6,}$/.test(phoneValue)
+        && phoneValue.replace(/\D/g,'').length >= 7;
       const okEmail = emailValue === '' || /^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(emailValue);
-      mark(nm, !okNm); mark(tel, !hasContact || !okTel); mark(email, !hasContact || !okEmail);
+      mark(nm, !okNm); mark(tel, !okTel); mark(email, !okEmail);
       if(!okNm){ setErr('err4','Bitte nennen Sie mir Ihren Namen.'); focusError(nm); return false; }
-      if(!hasContact){ setErr('err4','Bitte hinterlassen Sie eine Telefonnummer oder E-Mail-Adresse.'); focusError(tel); return false; }
+      if(!phoneValue){ setErr('err4','Bitte geben Sie Ihre Telefonnummer an. Sie ist für die persönliche Rückmeldung erforderlich.'); focusError(tel); return false; }
       if(!okTel){ setErr('err4','Bitte geben Sie eine gültige Telefonnummer ein.'); focusError(tel); return false; }
       if(!okEmail){ setErr('err4','Bitte geben Sie eine gültige E-Mail-Adresse ein.'); focusError(email); return false; }
       if(!cs.checked){ setErr('err4','Bitte bestätigen Sie, dass Sie die Datenschutzerklärung zur Kenntnis genommen haben.'); focusError(cs); return false; }

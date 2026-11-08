@@ -167,7 +167,7 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
 }
 
 for (const page of Object.keys(pages)) {
-  test(`${page}: two input steps, unchanged Netlify routing and no required second contact channel`, async () => {
+  test(`${page}: two input steps, unchanged Netlify routing, required phone and optional email`, async () => {
     const h = harness(page);
     assert.equal(h.steps.length, 3, 'Two input steps plus success confirmation');
     assert.equal(h.bars.length, 2);
@@ -175,7 +175,7 @@ for (const page of Object.keys(pages)) {
     assert.equal(h.form.getAttribute('data-netlify'), 'true');
     assert.equal(h.form.getAttribute('netlify-honeypot'), 'bot-field');
     assert.equal(h.form.getAttribute('action'), '/danke');
-    assert.equal(h.get('k-telefon').required, false);
+    assert.equal(h.get('k-telefon').required, true);
     assert.equal(h.get('k-email').required, false);
     for (const name of ['situation', 'anbieter', 'erhoehung', 'rueckruf']) {
       const control = h.controls.find(control => control.name === name);
@@ -298,7 +298,7 @@ test('unknown Gas, Heizstrom and commercial consumption use clarification withou
     const h = harness(); h.value('k-plz', '01067');
     await h.choose('sparte', energy); await h.choose('objekt', object); await h.change('k-unbekannt', true);
     assert.equal(h.get('k-pers-field').hidden, true); assert.equal(h.get('k-pers').disabled, true);
-    await h.click('next'); assert.deepEqual(h.active(), ['2']); h.contact('email'); await h.submit();
+    await h.click('next'); assert.deepEqual(h.active(), ['2']); h.contact(); await h.submit();
     assert.equal(h.requests[0].data.has('personen'), false); assert.equal(h.requests[0].data.has('kwh'), false);
     assert.match(h.requests[0].data.get('verbrauch_berechnet'), /nicht|unbekannt/i);
   }
@@ -320,30 +320,49 @@ test('heat-pump selection and joint electricity/gas inquiry cannot silently over
   assert.match(h.requests[0].data.get('verbrauch_berechnet'), /Heizstrom/);
 });
 
-for (const channel of ['phone', 'email']) {
-  test(`${channel}-only submission preserves contact, consent metadata and server route`, async () => {
-    const h = harness(); h.tariff(); await h.click('next'); h.contact(channel); await h.submit();
-    assert.equal(h.requests.length, 1);
-    const request = h.requests[0];
-    assert.equal(request.url, '/'); assert.equal(request.method, 'POST');
-    assert.equal(request.headers['Content-Type'], 'application/x-www-form-urlencoded');
-    assert.equal(request.data.get('form-name'), 'tarifanfrage');
-    assert.equal(request.data.get('pe_integration_source'), 'tarifanfrage');
-    assert.equal(request.data.get('plz'), '01067');
-    assert.equal(request.data.get('datenschutzhinweis'), 'zur Kenntnis genommen');
-    assert.equal(request.data.get('kontakt'), request.data.get(channel === 'phone' ? 'telefon' : 'email'));
-    assert.equal(request.data.get(channel === 'phone' ? 'email' : 'telefon'), '');
-    assert.equal(request.data.get('cookie_einwilligung'), 'OFFLINE_CONSENT');
-    assert.equal(request.data.get('vorgangs_id'), 'OFFLINE_REQUEST_ID');
-    assert.deepEqual(h.hooks, ['sync', 'id']); assert.deepEqual(h.redirects, ['/danke']);
-    assert.deepEqual(h.active(), ['success']);
+for (const page of Object.keys(pages)) {
+  for (const email of ['', 'offline@example.invalid']) {
+    test(`${page}: phone submission with ${email ? 'optional' : 'no'} email preserves contact, consent metadata and server route`, async () => {
+      const h = harness(page); h.tariff(); await h.click('next'); h.contact(); h.value('k-email', email); await h.submit();
+      assert.equal(h.requests.length, 1);
+      const request = h.requests[0];
+      assert.equal(request.url, '/'); assert.equal(request.method, 'POST');
+      assert.equal(request.headers['Content-Type'], 'application/x-www-form-urlencoded');
+      assert.equal(request.data.get('form-name'), 'tarifanfrage');
+      assert.equal(request.data.get('pe_integration_source'), 'tarifanfrage');
+      assert.equal(request.data.get('plz'), '01067');
+      assert.equal(request.data.get('datenschutzhinweis'), 'zur Kenntnis genommen');
+      assert.equal(request.data.get('telefon'), '+49 30 1234567');
+      assert.equal(request.data.get('kontakt'), ['+49 30 1234567', email].filter(Boolean).join(' / '));
+      assert.equal(request.data.get('email'), email);
+      assert.equal(request.data.get('cookie_einwilligung'), 'OFFLINE_CONSENT');
+      assert.equal(request.data.get('vorgangs_id'), 'OFFLINE_REQUEST_ID');
+      assert.deepEqual(h.hooks, ['sync', 'id']); assert.deepEqual(h.redirects, ['/danke']);
+      assert.deepEqual(h.active(), ['success']);
+    });
+  }
+
+  test(`${page}: an email cannot replace a missing, blank or invalid phone number`, async () => {
+    const h = harness(page); h.tariff(); await h.click('next'); h.contact('email');
+    for (const phone of ['', '   ', 'abc', '012', '+-------', '0 ( ) / . -']) {
+      h.value('k-telefon', phone); await h.submit();
+      assert.equal(h.requests.length, 0); assert.deepEqual(h.redirects, []);
+      assert.deepEqual(h.active(), ['2']); assert.equal(h.focused(), h.get('k-telefon'));
+      assert.match(h.get('err4').textContent, /Telefonnummer/);
+      assert.equal(h.get('k-telefon').field.classList.contains('bad'), true);
+      assert.equal(h.get('k-email').field.classList.contains('bad'), false);
+      assert.equal(h.submitButton.disabled, false);
+    }
+    h.value('k-telefon', '030 1234567'); await h.submit();
+    assert.equal(h.requests.length, 1); assert.deepEqual(h.redirects, ['/danke']);
   });
 }
 
 test('missing contact, invalid contact and missing acknowledgement cannot submit', async () => {
   const h = harness(); h.tariff(); await h.click('next'); h.value('k-name', 'Offline Testperson'); h.get('k-consent').checked = true;
   await h.submit(); assert.equal(h.requests.length, 0);
-  h.value('k-email', 'invalid'); await h.submit(); assert.equal(h.requests.length, 0);
+  h.contact(); h.value('k-email', 'invalid'); await h.submit(); assert.equal(h.requests.length, 0);
+  assert.equal(h.focused(), h.get('k-email'));
   h.value('k-email', ''); h.value('k-telefon', 'abc'); await h.submit(); assert.equal(h.requests.length, 0);
   h.contact(); h.get('k-consent').checked = false; await h.submit(); assert.equal(h.requests.length, 0);
   assert.deepEqual(h.redirects, []);
