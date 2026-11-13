@@ -23,25 +23,16 @@
   syncTiles();
 
   function syncConsumption(){
-    const unknown = document.getElementById('k-unbekannt').checked;
     const both = document.getElementById('k-beide').checked;
     const sparte = form.sparte.value;
     const kwh = document.getElementById('k-kwh');
-    const household = unknown && form.objekt.value !== 'Gewerbe' && sparte === 'Strom';
-    kwh.disabled = unknown;
-    kwh.required = !unknown;
-    document.getElementById('k-pers-field').hidden = !household;
-    document.getElementById('k-pers').disabled = !household;
-    document.getElementById('k-kwh-lbl').textContent = (sparte === 'Gas' ? 'Gasverbrauch' : sparte === 'Heizstrom' ? 'Heizstromverbrauch' : 'Stromverbrauch') + ' pro Jahr (kWh)';
+    document.getElementById('k-kwh-lbl').textContent = (sparte === 'Gas' ? 'Gasverbrauch' : sparte === 'Heizstrom' ? 'Heizstromverbrauch' : 'Stromverbrauch') + ' pro Jahr (kWh) – optional';
     kwh.placeholder = sparte === 'Gas' ? 'z. B. 12000' : sparte === 'Heizstrom' ? 'z. B. 5000' : 'z. B. 3200';
-    document.getElementById('k-verbrauch-hint').textContent = (unknown
-      ? 'Den genauen Verbrauch klären wir persönlich. Ihre Anfrage ist auch ohne Abrechnung möglich.'
-      : 'Den Jahresverbrauch finden Sie auf Ihrer letzten Abrechnung.')
+    document.getElementById('k-verbrauch-hint').textContent = 'Freiwillige Angabe. Sie können auch ohne Jahresverbrauch fortfahren.'
       + (both ? ' Die Abrechnung der zweiten Sparte können Sie später nachreichen.' : '');
     mark(kwh, false);
     setErr('err2', '');
   }
-  document.getElementById('k-unbekannt').addEventListener('change', syncConsumption);
   document.getElementById('k-beide').addEventListener('change', function(){
     // "Strom und Gas" must never silently replace a heat-pump request.
     if(document.getElementById('k-beide').checked && form.sparte.value === 'Heizstrom'){
@@ -114,11 +105,12 @@
     if(i === 0){
       const plz = document.getElementById('k-plz'), kwh = document.getElementById('k-kwh');
       const okPlz = /^\d{5}$/.test(plz.value.trim());
-      const raw = kwh.value.trim().replace(/[.\s']/g,'');
-      const okKwh = document.getElementById('k-unbekannt').checked || (/^\d{1,6}$/.test(raw) && +raw > 0);
+      const entered = kwh.value.trim();
+      const raw = entered.replace(/[.\s']/g,'');
+      const okKwh = entered === '' || (/^\d{1,6}$/.test(raw) && +raw > 0);
       mark(plz, !okPlz); mark(kwh, !okKwh);
       if(!okPlz){ setErr('err2','Bitte geben Sie eine 5-stellige Postleitzahl ein.'); focusError(plz); return false; }
-      if(!okKwh){ setErr('err2','Bitte geben Sie Ihren Jahresverbrauch ein, z. B. 3200, oder wählen Sie „Jahresverbrauch gerade nicht zur Hand“.'); focusError(kwh); return false; }
+      if(!okKwh){ setErr('err2','Bitte geben Sie einen gültigen Jahresverbrauch ein, z. B. 3200, oder lassen Sie das optionale Feld leer.'); focusError(kwh); return false; }
       setErr('err2',''); return true;
     }
     if(i === 1){
@@ -142,7 +134,7 @@
   const nf = new Intl.NumberFormat('de-DE');
 
   function angaben(){
-    const eigen = document.getElementById('k-unbekannt').checked ? '' : document.getElementById('k-kwh').value.trim().replace(/[.\s']/g,'');
+    const eigen = document.getElementById('k-kwh').value.trim().replace(/[.\s']/g,'');
     const beide = document.getElementById('k-beide').checked;
     return {
       sparte: beide ? 'Strom und Gas' : form.sparte.value,
@@ -162,8 +154,6 @@
       ['Postleitzahl', document.getElementById('k-plz').value.trim()],
       ['Jahresverbrauch', r.verbrauch]
     ];
-    const personen = document.getElementById('k-pers');
-    if(!personen.disabled && personen.value) zeilen.push(['Personen im Haushalt', personen.value === '5' ? '5 oder mehr' : personen.value]);
     document.getElementById('k-sum').innerHTML = zeilen.map(function(z){
       return '<li><span>' + z[0] + '</span><span>' + z[1].replace(/[<>&]/g,'') + '</span></li>';
     }).join('');

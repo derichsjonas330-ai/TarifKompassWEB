@@ -167,7 +167,7 @@ function harness(page = 'index.html', response = async () => ({ ok: true, status
 }
 
 for (const page of Object.keys(pages)) {
-  test(`${page}: two input steps, unchanged Netlify routing, required phone and optional email`, async () => {
+  test(`${page}: two input steps, unchanged Netlify routing, required phone and optional consumption/email`, async () => {
     const h = harness(page);
     assert.equal(h.steps.length, 3, 'Two input steps plus success confirmation');
     assert.equal(h.bars.length, 2);
@@ -177,6 +177,10 @@ for (const page of Object.keys(pages)) {
     assert.equal(h.form.getAttribute('action'), '/danke');
     assert.equal(h.get('k-telefon').required, true);
     assert.equal(h.get('k-email').required, false);
+    assert.equal(h.get('k-kwh').required, false);
+    assert.equal(h.get('k-kwh').disabled, false);
+    assert.equal(h.elements.has('k-unbekannt'), false);
+    assert.equal(h.elements.has('k-pers-field'), false);
     for (const name of ['situation', 'anbieter', 'erhoehung', 'rueckruf']) {
       const control = h.controls.find(control => control.name === name);
       assert.equal(control.type, 'hidden'); assert.equal(control.value, '');
@@ -189,12 +193,12 @@ for (const page of Object.keys(pages)) {
   });
 }
 
-test('first step validates ZIP and consumption, including Enter without premature submission', async () => {
+test('first step validates ZIP and entered consumption, including Enter without premature submission', async () => {
   const h = harness();
   await h.click('next');
   assert.deepEqual(h.active(), ['1']); assert.equal(h.focused(), h.get('k-plz'));
   h.value('k-plz', '01067');
-  for (const value of ['', '0', '-1', 'abc']) {
+  for (const value of ['0', '-1', 'abc', '.', "'", '1000000', '3,2']) {
     h.value('k-kwh', value); await h.click('next');
     assert.deepEqual(h.active(), ['1']); assert.equal(h.focused(), h.get('k-kwh'));
   }
@@ -262,44 +266,42 @@ test('step changes and invalid fields keep the hero at the top instead of scroll
   assert.notEqual(h.scrolls.at(-1).behavior, 'smooth', 'Reduced-motion preference prevents animated scrolling');
 });
 
-test('unknown private electricity shows optional household size and omits stale kWh', async () => {
-  const h = harness(); h.tariff();
-  assert.equal(h.get('k-pers-field').hidden, true); assert.equal(h.get('k-pers').disabled, true);
-  await h.change('k-unbekannt', true);
-  assert.equal(h.get('k-pers-field').hidden, false); assert.equal(h.get('k-pers').disabled, false);
-  assert.equal(h.get('k-kwh').disabled, true);
-  h.value('k-pers', '3'); await h.click('next'); h.contact(); await h.submit();
-  assert.equal(h.requests.length, 1);
-  assert.equal(h.requests[0].data.get('personen'), '3'); assert.equal(h.requests[0].data.has('kwh'), false);
-  assert.match(h.requests[0].data.get('verbrauch_berechnet'), /nicht|unbekannt/i);
-  assert.doesNotMatch(h.requests[0].data.get('verbrauch_berechnet'), /3[.,]?200/);
+for (const page of Object.keys(pages)) {
+  test(`${page}: empty or whitespace consumption advances and submits without an estimate`, async () => {
+    for (const value of ['', '   ']) {
+      const h = harness(page); h.value('k-plz', '01067'); h.value('k-kwh', value);
+      await h.click('next'); assert.deepEqual(h.active(), ['2']);
+      assert.equal(h.requests.length, 0);
+      h.contact(); await h.submit();
+      assert.equal(h.requests.length, 1); assert.deepEqual(h.redirects, ['/danke']);
+      assert.equal(h.requests[0].data.get('kwh').trim(), '');
+      assert.equal(h.requests[0].data.get('personen'), '');
+      assert.match(h.requests[0].data.get('verbrauch_berechnet'), /nicht|unbekannt/i);
+      assert.doesNotMatch(h.get('k-sum').innerHTML, /Personen im Haushalt/);
+    }
+  });
+}
+
+test('entered consumption is preserved and clearing it never submits a stale estimate', async () => {
+  for (const value of ['3500', '3.500', "3'500", '3 500', '']) {
+    const h = harness(); h.tariff(); await h.click('next'); await h.click('back');
+    h.value('k-kwh', value); await h.click('next'); h.contact(); await h.submit();
+    assert.equal(h.requests.length, 1);
+    assert.equal(h.requests[0].data.get('kwh'), value);
+    assert.equal(h.requests[0].data.get('personen'), '');
+    assert.match(h.requests[0].data.get('verbrauch_berechnet'), value ? /3\.500 kWh Strom/ : /nicht|unbekannt/i);
+    assert.doesNotMatch(h.requests[0].data.get('verbrauch_berechnet'), /3[.,]?200/);
+  }
 });
 
-test('known consumption after changing the choice never serializes stale household size', async () => {
-  const h = harness(); h.tariff(); await h.change('k-unbekannt', true); h.value('k-pers', '4');
-  await h.change('k-unbekannt', false);
-  assert.equal(h.get('k-pers-field').hidden, true); assert.equal(h.get('k-pers').disabled, true);
-  h.value('k-kwh', '3500'); await h.click('next'); h.contact(); await h.submit();
-  assert.equal(h.requests[0].data.has('personen'), false);
-  assert.equal(h.requests[0].data.get('kwh'), '3500');
-});
-
-test('unknown household consumption does not require a guessed household size', async () => {
-  const h = harness(); h.value('k-plz', '01067'); await h.change('k-unbekannt', true);
-  assert.equal(h.get('k-pers').value, '');
-  await h.click('next'); h.contact(); await h.submit();
-  assert.equal(h.requests.length, 1); assert.deepEqual(h.redirects, ['/danke']);
-  assert.equal(h.requests[0].data.get('personen'), '');
-  assert.equal(h.requests[0].data.has('kwh'), false);
-});
-
-test('unknown Gas, Heizstrom and commercial consumption use clarification without household estimates', async () => {
+test('empty Gas, Heizstrom and commercial consumption advances with Enter and uses clarification', async () => {
   for (const [energy, object] of [['Gas', 'Wohnung'], ['Heizstrom', 'Haus'], ['Strom', 'Gewerbe']]) {
     const h = harness(); h.value('k-plz', '01067');
-    await h.choose('sparte', energy); await h.choose('objekt', object); await h.change('k-unbekannt', true);
-    assert.equal(h.get('k-pers-field').hidden, true); assert.equal(h.get('k-pers').disabled, true);
-    await h.click('next'); assert.deepEqual(h.active(), ['2']); h.contact(); await h.submit();
-    assert.equal(h.requests[0].data.has('personen'), false); assert.equal(h.requests[0].data.has('kwh'), false);
+    await h.choose('sparte', energy); await h.choose('objekt', object);
+    assert.equal(h.get('k-kwh').required, false);
+    await h.submit(); assert.deepEqual(h.active(), ['2']); assert.equal(h.requests.length, 0);
+    h.contact(); await h.submit();
+    assert.equal(h.requests[0].data.get('personen'), ''); assert.equal(h.requests[0].data.get('kwh'), '');
     assert.match(h.requests[0].data.get('verbrauch_berechnet'), /nicht|unbekannt/i);
   }
 });
@@ -342,8 +344,8 @@ for (const page of Object.keys(pages)) {
     });
   }
 
-  test(`${page}: an email cannot replace a missing, blank or invalid phone number`, async () => {
-    const h = harness(page); h.tariff(); await h.click('next'); h.contact('email');
+  test(`${page}: skipping consumption does not allow email to replace a missing, blank or invalid phone number`, async () => {
+    const h = harness(page); h.value('k-plz', '01067'); await h.click('next'); h.contact('email');
     for (const phone of ['', '   ', 'abc', '012', '+-------', '0 ( ) / . -']) {
       h.value('k-telefon', phone); await h.submit();
       assert.equal(h.requests.length, 0); assert.deepEqual(h.redirects, []);
@@ -373,7 +375,7 @@ test('final submission revalidates tariff data rather than trusting an earlier s
   h.value('k-plz', '123'); await h.submit();
   assert.equal(h.requests.length, 0); assert.deepEqual(h.redirects, []);
   assert.deepEqual(h.active(), ['1']);
-  h.tariff(); await h.click('next'); h.value('k-kwh', ''); await h.submit();
+  h.tariff(); await h.click('next'); h.value('k-kwh', 'invalid'); await h.submit();
   assert.equal(h.requests.length, 0); assert.deepEqual(h.active(), ['1']);
 });
 

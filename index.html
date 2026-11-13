@@ -306,7 +306,6 @@ footer a:hover{color:var(--gold)}
 @media(max-width:400px){.konf-row{grid-template-columns:1fr}}
 .hint{font-size:.78rem;color:var(--grau);margin-top:.35rem;line-height:1.45}
 .konf .field{margin-bottom:.95rem}
-.konf-unknown{margin:.1rem 0 .65rem}
 .konf-consumption-hint{margin:0 0 1rem}
 .konf input:disabled{background:#f1f3f5;color:var(--grau)}
 .konf-err{display:none;background:#FBEDEB;color:#8a3226;border-radius:7px;padding:.6rem .8rem;font-size:.85rem;margin-bottom:.9rem}
@@ -478,6 +477,7 @@ section h2{max-width:30ch}
           <input type="hidden" name="anbieter" value="">
           <input type="hidden" name="erhoehung" value="">
           <input type="hidden" name="rueckruf" value="">
+          <input type="hidden" name="personen" value="">
           <input type="hidden" name="pe_integration_source" value="tarifanfrage">
           <input type="hidden" name="subject" value="Neue Tarif-Anfrage über paschenenergie.de">
           <input type="hidden" id="k-verbrauch-berechnet" name="verbrauch_berechnet" value="">
@@ -525,21 +525,10 @@ section h2{max-width:30ch}
             <div class="konf-row">
               <div class="field"><label for="k-plz">Postleitzahl</label>
                 <input id="k-plz" name="plz" type="text" inputmode="numeric" maxlength="5" placeholder="z. B. 80331" autocomplete="postal-code" required></div>
-              <div class="field"><label for="k-kwh" id="k-kwh-lbl">Stromverbrauch pro Jahr (kWh)</label>
-                <input id="k-kwh" name="kwh" type="text" inputmode="numeric" placeholder="z. B. 3200" aria-describedby="k-verbrauch-hint" required></div>
+              <div class="field"><label for="k-kwh" id="k-kwh-lbl">Stromverbrauch pro Jahr (kWh) – optional</label>
+                <input id="k-kwh" name="kwh" type="text" inputmode="numeric" placeholder="z. B. 3200" aria-describedby="k-verbrauch-hint"></div>
             </div>
-            <div class="consent konf-unknown"><input type="checkbox" id="k-unbekannt">
-              <label for="k-unbekannt">Jahresverbrauch gerade nicht zur Hand</label></div>
-            <div class="field" id="k-pers-field" hidden><label for="k-pers">Personen im Haushalt <span class="opt">(falls bekannt)</span></label>
-              <select id="k-pers" name="personen" disabled>
-                <option value="" selected>Bitte wählen</option>
-                <option value="1">1 Person</option>
-                <option value="2">2 Personen</option>
-                <option value="3">3 Personen</option>
-                <option value="4">4 Personen</option>
-                <option value="5">5 oder mehr</option>
-              </select></div>
-            <p class="hint konf-consumption-hint" id="k-verbrauch-hint">Den Jahresverbrauch finden Sie auf Ihrer letzten Abrechnung.</p>
+            <p class="hint konf-consumption-hint" id="k-verbrauch-hint">Freiwillige Angabe. Sie können auch ohne Jahresverbrauch fortfahren.</p>
             <button class="btn" type="button" data-next>Sparangebot kostenlos anfordern</button>
             <p class="konf-note">Noch Ihre Kontaktdaten, dann ist Ihre Anfrage fertig.</p>
           </section>
